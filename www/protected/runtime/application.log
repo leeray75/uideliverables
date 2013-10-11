@@ -234,3 +234,25 @@ Stack trace:
 REQUEST_URI=/www/index.php?r=site/contact
 in C:\Servers\htdocs\www\protected\controllers\SiteController.php (122)
 in C:\Servers\htdocs\www\index.php (13)
+2013/10/11 16:49:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "portfolio".' in C:\Servers\htdocs\YiiRoot\framework\web\CController.php:484
+Stack trace:
+#0 C:\Servers\htdocs\YiiRoot\framework\web\CController.php(271): CController->missingAction('portfolio')
+#1 C:\Servers\htdocs\YiiRoot\framework\web\CWebApplication.php(283): CController->run('portfolio')
+#2 C:\Servers\htdocs\YiiRoot\framework\web\CWebApplication.php(142): CWebApplication->runController('site/portfolio')
+#3 C:\Servers\htdocs\YiiRoot\framework\base\CApplication.php(162): CWebApplication->processRequest()
+#4 C:\Servers\htdocs\www\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/www/index.php?r=site/portfolio
+HTTP_REFERER=http://localhost/www/index.php?r=site/index
+---
+2013/10/11 16:50:06 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "portfolio".' in C:\Servers\htdocs\YiiRoot\framework\web\CController.php:484
+Stack trace:
+#0 C:\Servers\htdocs\YiiRoot\framework\web\CController.php(271): CController->missingAction('portfolio')
+#1 C:\Servers\htdocs\YiiRoot\framework\web\CWebApplication.php(283): CController->run('portfolio')
+#2 C:\Servers\htdocs\YiiRoot\framework\web\CWebApplication.php(142): CWebApplication->runController('site/portfolio')
+#3 C:\Servers\htdocs\YiiRoot\framework\base\CApplication.php(162): CWebApplication->processRequest()
+#4 C:\Servers\htdocs\www\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/www/index.php?r=site/portfolio
+HTTP_REFERER=http://localhost/www/index.php?r=site/index
+---

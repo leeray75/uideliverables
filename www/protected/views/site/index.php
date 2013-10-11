@@ -32,7 +32,7 @@ $this->pageCSS = "homepage.css";
     <div class="span4 box">
       <h2>My Portfolio</h2>
       <p>A list of sites and other projects I've coded recently.</p>
-      <p><a class="btn" href="#">Portfolio &raquo;</a></p>
+      <p><a class="btn" href="/www/index.php?r=site/page&view=portfolio">Portfolio &raquo;</a></p>
     </div>
     <!-- .span4 --> 
     
