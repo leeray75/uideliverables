@@ -1,0 +1,17 @@
+@charset "utf-8";
+/* CSS Document */
+
+.box{
+	border: 1px solid #CCCCCC;
+	background: #062A53;
+	-moz-border-radius: 10px;
+	border-radius: 10px;		
+	color: #fff;
+		
+}
+.hero-unit h1{ padding-bottom: 10px;}
+.span4{ width: 298px !important; }
+.span4.box p,
+.span4.box h2{ width: 250px; margin: 0 auto 0 auto;} 
+.span4.box h2{ font-size: 24px !important;} 
+.span4.box p{ line-height: 1.2em; }
