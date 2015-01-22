@@ -10,7 +10,7 @@
 	);
 $this->metaKeyWords = "resume, html, css, javascript, jquery, ajax, json, frontend, developer";
 $this->metaDescription = "Raymond Lee's resume. Frontend web developer. Experience programming with HTML, CSS, and JavaScript. Experience with jQuery library and various plugins.";
-$this->pageTitle=Yii::app()->name . ' - Resume';
+$this->pageTitle=Yii::app()->name . ' - Frontend Web Developer - Raymond Lee\'s Resume';
 $this->breadcrumbs=array(
 	'Resume',
 );

@@ -83,6 +83,42 @@ footer {
 	color: #cdae51;
 }
 
+#Google-Search-Container
+{  }
+
+#Google-Search-Container .gsc-control-cse
+{ 
+	background-color: transparent !important; 
+	border: none;
+	padding: 5px; 
+}
+#Google-Search-Container .gsc-input-box 
+{
+	border: 1px solid #062A53;	
+	border-radius:5px;
+	height: 30px;
+	-moz-border-radius: 5px;
+}
+
+#Google-Search-Container table.gsc-search-box td{
+	vertical-align: top;
+}
+#Google-Search-Container table.gsc-search-box td .gsc-input{
+	color: #000;	
+}
+#Google-Search-Container .gsc-search-button 
+{
+	background-color: #006DCC;
+	background-image: linear-gradient(to bottom, #0088CC, #0044CC);
+	background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);	
+	border-radius:5px;
+	-moz-border-radius: 5px;
+	padding: 5px 5px 0 5px;	
+}
+#Google-Search-Container  .gsc-results-wrapper-overlay  .gsc-result .gs-title
+{ overflow: visible;}
+
 @media (max-width: 991px) {
     body{font-size: 12px;}
 }
