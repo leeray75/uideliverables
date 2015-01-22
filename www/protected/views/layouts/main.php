@@ -1,65 +1,73 @@
 <?php /* @var $this Controller */ 
+
 $baseURL = Yii::app()->request->baseUrl;
 ?>
 <!DOCTYPE HTML>
 <!-- 
-<?php echo 'Current PHP version: ' . phpversion(); ?>
+<?php /* echo 'Current PHP version: ' . phpversion(); */ ?>
 -->
-<html>
-<head>
-<meta charset="utf-8">
-
-<meta name="description" content="<?php echo $this->metaDescription; ?>">
-<meta name="keywords" content="<?php echo $this->metaKeywords; ?>">
-<meta name="author" content="Raymond Lee">
-
-<link rel="stylesheet" type="text/css" href="<?php echo $baseURL; ?>/content/css/reset.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo $baseURL; ?>/content/css/global.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo $baseURL; ?>/content/css/bootstrap.min.css" />
 <?php 
-	if(!empty($this->pageCSS)){
-		echo '<link rel="stylesheet" type="text/css" href="'.$baseURL.'/content/css/'.CHtml::encode($this->pageCSS).'" />';
-	}
+if(isset($_GET["portfolio"]) and ($_GET["portfolio"] == "angular-movies-rating"))
+{
+	echo('<html lang="en" ng-app="myApp">');
+}else{
+	echo('<html>');
+}
+?><head>
+<meta charset="utf-8">
+<meta name="google-site-verification" content="EPIlhr6_ScpRyrPBAia0j6H8ooaKOa4Y8nmF9SrSZv4" />
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+<?php
+if ( (isset($this->isSSL) and $this->isSSL === true) and (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on')) {
+    if(!headers_sent()) {
+        header("Status: 301 Moved Permanently");
+        header(sprintf(
+            'Location: https://%s%s',
+            $_SERVER['HTTP_HOST'],
+            $_SERVER['REQUEST_URI']
+        ));
+        exit();
+    }
+}
+else if((isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] === 'on')){
+	
+	if(isset($this->isSSL) and !$this->isSSL === true)
+	{
+		if(!headers_sent()) {
+			header("Status: 301 Moved Permanently");
+			header(sprintf(
+				'Location: http://%s%s',
+				$_SERVER['HTTP_HOST'],
+				$_SERVER['REQUEST_URI']
+			));
+			exit();
+		}
+    }
+}
 ?>
-<script src="<?php echo $baseURL; ?>/content/js/json2.js"></script>
-<script src="<?php echo $baseURL; ?>/content/js/libs/jquery/jquery-1.9.1.min.js"></script>
-<script src="<?php echo $baseURL; ?>/content/js/libs/jquery/jquery-ui-1.10.3.custom.min.js"></script>
-<script src="<?php echo $baseURL; ?>/content/js/libs/backbone/backbone-min-1.0.0.js"></script>
-<script src="<?php echo $baseURL; ?>/content/js/libs/underscore/underscore-min-1.5.1.js"></script>
-<script src="<?php echo $baseURL; ?>/content/js/libs/bootstrap/bootstrap.min.js"></script>
+<?php if(isset($this->metaDescription)): ?>
+<meta name="description" content="<?php echo $this->metaDescription; ?>">
+<?php endif ?>
+<?php if(isset($this->metaKeywords)): ?>
+<meta name="keywords" content="<?php echo $this->metaKeywords; ?>">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<?php endif ?>
+<meta name="author" content="Raymond Lee" />
+<?php include_once "includes/js-files.php"; ?>
+<?php include_once "includes/css-files.php"; ?>
+
+
 <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 
 <body>
-<div class="site-container" id="page">
-  <header>
-    <div class="content-container clearfix">
-      <div id="logo"> <img src="<?php echo $baseURL; ?>/content/images/global/logo-UIDeliverables.png" alt="UI Deliverables" />
-        <?php /* echo CHtml::encode(Yii::app()->name); */?>
-      </div>
-    </div>
-    <!-- /content-container --> 
-  </header>
-  <!-- header -->
-  <nav>
-    <div class="content-container clearfix">
-      <?php $this->widget('zii.widgets.CMenu',array(
-			'items'=>array(
-				array('label'=>'Home', 'url'=>array('/site/index')),
-				array('label'=>'My Resume', 'url'=>array('/site/page', 'view'=>'resume')),
-				array('label'=>'Contact', 'url'=>array('/site/contact')),
-				array('label'=>'Portfolio', 'url'=>array('/site/page', 'view'=>'portfolio'))
-				/*
-				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
-				*/
-			),
-		)); ?>
-    </div>
-    <!-- /content-container --> 
-  </nav>
-  <section id="main">
-    <div class="content-container clearfix">
+<!-- Google Tag Manager -->
+
+<div class="container" id="page" data-role="page">
+  <?php include "includes/header.php" ?>
+  <section id="main" class="row" data-role="content">
+    <div class="content-container col-xs-12 clearfix">
+    	
       <?php if(isset($this->breadcrumbs)):?>
       <?php $this->widget('zii.widgets.CBreadcrumbs', array(
 			'links'=>$this->breadcrumbs,
@@ -67,18 +75,61 @@ $baseURL = Yii::app()->request->baseUrl;
       <!-- breadcrumbs -->
       
       <?php endif?>
-      <?php echo $content; ?> </div>
+ 		
+      <?php echo $content; ?> 
+      </div>
     <!-- /content-container --> 
   </section>
   <!-- /main -->
-  <footer>
-    <div class="content-container clearfix"> Copyright &copy; <?php echo date('Y'); ?> by <?php echo CHtml::encode(Yii::app()->name); ?>.<br/>
+  <footer data-role="footer">
+    <div class="content-container clearfix">
+      <div id="linkedin-plugin-container"> 
+        <!--
+<script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
+--> 
+<!--
+        <script language="javascript">
+	LazyLoad.js("//platform.linkedin.com/in.js", function () {});
+</script> 
+        <script type="IN/MemberProfile" data-id="http://www.linkedin.com/pub/raymond-lee/3/946/382" data-format="click" data-related="false"></script> 
+        -->
+      </div>
+      <!-- /linkedin-plugin-container --> 
+      Copyright &copy; <?php echo date('Y'); ?> by <?php echo CHtml::encode(Yii::app()->name); ?>.<br/>
       All Rights Reserved.<br/>
       <?php echo Yii::powered(); ?> </div>
     <!-- /content-container --> 
   </footer>
+
 </div>
 <!-- page -->
 
+<?php include_once $_SERVER['DOCUMENT_ROOT']."/analyticstracking.php"; ?>
+<!-- Piwik -->
+<?php
+if(!(isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] === 'on'))
+{
+?>
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(["trackPageView"]);
+  _paq.push(["enableLinkTracking"]);
+
+  (function() {
+    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://piwik.uideliverables.com/";
+    _paq.push(["setTrackerUrl", u+"piwik.php"]);
+    _paq.push(["setSiteId", "1"]);
+    var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+    g.defer=true; g.async=true; g.src=u+"piwik.js"; 
+	s.parentNode.insertBefore(g,s);
+  })();
+</script> 
+<!-- End Piwik Code -->
+<?php } ?>
+<script type="text/javascript">stLight.options({publisher: "0749a3e4-1b28-453c-8ace-e949971754c9", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
+<script>
+var options={ "publisher": "0749a3e4-1b28-453c-8ace-e949971754c9", "logo": { "visible": true, "url": "http://www.uideliverables.com/", "img": "http://www.uideliverables.com/www/content/images/global/logo-UIDeliverables.png", "height": 30}, "ad": { "visible": false, "openDelay": "5", "closeDelay": "0"}, "livestream": { "domain": "", "type": "sharethis"}, "ticker": { "visible": false, "domain": "", "title": "", "type": "sharethis"}, "facebook": { "visible": false, "profile": "sharethis"}, "fblike": { "visible": false, "url": ""}, "twitter": { "visible": false, "user": "sharethis"}, "twfollow": { "visible": false}, "custom": [{ "visible": false, "title": "Custom 1", "url": "", "img": "", "popup": false, "popupCustom": { "width": 300, "height": 250}}, { "visible": false, "title": "Custom 2", "url": "", "img": "", "popup": false, "popupCustom": { "width": 300, "height": 250}}, { "visible": false, "title": "Custom 3", "url": "", "img": "", "popup": false, "popupCustom": { "width": 300, "height": 250}}], "chicklets": { "items": ["facebook", "twitter", "linkedin", "pinterest", "email", "sharethis"]}};
+var st_bar_widget = new sharethis.widgets.sharebar(options);
+</script>
 </body>
 </html>

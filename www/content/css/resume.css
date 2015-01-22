@@ -1,9 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
 
-h2 { font-weight: bold; font-size: 22px;}
-h3{ font-weight: bold; font-size: 18px; }
-h4{ font-weight: bold; font-size: 16px; }
+
 
 section#main p{ line-height: 1.2em; }
 section#main ul{ list-style: disc; margin-left: 20px; margin-top: 1em; padding-left: 20px; }

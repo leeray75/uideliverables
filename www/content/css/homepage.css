@@ -1,18 +1,54 @@
 @charset "utf-8";
 /* CSS Document */
 
-.box{
+.box {
 	border: 1px solid #CCCCCC;
 	background: #062A53;
 	-moz-border-radius: 10px;
-	border-radius: 10px;		
+	border-radius: 10px;
 	color: #fff;
-	height: 170px;
-		
+	/* height: 190px; */
+	width: 100%;
+	padding: 0 1em 0 1em;
 }
-.hero-unit h1{ padding-bottom: 10px;}
-.span4{ width: 298px !important; }
-.span4.box p,
-.span4.box h2{ width: 250px; margin: 0 auto 0 auto;} 
-.span4.box h2{ font-size: 24px !important;} 
-.span4.box p{ line-height: 1.2em; }
+ul.bxSlider, ul.bxSlider > li {
+	margin: 0px !important;
+}
+#Hero-Slider-Container{
+	/*visibility: hidden;	*/
+}
+
+
+#linkedin-plugin-container {
+	position: absolute;
+	z-index: 10;
+	top: 0px;
+	left: 10px;
+}
+#Welcome-Hero{
+	background: url(/www/content/images/download/_TOON4.GIF) no-repeat right top;
+	background-size: 50% 100%;
+	padding: 20px;
+	margin: 0 0 10px 0;
+	border-radius: 6px;
+	border: 1px solid #03C;
+}
+#Welcome-Hero h1{
+	font-size: 300%;	
+}
+#Welcome-Hero p {
+	width: 50%;
+}
+#Events-Calendar-Button {
+	position: absolute;
+	bottom: 20px;
+	left: 50px;
+	z-index: 10;
+}
+
+@media (max-width: 992px) {
+    #Welcome-Hero{ background: none; height: auto;}
+	#Welcome-Hero p {
+		width: 100%;
+	}	
+}

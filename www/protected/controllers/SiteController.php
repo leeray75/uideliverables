@@ -2,24 +2,37 @@
 
 class SiteController extends Controller
 {
-	private $_pageCSS;
+	private $_pageCSS = array();
+	private $_pageJS = array();
 	private $_metaKeyWords;
 	private $_metaDescription;
+	private $_isSSL;
 	
-	
-	public function getPageCSS()
+	public function getPageJS()
 	{
-		if($this->_pageCSS!==null)
-			return $this->_pageCSS;
+		return $this->_pageJS;		
+	}
+	public function setPageJS($value)
+	{
+		$this->_pageJS=$value;
+	}
+	public function getIsSSL()
+	{
+		if($this->_isSSL!==null)
+			return $this->_isSSL;
 		else
 		{
 			return "";
 		}
 	}
-
-	/**
-	 * @param string $value the page css
-	 */
+	public function setIsSSL($value)
+	{
+		$this->_isSSL=$value;
+	}
+	public function getPageCSS()
+	{
+		return $this->_pageCSS;
+	}
 	public function setPageCSS($value)
 	{
 		$this->_pageCSS=$value;
@@ -120,7 +133,7 @@ class SiteController extends Controller
 					"Content-type: text/plain; charset=UTF-8";
 
 				mail(Yii::app()->params['adminEmail'],$subject,$model->body,$headers);
-				Yii::app()->user->setFlash('contact','Thank you for contacting me. I will respond to you as soon as possible.');
+				Yii::app()->user->setFlash('contact','Thank you for contacting me. I will respond to you as soon as possible. E-mail was sent to '.Yii::app()->params['adminEmail']);
 				$this->refresh();
 			}
 		}
