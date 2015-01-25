@@ -1,17 +1,18 @@
 <?php /* @var $this Controller */ 
-
 $baseURL = Yii::app()->request->baseUrl;
 ?>
+<?php header('Content-language: en'); ?> 
 <!DOCTYPE HTML>
 <!-- 
 <?php /* echo 'Current PHP version: ' . phpversion(); */ ?>
 -->
 <?php 
+
 if(isset($_GET["portfolio"]) and ($_GET["portfolio"] == "angular-movies-rating"))
 {
 	echo('<html lang="en" ng-app="myApp">');
 }else{
-	echo('<html>');
+	echo('<html lang="en">');
 }
 ?><head>
 <meta charset="utf-8">

@@ -1,6 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
-
+h2{ font-size: 24px; }
 .box {
 	border: 1px solid #CCCCCC;
 	background: #062A53;
@@ -19,25 +19,20 @@ ul.bxSlider, ul.bxSlider > li {
 }
 
 
-#linkedin-plugin-container {
-	position: absolute;
-	z-index: 10;
-	top: 0px;
-	left: 10px;
-}
 #Welcome-Hero{
-	background: url(/www/content/images/download/_TOON4.GIF) no-repeat right top;
-	background-size: 50% 100%;
+	background: #fff;
 	padding: 20px;
 	margin: 0 0 10px 0;
 	border-radius: 6px;
 	border: 1px solid #03C;
 }
+#Welcome-Hero .hero-image-col img{ float: right;  }
 #Welcome-Hero h1{
-	font-size: 300%;	
+	font-size: 28px;	
 }
 #Welcome-Hero p {
-	width: 50%;
+	
+	font-size: 16px;
 }
 #Events-Calendar-Button {
 	position: absolute;
@@ -45,10 +40,6 @@ ul.bxSlider, ul.bxSlider > li {
 	left: 50px;
 	z-index: 10;
 }
+#RSS-FEED,
+#Site-Info{ margin-top: 20px; }
 
-@media (max-width: 992px) {
-    #Welcome-Hero{ background: none; height: auto;}
-	#Welcome-Hero p {
-		width: 100%;
-	}	
-}
