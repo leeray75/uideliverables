@@ -1,4 +1,4 @@
-var MoviesList, MovieListItemView;
+var MoviesList, MovieListItemView, MoviesListView;
 $(function(){
 	var response = $.ajax({
 		url: '/www/content/templates/movies-rating/movies-templates.html',

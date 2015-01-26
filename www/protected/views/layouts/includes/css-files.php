@@ -4,6 +4,7 @@ $cssArray =  array(
 	 $baseURL."/content/css/bootstrap.min.css", 
 	/* $baseURL."/content/css/jquery-ui-1.10.3.custom.css", */
 	/* $baseURL."/content/plugins/jquery.mobile/1.3.2/jquery.mobile-1.3.2.min.css", */
+	
      $baseURL."/content/css/global.css", 
 );
 $cssArray = isset($this->pageCSS) ? array_merge($cssArray, $this->pageCSS) : $cssArray;
@@ -39,5 +40,11 @@ else
 }
 */
 ?>
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+  <script src="/www/content/js/html5shiv.min.js"></script>
+  <script src="/www/content/js/respond.min.js"></script>
+<![endif]-->
 
 	

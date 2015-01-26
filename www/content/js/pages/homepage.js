@@ -5,9 +5,9 @@ var Homepage =
 	_slider: null,
 	init: function()
 	{		
-		this._HeroHTML = $('#Hero-Slider-Container').clone();
+		//this._HeroHTML = $('#Hero-Slider-Container').clone();
 		//this.updateOrientation();
-		this.initHeroes();
+		//this.initHeroes();
 	},
 	initHeroes: function()
 	{
@@ -19,7 +19,7 @@ var Homepage =
 		 });
 		 */		
 		 //$('#Hero-Slider-Container').css("visibility", "visible");
-		 console.log("done");
+		 //console.log("done");
 	},
 	resetHeroes: function()
 	{
@@ -64,6 +64,7 @@ var Homepage =
 		}
 	}
 }
+/*
 $(document).ready(function(){	
 	$( window ).on( "orientationchange", function( event ) {
 		// Give time to redraw the page before updating
@@ -71,3 +72,4 @@ $(document).ready(function(){
 	});
 	Homepage.init(); 
 });
+*/

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+<url>
+  <loc>http://www.uideliverables.com/www/</loc>
+</url>
+<url>
+  <loc>http://www.uideliverables.com/www/index.php/site/index</loc>
+</url>
+<url>
+  <loc>http://www.uideliverables.com/www/index.php/site/page?view=resume</loc>
+</url>
+<url>
+  <loc>http://www.uideliverables.com/www/index.php/site/contact</loc>
+</url>
+<url>
+  <loc>http://www.uideliverables.com/www/index.php/site/page?view=portfolio</loc>
+</url>
+<url>
+  <loc>http://www.uideliverables.com/www/index.php?r=site/page&amp;view=resume</loc>
+</url>
+<url>
+  <loc>http://www.uideliverables.com/www/index.php</loc>
+</url>
+<url>
+  <loc>http://www.uideliverables.com/www/index.php/site/page?view=portfolio&amp;portfolio=calendar</loc>
+</url>
+<url>
+  <loc>http://www.uideliverables.com/www/index.php/site/page/?view=portfolio</loc>
+</url>
+<url>
+  <loc>
+http://www.uideliverables.com/www/index.php/site/page?view=portfolio&portfolio=movies-rating</loc>
+</url>
+<url>
+  <loc>http://www.uideliverables.com/www/index.php/site/page?view=portfolio&portfolio=angular-movies-rating</loc>
+</url>
+<url>
+  <loc>http://www.uideliverables.com/www/index.php/site/page?view=portfolio&portfolio=angular-two-way-binding</loc>
+</url>
+</urlset>

@@ -60,6 +60,7 @@ $pageJS = isset($this->pageJS) ? $this->pageJS : array();
 		echo '<script src="'.$scriptSrc.'"></script>'."\r\n";
 	}
 ?>
+
 <script language="javascript" type="text/javascript">
 function initUser()
 {
@@ -79,3 +80,6 @@ function initUser()
 <script type="text/javascript">var switchTo5x=true;</script>
 <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
 <script type="text/javascript" src="http://s.sharethis.com/loader.js"></script>
+
+
+
