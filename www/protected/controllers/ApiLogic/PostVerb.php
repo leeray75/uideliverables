@@ -5,6 +5,9 @@
 			case 'events':
 				$model = new Event;                    
 				break;
+			case 'movies':
+				$model = new Movie;                    
+				break;
 			default:
 				$this->_sendResponse(501, 
 					sprintf('Mode <b>create</b> is not implemented for model <b>%s</b>',

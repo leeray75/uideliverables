@@ -18,6 +18,11 @@
 				}
 
 				break;
+			case 'movies':
+				$all_models = Movie::model()->findAll();		
+				$user_models = new stdClass();	// empty object
+				$models = $all_models;				
+				break;
 			default:
 				// Model not implemented error
 				$this->_sendResponse(501);

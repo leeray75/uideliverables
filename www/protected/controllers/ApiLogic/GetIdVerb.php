@@ -9,6 +9,9 @@
 			case 'events':
 				$model = Event::model()->findByPk($_GET['id']);
 				break;
+			case 'movies':
+				$model = Movie::model()->findByPk($_GET['id']);
+				break;
 			default:
 				$this->_sendResponse(501);
 				Yii::app()->end();

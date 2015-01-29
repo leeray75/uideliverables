@@ -30,7 +30,7 @@ $this->metaKeyWords = "html, css, javascript, jquery, ajax, json, backbone.js, m
 $this->metaDescription = "A problem and solution to a movies rating problem";
 $this->pageTitle=Yii::app()->name . ' - Demo: Movies Rating Demo';
 $this->breadcrumbs=array(
-	'Demos &amp; Portfolio'=>array('/site/page/?view=portfolio'), 
+	'Demos & Portfolio'=>array('/site/page/?view=portfolio'), 
 	'Movies Rating'
 );
 ?>

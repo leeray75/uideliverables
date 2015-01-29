@@ -64,7 +64,7 @@ $pageJS = isset($this->pageJS) ? $this->pageJS : array();
 <script language="javascript" type="text/javascript">
 function initUser()
 {
-	user = new User(<?php echo json_encode(Yii::app()->user->userProfile) ?>);
+	user = <?php echo json_encode(Yii::app()->user->userProfile) ?>;
 	<?php /*
 	user = new User({
 		isGuest: <?php echo Yii::app()->user->isGuest==1 ? "true" : "false" ?>,
@@ -77,9 +77,10 @@ function initUser()
 	?>
 }
 </script>
+<!--
 <script type="text/javascript">var switchTo5x=true;</script>
 <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
 <script type="text/javascript" src="http://s.sharethis.com/loader.js"></script>
-
+-->
 
 

@@ -7,7 +7,6 @@ $baseURL = Yii::app()->request->baseUrl;
 <?php /* echo 'Current PHP version: ' . phpversion(); */ ?>
 -->
 <?php 
-
 if(isset($_GET["portfolio"]) and ($_GET["portfolio"] == "angular-movies-rating"))
 {
 	echo('<html lang="en" ng-app="myApp">');
@@ -16,9 +15,11 @@ if(isset($_GET["portfolio"]) and ($_GET["portfolio"] == "angular-movies-rating")
 }
 ?><head>
 <meta charset="utf-8">
+<!--
 <meta name="google-site-verification" content="EPIlhr6_ScpRyrPBAia0j6H8ooaKOa4Y8nmF9SrSZv4" />
+-->
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-<link href='//fonts.googleapis.com/css?family=Lobster|Open+Sans:400,300,300italic,600,400italic,600italic,700,700italic,800,800italic|Roboto+Condensed:400,300,300italic,400italic,700,700italic|Source+Sans+Pro:400,200,200italic,300,300italic,400italic,600,600italic,700,700italic,900,900italic|PT+Sans:400,400italic,700,700italic|Droid+Serif:400,400italic,700,700italic|Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic|Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Lobster|Open+Sans:400,300,300italic,600,400italic,600italic,700,700italic,800,800italic|Roboto+Condensed:400,300,300italic,400italic,700,700italic|Source+Sans+Pro:400,200,200italic,300,300italic,400italic,600,600italic,700,700italic,900,900italic|PT+Sans:400,400italic,700,700italic|Droid+Serif:400,400italic,700,700italic|Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic|Merriweather:400,300,300italic,400italic,700,700italic,900,900italic|Play:400,700' rel='stylesheet' type='text/css'>
 <?php
 if ( (isset($this->isSSL) and $this->isSSL === true) and (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on')) {
     if(!headers_sent()) {
@@ -57,14 +58,9 @@ else if((isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] === 'on')){
 <meta name="author" content="Raymond Lee" />
 <?php include_once "includes/js-files.php"; ?>
 <?php include_once "includes/css-files.php"; ?>
-
-
 <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
-
 <body>
-<!-- Google Tag Manager -->
-
 <div class="container" id="page" data-role="page">
   <?php include "includes/header.php" ?>
   <section id="main" class="row" data-role="content">
@@ -109,10 +105,12 @@ else if((isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] === 'on')){
 <?php include_once $_SERVER['DOCUMENT_ROOT']."/analyticstracking.php"; ?>
 <!-- Piwik -->
 
+<!--
 <script type="text/javascript">stLight.options({publisher: "0749a3e4-1b28-453c-8ace-e949971754c9", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
 <script>
 var options={ "publisher": "0749a3e4-1b28-453c-8ace-e949971754c9", "logo": { "visible": true, "url": "http://www.uideliverables.com/", "img": "http://www.uideliverables.com/www/content/images/global/logo-UIDeliverables.png", "height": 30}, "ad": { "visible": false, "openDelay": "5", "closeDelay": "0"}, "livestream": { "domain": "", "type": "sharethis"}, "ticker": { "visible": false, "domain": "", "title": "", "type": "sharethis"}, "facebook": { "visible": false, "profile": "sharethis"}, "fblike": { "visible": false, "url": ""}, "twitter": { "visible": false, "user": "sharethis"}, "twfollow": { "visible": false}, "custom": [{ "visible": false, "title": "Custom 1", "url": "", "img": "", "popup": false, "popupCustom": { "width": 300, "height": 250}}, { "visible": false, "title": "Custom 2", "url": "", "img": "", "popup": false, "popupCustom": { "width": 300, "height": 250}}, { "visible": false, "title": "Custom 3", "url": "", "img": "", "popup": false, "popupCustom": { "width": 300, "height": 250}}], "chicklets": { "items": ["facebook", "twitter", "linkedin", "pinterest", "email", "sharethis"]}};
 var st_bar_widget = new sharethis.widgets.sharebar(options);
 </script>
+-->
 </body>
 </html>

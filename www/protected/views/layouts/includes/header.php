@@ -16,16 +16,17 @@
           <li><a href="/www/index.php/site/contact"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Contact</a></li>
           <li class="dropdown"><a href="/www/index.php/site/page?view=portfolio" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-list-alt" ariah-hidden="true"></span> Demos<span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="/www/index.php/site/page?view=portfolio&portfolio=calendar">Backbone: Event Calendar</a></li>
-              <li><a href="/www/index.php/site/page?view=portfolio&portfolio=movies-rating">Backbone: Movie Rating</a> </li>
-              <li><a href="/www/index.php/site/page?view=portfolio&portfolio=angular-movies-rating">Angular: Movie Rating</a> </li>
-              <li><a href="/www/index.php/site/page?view=portfolio&portfolio=angular-two-way-binding">Angular: Two Way Data Binding</a> </li>
+              <li><a href="/www/index.php/site/page?view=portfolio&portfolio=calendar"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"> </span> Backbone: Event Calendar</a></li>
+              <li><a href="/www/index.php/site/page?view=portfolio&portfolio=movies-rating"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"> </span> Backbone: Movie Rating</a> </li>
+              <li><a href="/www/index.php/site/page?view=portfolio&portfolio=angular-movies-rating"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"> </span> Angular: Movie Rating</a> </li>
+              <li><a href="/www/index.php/site/page?view=portfolio&portfolio=angular-movies-rating-v2"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"> </span> Angular: Movie Rating - Version 2</a></li>
+              <li><a href="/www/index.php/site/page?view=portfolio&portfolio=angular-two-way-binding"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"> </span> Angular: Two Way Data Binding</a> </li>
             </ul>
           </li>
           <li class="dropdown"><a href="/www/index.php/site/page?view=portfolio" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-folder-open" ariah-hidden="true"></span>&nbsp;&nbsp;Portfolio<span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="http://store.scholastic.com/" target="_blank">Scholastic: Scholastic Store</a></li>
-              <li><a href="http://shop.scholastic.com/" target="_blank">Scholastic: Teacher Store</a></li>
+              <li><a href="http://store.scholastic.com/" target="_blank"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"> </span> Scholastic: Scholastic Store</a></li>
+              <li><a href="http://shop.scholastic.com/" target="_blank"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"> </span> Scholastic: Teacher Store</a></li>
             </ul>
           </li>
         </ul>

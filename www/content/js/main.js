@@ -154,7 +154,7 @@ UI = {
 	sidrId: '#sidr',
 	init: function()
 	{
-		console.log("intiializing!");
+		//console.log("intiializing!");
 		GlobalVariables = GlobalVariables || {};
 		var now = new Date();
 		var year = now.getFullYear();
@@ -168,7 +168,7 @@ UI = {
 			$('#fixed-header').css('position', 'relative');	
 		}
 
-		initUser();	
+		
 		/*
 		UI.updateOrientation()
 		$( window ).on( "orientationchange", function( event ) {
@@ -311,6 +311,7 @@ UI = {
 	
 }
 $(function(){	
-	UI.init();
+	//UI.init();
+	initUser();	
 	
 });
