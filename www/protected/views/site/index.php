@@ -22,8 +22,10 @@ $this->metaDescription="Welcome to UI Deliverables! I am a front-end developer w
 <div class="hero-copy-col col-lg-6 col-md-6 col-sm-12 col-xs 12">
   <h1>Welcome to <?php echo CHtml::encode(Yii::app()->name); ?></h1>
   <p>I am a front-end developer with experience in developing in HTML, JavaScript, CSS. I have experience with JavaScript libraries and frameworks such as jQuery, backbone.js, and AngularJS. I also have knowlege working with Bootstrap, a responsive web framework. I am always looking forward to new opportunities and working in a dynamic learning environment where I can contribute my current skills, and grow through new opportunities.</p>
+  <p>Currently I'm building a Movie SPA (Single Page Application), using jQuery, AngularJS, and bootstrap.js. It currently creates, updates, and lists the movies with REST API. I will be building on it daily, adding some new features, improving existing code, and other updates and/or enhancements.</p>
   <p itemscope itemtype="http://data-vocabulary.org/Person">- <span itemprop="name">Raymond Lee</span></p>
-  <p><a class="btn btn-primary btn-large" href="/www/index.php/site/page?view=resume">My Resume &raquo;</a></p>
+  <p><a class="btn btn-primary btn-large" href="/www/index.php/site/page?view=resume">My Resume &raquo;</a> 
+  <a class="btn btn-primary btn-large" href="/www/index.php/site/page?view=portfolio&portfolio=angular-movies-rating-v2">Movie App &raquo;</a></p>
   </div>
   <div class="hero-image-col col-lg-6 col-md-6 hidden-sm hidden-xs">
   <img src="/www/content/images/download/_TOON4.GIF" class="img-responsive" alt="You can't just punch i 'let there be light' without writing the code underlying the user interface functions" />

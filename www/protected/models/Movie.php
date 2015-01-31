@@ -46,7 +46,7 @@ class Movie extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title, actors, director, genre, plot, poster, rated, released, runtime, writers, year, imdbID', 'required'),
+			array('title, actors, director, genre, plot, poster, rated, released, runtime, writers', 'required'),
 			/*
 			array('status', 'in', 'range'=>array(1,2,3)),
 			array('title', 'length', 'max'=>128),

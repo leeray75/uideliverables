@@ -1,5 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
+#TemplateSpinner{ padding: 50px 0 50px 0; text-align: center;}
 #MoviesAppRow,
 #MoviesSideNavColumn{ margin: 0px; padding: 0px;}
 #Movie-Page-Title{
@@ -7,6 +8,19 @@
 	border-bottom: 1px dashed #CCCCCC;	
 	margin-bottom: 10px;
 }
+.movie-top-copy{
+	border-bottom: 1px dashed #CCCCCC;	
+	margin-bottom: 10px;
+}
+.error-container{ 
+	color: #f00; 
+	border-bottom: 1px dashed #CCCCCC;	
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+}
+.error-container > ul{ display: block;}
+.error-container > ul > ul{ display: inline; }
+.error-container li{ display: inline; margin-right: 1em;}
 
 #MoviesMainViewColumn{ border-left: 1px dashed #CCC; }
 #MoviesListView{
@@ -49,7 +63,7 @@
 .movie-list-item-container .movie-label{ font-weight: bold;}
 .movie-list-item-container .ratings-container .row{ text-align:right;}
 .movie-list-item-container .ratings-container .row.imdb-votes{ text-align: right;}
-.movie-list-item-container .ratings-container .votes-count{ font-size: 10px; }
+.movie-list-item-container .ratings-container .votes-count{ font-size: 12px; }
 
 .movie-list-item-container .plot{
 	line-height: 1.5em;
@@ -189,14 +203,33 @@ ul.movies-navbar li{ margin: 0 auto 0 auto; width: 100%;}
 #MoviesListView .ratings-container .row.imdb-votes{ text-align: left;}
 
 }
+#Add-Edit-Movie{ display: block;}
+#Movie-Preview-Container{ display: block; }
 #Add-Edit-Movie .input-row{ margin-bottom: 10px; }
 #Add-Edit-Movie .label-col{ text-align: right; }
 #Add-Edit-Movie .label-col label{ }
 #Add-Edit-Movie .input-col{ text-align: left;}
 #Add-Edit-Movie .input-col input[type="text"]{ width: 80%; }
 #Add-Edit-Movie textarea#plot{ width: 80%; height: 10em;}
-#Movie-Preview-Container{ display: none; }
+
 #Movie-Preview-Container .button-container,
 #Add-Edit-Movie .button-container{ text-align: center;}
 
 #Movie-Preview-Container .button-container { margin-top: 20px; padding-top: 20px; border-top: 1px solid #999;}
+.editable-item input{ width: 100% !important;}
+.editable-item textarea{ width: 100% !important; height: 10em !important;}
+
+#Movie-Preview-Container .editable-text, 
+#Movie-Preview-Container .editable-date,
+#Movie-Preview-Container .editable-textarea, 
+#Movie-Preview-Container #Editable-Select-Rated{ color: #f00;}
+
+#Movie-Preview-Container .editable-text:hover, 
+#Movie-Preview-Container .editable-date:hover,
+#Movie-Preview-Container .editable-textarea:hover, 
+#Movie-Preview-Container #Editable-Select-Rated:hover{color: #00f;}
+
+#Movie-Preview-Container .editable-text form, 
+#Movie-Preview-Container .editable-date form,
+#Movie-Preview-Container .editable-textarea form, 
+#Movie-Preview-Container #Editable-Select-Rated form{ color: #000;}

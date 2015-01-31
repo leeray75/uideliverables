@@ -1,8 +1,8 @@
+<!DOCTYPE HTML>
 <?php /* @var $this Controller */ 
 $baseURL = Yii::app()->request->baseUrl;
+header('Content-language: en');
 ?>
-<?php header('Content-language: en'); ?> 
-<!DOCTYPE HTML>
 <!-- 
 <?php /* echo 'Current PHP version: ' . phpversion(); */ ?>
 -->
@@ -102,8 +102,12 @@ else if((isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] === 'on')){
 </div>
 <!-- page -->
 
-<?php include_once $_SERVER['DOCUMENT_ROOT']."/analyticstracking.php"; ?>
-<!-- Piwik -->
+<?php 
+if(strpos($_SERVER['SERVER_NAME'], "localhost")===false){
+	include_once $_SERVER['DOCUMENT_ROOT']."/analyticstracking.php"; 
+}
+?>
+
 
 <!--
 <script type="text/javascript">stLight.options({publisher: "0749a3e4-1b28-453c-8ace-e949971754c9", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>

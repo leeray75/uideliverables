@@ -19,7 +19,7 @@
               <li><a href="/www/index.php/site/page?view=portfolio&portfolio=calendar"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"> </span> Backbone: Event Calendar</a></li>
               <li><a href="/www/index.php/site/page?view=portfolio&portfolio=movies-rating"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"> </span> Backbone: Movie Rating</a> </li>
               <li><a href="/www/index.php/site/page?view=portfolio&portfolio=angular-movies-rating"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"> </span> Angular: Movie Rating</a> </li>
-              <li><a href="/www/index.php/site/page?view=portfolio&portfolio=angular-movies-rating-v2"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"> </span> Angular: Movie Rating - Version 2</a></li>
+              <li><a href="/www/index.php/site/page?view=portfolio&portfolio=angular-movies-rating-v2"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"> </span> Angular: Movie Single Page Application</a></li>
               <li><a href="/www/index.php/site/page?view=portfolio&portfolio=angular-two-way-binding"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"> </span> Angular: Two Way Data Binding</a> </li>
             </ul>
           </li>

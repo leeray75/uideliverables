@@ -14,6 +14,7 @@ angular.module('moviesApp.services',[]).factory('dataFactory', ['$http', functio
     };
 
     dataFactory.insertMovie = function (movie) {
+		delete movie.id;
         return $http.post(urlBase, movie);
     };
 
@@ -24,5 +25,30 @@ angular.module('moviesApp.services',[]).factory('dataFactory', ['$http', functio
     dataFactory.deleteMovie = function (id) {
         return $http.delete(urlBase + '/' + id);
     };
+	
+	dataFactory.submitVote = function(movie, rating){	
+		//console.log("Inside Service");				
+		delete movie.rating;
+		delete movie.allowDeleteEdit;
+		delete movie.ActorsLabel;
+		delete movie.DirectorLabel;
+		delete movie.DisplayReleaseDate;
+		delete movie.GenreLabel;
+		delete movie.WriterLabel;
+		movie['imdbRating'] = (parseInt(movie['imdbRating'])+rating).toString();
+		movie['imdbVotes'] = (parseInt(movie['imdbVotes'])+1).toString();
+		return dataFactory.updateMovie(movie);			
+			
+		
+		/*
+		var AjaxData = { "movieId": movieId, "rating": rating};
+		return $.ajax({
+			url: MoviesSettings.RateMovieUri,
+			type: "POST",
+			dataType: 'json',
+			data: AjaxData	
+		});
+		*/
+	};
     return dataFactory;
 }]);

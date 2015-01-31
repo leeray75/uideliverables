@@ -22,8 +22,8 @@ var EventsListView = Backbone.View.extend({
 			this.listenTo(this.collection, 'sync', this.sync);                   
         },
         render: function() {
-			console.log('EventsListView render');
-			console.log('EventsListView this.collection.length = ' + this.collection.length);
+			//console.log('EventsListView render');
+			//console.log('EventsListView this.collection.length = ' + this.collection.length);
 			$('#active-events-list').html('');
 			for(i=0;i<this.collection.length;i++)
 			{
@@ -33,23 +33,23 @@ var EventsListView = Backbone.View.extend({
 			}
         },
         addAll: function() {
-			console.log("EventsListView addAll");
+			//console.log("EventsListView addAll");
             //this.$el.fullCalendar('addEventSource', events.toJSON());
         },
         addOne: function(event) {
-			console.log("EventsListView addOne");			
+			//console.log("EventsListView addOne");			
 			this.render();									
 		},
 		change: function(event){
-			console.log("EventsListView change");
+			//console.log("EventsListView change");
 			this.collection.sort();  
 		},
         destroy: function(event) {
-			console.log("EventsListView destroy"); 
+			//console.log("EventsListView destroy"); 
 			$('#EventListItem-'+event.get("id")).remove();         
         },
 		sync: function(event) {
-			console.log("EventsListView sync");
+			//console.log("EventsListView sync");
 			
 			this.render();              
         }		
@@ -118,18 +118,18 @@ var EventListItemView = Backbone.View.extend({
 	},
 	addEvent: function()
 	{
-		console.log("EventListItemView addEvent: "+this.model.get("title"));	
+		//console.log("EventListItemView addEvent: "+this.model.get("title"));	
 		App.Calendar.select( new Date(), new Date());	
 	},
 	editEvent: function()
 	{
-		console.log("EventListItemView editEvent: "+this.model.get("title"));
+		//console.log("EventListItemView editEvent: "+this.model.get("title"));
 		var AddEditEventModalOverlay = new AddEditEventModalOverlayView({model: this.model });
 		AddEditEventModalOverlay.render();			
 	},
 	deleteEvent: function()
 	{
-		console.log("EventListItemView deleteEvent: "+this.model.get("title"));	
+		//console.log("EventListItemView deleteEvent: "+this.model.get("title"));	
 		var DeleteEventModalOverlay = new DeleteEventModalOverlayView({model: this.model });
 		DeleteEventModalOverlay.render();
 	}

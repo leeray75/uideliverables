@@ -197,7 +197,7 @@ var ModalViews =
 								}
 								else
 								{
-									if($('#file').val().length > 0)
+									if($('#file').exists() && $('#file').val().length > 0)
 									{
 										thisObj.uploadFile(newModel.get("id"));	
 									}

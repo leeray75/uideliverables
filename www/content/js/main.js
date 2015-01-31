@@ -155,6 +155,7 @@ UI = {
 	init: function()
 	{
 		//console.log("intiializing!");
+		initUser();
 		GlobalVariables = GlobalVariables || {};
 		var now = new Date();
 		var year = now.getFullYear();
@@ -163,19 +164,7 @@ UI = {
 		month = month<10 ? "0"+month : month;
 		day = day<10 ? "0"+day : day;
 		GlobalVariables.CurrentDate = year+"-"+month+"-"+day+" 00:00:00";
-		if(!IS_POSITION_FIXED_SUPPORTED())
-		{
-			$('#fixed-header').css('position', 'relative');	
-		}
-
 		
-		/*
-		UI.updateOrientation()
-		$( window ).on( "orientationchange", function( event ) {
-			// Give time to redraw the page before updating
-			setTimeout(function(){UI.updateOrientation();},500);
-		});
-		*/	
 	},
 	loadGoogleSearch: function()
 	{
@@ -194,124 +183,11 @@ UI = {
 		LazyLoad.js(gsURL,function(){
 			console.log("loaded: "+gsURL);
 		});		
-	},
-	updateOrientation: function()
-	{
-		var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-		width = width>=980 ? 980 : width;
-		//alert("width = "+width);
-		if(width<980)
-		{
-			$('.breadcrumbs, .content-container, .row').width(width-10);
-			$('#content').width(width-30);
-		}
-		else
-		{
-			$('.breadcrumbs, .content-container, .row').width(width);
-			$('#content').width(width-20);			
-		}
-		if ( Modernizr.touch ) {
-			UI.showMobileLayout();
-		}
-		else
-		{
-			UI.showDesktopLayout();	
-			//UI.showMobileLayout();
-		}
-		
-
-	},
-	showMobileLayout: function()
-	{		
-		//alert("showing mobile");
-		var headerHeight = $('header').height();
-		//alert(headerHeight+40);
-		$('section#main').css('margin-top',headerHeight+40);		
-		$('header > nav').hide();
-		$('#logo').addClass('mobile');
-		$('#sidr-menu').show();
-		//$('#user-nav-view-container').show();
-		//$('#user-nav-view-container').hide(); 
-		var cssArray = new Array();
-		var scriptsArray = new Array();
-		cssArray.push("/www/content/plugins/sidr/sidr-package-1.1.1/stylesheets/jquery.sidr.dark.css");
-		scriptsArray.push("/www/content/plugins/sidr/sidr-package-1.1.1/jquery.sidr.min.js");		
-		LazyLoad.css(cssArray, function () {});
-		//alert("loading: "+scriptsArray.toString());
-		LazyLoad.js(scriptsArray, function () {
-			UI.loadMobileNav();
-		});
-		
-		
-	},
-	showDesktopLayout: function()
-	{
-		console.log("show desktop layout");
-		$('header > nav').show();
-		$('#user-nav-view-container').show();
-		var headerHeight = $('header').height()+$('nav').height();	
-		$('section#main').css('margin-top',headerHeight+20);
-		$('header > nav').show();
-		$('#logo').removeClass('mobile');
-		$('#sidr-menu').hide();			
-		UI.loadGoogleSearch();
-			
-	},
-	loadMobileNav: function()
-	{
-		var headerHeight = $('header').height();
-		//alert(headerHeight+40);
-		$('section#main').css('margin-top',headerHeight+40);
-		$('body').append('<div id="sidr"></div>');
-		
-		var navHtml = $('header > nav > .content-container ul').clone();
-		var searchHTML = $('#Google-Search-Container').clone();		
-		var userHtml = $('#user-nav-view-container ul').clone();
-		$('#Google-Search-Container').remove();
-		$('header > nav').remove();				
-		$('#user-nav-view-container').remove();	
-		
-		$(UI.sidrId).append(navHtml);	
-		$(UI.sidrId).append(userHtml);
-		$(UI.sidrId).append(searchHTML);
-		var sidr = $('#sidr-menu').sidr({ 
-			body: '#page',
-			beforeOpen: function(){ 
-				UI.repositionHeader(); 
-				$('#page').on('touchstart',function(event){
-					$('#sidr-menu').trigger('click');
-				});
-			},
-			beforeClose: function(){ 
-				UI.repositionHeader(); 
-				$('#page').off('touchstart');
-			}
-		});
-		//UI.loadGoogleSearch();
-		
-	},
-	repositionHeader: function()
-	{
-		var menuAnimation = {left: '0px'};
-		var speed = 200;
-		if( !$('#sidr').is(':hidden'))
-		{
-			menuAnimation = {left: '0px'};
-			$('#fixed-header').animate(menuAnimation, speed, function() {});
-			//$('#fixed-header').css('left',0);	
-		}
-		else
-		{
-			menuAnimation = {left: '260px'};
-			$('#fixed-header').animate(menuAnimation, speed, function() {});
-			//$('#fixed-header').css('left',260);
-		}
-		
 	}
 	
 }
 $(function(){	
-	//UI.init();
-	initUser();	
+	UI.init();
+	
 	
 });

@@ -64,7 +64,7 @@ $pageJS = isset($this->pageJS) ? $this->pageJS : array();
 <script language="javascript" type="text/javascript">
 function initUser()
 {
-	user = <?php echo json_encode(Yii::app()->user->userProfile) ?>;
+	user = new User(<?php echo json_encode(Yii::app()->user->userProfile) ?>);
 	<?php /*
 	user = new User({
 		isGuest: <?php echo Yii::app()->user->isGuest==1 ? "true" : "false" ?>,

@@ -67,7 +67,6 @@ var AppView = Backbone.View.extend({
 			{			
 				var eventModel = this.collection.at(i);
 				var endDateVal = eventModel.get("end")
-		
 				if(getDateObject(GlobalVariables.CurrentDate) < getDateObject(endDateVal))
 				{
 					EventsArray.push(eventModel);					

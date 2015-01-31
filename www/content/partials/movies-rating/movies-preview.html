@@ -1,0 +1,62 @@
+<div id="TemplateSpinner" ng-show="previewMovieItem == null"> <img src="/www/content/images/apps/movies/ajax-loader.gif" /> </div>
+<div id="TemplateWrapper" ng-show="previewMovieItem!=null">
+  <div id="Movie-Page-Title">
+    <h2>{{ pageTitle }}</h2>
+  </div>
+  <!-- /Movie-Page-Title -->
+  <div class="movie-top-copy">
+    <p>Click on the <span style="color: #f00;">RED</span> copy below to edit and click on the 'OK' button to save it. Click outside of the edit field to ignore the changes.</p>
+  </div>
+  <div class="error-container" ng-show="status!=''"></div>
+  <div id="Movie-Preview-Container" class="editable-preview-container">
+    <div id="#MovieItem-{{previewMovieItem.id}}" class="movie-list-item-container clear-fix row">
+      <div class="row">
+        <div class="image-col col-lg-3 col-md-3 col-sm-3"> <img ng-src="{{previewMovieItem.poster}}" class="img-responsive"/> </div>
+        <div class="data-col col-lg-9 col-md-9 col-sm-9">
+          <div class="movie-title row editable-text" model-key="title">{{previewMovieItem.title}}</div>
+          <div class="row ">
+            <div class="col-lg-6 col-md-6 col-sm-6 info-column">
+              <div class="row"><span class="movie-label">Rated:</span> <span id="Editable-Select-Rated" class="rated" model-key="rated">{{previewMovieItem.rated}}</span></div>
+              <div class="row"><span class="movie-label">Run Time:</span> <span class="run-time"><span class="editable-text" model-key="runtime">{{previewMovieItem.runtime}}</span> minutes</span></div>
+              <div class="row"><span class="movie-label">{{previewMovieItem.GenreLabel}}:</span> <span class="genre editable-text" model-key="genre">{{previewMovieItem.genre}}</span></div>
+              <div class="row"><span class="movie-label">Release Date: </span> <span class="release-date editable-date masked" model-key="released">{{previewMovieItem.DisplayReleaseDate}}</span></div>
+            </div>
+            <!-- /info-column -->
+            <div class="ratings-column col-lg6 col-md-6 col-sm-6">
+              <div class="ratings-container">
+                <div class="row"><span class="movie-label">Your Rating:</span> <span id="RateIt-User-Preview" class="rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="16" rating="0" imdb-rate></span> </div>
+                <div class="row"> <span class="movie-label">IMDb Rating:</span> <span id="IMDb-RateIt" class="rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="16" data-rating="{{previewMovieItem.imdbRating}}" imdb-rate></span> </div>
+                <div class="imdb-votes row"> <span class="votes-count">( Rating: {{previewMovieItem.imdbRating}} from {{previewMovieItem.imdbVotes}} users)</span></div>
+              </div>
+              <!-- /ratings-container --> 
+            </div>
+            <!-- /ratings-column --> 
+          </div>
+          <!-- /row -->
+          <div class="plot editable-textarea" model-key="plot">{{previewMovieItem.plot}}</div>
+          <!-- /plot -->
+          <div class="additional-info-rows">
+            <div class="row"><span class="movie-label">{{previewMovieItem.DirectorLabel}}:</span> <span class="directors editable-text" model-key="director">{{previewMovieItem.director}}</span></div>
+            <div class="row"><span class="movie-label">{{previewMovieItem.WriterLabel}}:</span> <span class="writers editable-text" model-key="writers">{{previewMovieItem.writers}}</span></div>
+            <div class="row"><span class="movie-label">{{previewMovieItem.ActorsLabel}}:</span> <span class="actors editable-text" model-key="actors">{{previewMovieItem.actors}}</span></div>
+          </div>
+        </div>
+        <!-- /data-col --> 
+        
+      </div>
+    </div>
+    <!-- /movie-list-item-container -->
+    
+    <div class="button-container"> <span>
+      <button class="btn btn-info" ng-click="showMovieForm()">Edit Form</button>
+      </span> <span ng-if="movie.id == null || movie.id=='0' ">
+      <button class="btn btn-primary" ng-click="addMovie(movie)">Add Movie</button>
+      </span> 
+      <!--<span ng-if="movie.id != null">
+      <button class="btn btn-primary" ng-click="updateMovie(movie)">Update Movie</button>
+      </span>--> 
+    </div>
+  </div>
+  <!-- /Movie-Preview-Container --> 
+  <span class="InlineEditTemplateReady" style="display:none;"></span> </div>
+<!-- /TemplateWrapper -->
