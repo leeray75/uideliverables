@@ -23,8 +23,9 @@ $this->pageJS = array(
 	"/www/content/js/libs/jquery/plugins/jeditable/jquery.jeditable-1.7.3.js",
 	"/www/content/js/libs/jquery/plugins/jeditable/jquery.jeditable.masked.js",	
 	"/www/content/js/libs/jquery/plugins/jquery.maskedinput.js",
-	"/www/content/js/libs/angular/angular.min.js",	
-	"/www/content/js/libs/angular/angular-route.min.js",
+	"/www/content/js/libs/angular/angular-1.3.11/angular.min.js",	
+	"/www/content/js/libs/angular/angular-1.3.11/angular-route.min.js",
+	"/www/content/js/libs/angular/angular-1.3.11/angular-touch.min.js",
 	//"/www/content/js/libs/angular/angular-animate.min.js",
 	"/www/content/js/apps/MoviesDemo-Angular-v2.js",
 	"/www/content/js/services/MoviesServices.js",
@@ -76,7 +77,7 @@ $this->breadcrumbs=array(
         <aside id="MoviesNavContainer" ng-controller="asideMenuController">
           <div id="Movie-Collapse-Menu">
             <ul class="movies-navbar" >           
-              <li class="movies-brand-logo"><a href="/www/index.php/site/page?view=portfolio&portfolio=angular-movies-rating-v2"><img src="/www/content/images/logos/UI-Deliverables-Movies.gif" class="movie-logo img-responsive" /></a></li>
+              <li class="movies-brand-logo"><a href="/www/index.php/site/page?view=portfolio&portfolio=angular-movies-rating-v2#/"><img src="/www/content/images/logos/UI-Deliverables-Movies.gif" class="movie-logo img-responsive" /></a></li>
               
               <li class="nav-link-item" ng-class="{active: menuActive == 'list'}"><a href="/www/index.php/site/page?view=portfolio&portfolio=angular-movies-rating-v2#/list" class="btn btn-default">Movies List <span class="glyphicon glyphicon-triangle-right"></span></a></li>
               <li class="nav-link-item" ng-class="{active: menuActive == 'add'}"><a href="/www/index.php/site/page?view=portfolio&portfolio=angular-movies-rating-v2#/edit/preview/0" class="btn btn-default">Add Movie <span class="glyphicon glyphicon-triangle-right"></span></a></li>

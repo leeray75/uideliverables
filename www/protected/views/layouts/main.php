@@ -56,7 +56,7 @@ else if((isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] === 'on')){
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <?php endif ?>
 <meta name="author" content="Raymond Lee" />
-<?php include_once "includes/js-files.php"; ?>
+
 <?php include_once "includes/css-files.php"; ?>
 <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
@@ -101,7 +101,7 @@ else if((isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] === 'on')){
 
 </div>
 <!-- page -->
-
+<?php include_once "includes/js-files.php"; ?>
 <?php 
 if(strpos($_SERVER['SERVER_NAME'], "localhost")===false){
 	include_once $_SERVER['DOCUMENT_ROOT']."/analyticstracking.php"; 

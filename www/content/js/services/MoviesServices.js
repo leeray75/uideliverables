@@ -23,18 +23,23 @@ angular.module('moviesApp.services',[]).factory('dataFactory', ['$http', functio
     };
 
     dataFactory.deleteMovie = function (id) {
-        return $http.delete(urlBase + '/' + id);
+		var deleteApi = urlBase + '/' + id;
+		return $http({
+        	method: 'DELETE', 
+        	url: deleteApi
+    	});
+		/* The following throws an error in IE8. Because 'delete' is a reserved word */
+        //return $http.delete(urlBase + '/' + id);
     };
 	
 	dataFactory.submitVote = function(movie, rating){	
-		//console.log("Inside Service");				
-		delete movie.rating;
-		delete movie.allowDeleteEdit;
-		delete movie.ActorsLabel;
-		delete movie.DirectorLabel;
-		delete movie.DisplayReleaseDate;
-		delete movie.GenreLabel;
-		delete movie.WriterLabel;
+		/* Removes keys that were created in the model that aren't part of the original model */			
+		for(key in movie){
+			if(!DefaultMovieModel.hasOwnProperty(key)){
+				delete movie[key];	
+			}
+		}
+
 		movie['imdbRating'] = (parseInt(movie['imdbRating'])+rating).toString();
 		movie['imdbVotes'] = (parseInt(movie['imdbVotes'])+1).toString();
 		return dataFactory.updateMovie(movie);			

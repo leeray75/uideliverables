@@ -19,7 +19,7 @@
       <div id="#MovieItem-{{movie.imdbID}}" class="movie-list-item-container clear-fix row">
         <div class="row">
           <div class="image-col col-lg-3 col-md-3 col-sm-3"> <img name="PosterImage-{{movie.imdbID}}" ng-src="{{movie.poster}}" class="img-responsive"/>
-            <div class="edit-delete-links" ng-if="movie.allowDeleteEdit"><a href="#/edit/preview/{{movie.id}}">Edit</a> | <a href="javascript:(void);" ng-click="deleteMovie(movie)">Delete</a></div>
+            <div class="edit-delete-links" ng-if="movie.allowDeleteEdit"><a href="#/edit/preview/{{movie.id}}" class="btn btn-primary">Edit</a> <a href="" ng-click="deleteMovie(movie)" class="btn btn-danger">Delete</a></div>
           </div>
           <div class="data-col col-lg-9 col-md-9 col-sm-9">
             <div class="movie-title row"> {{movie.title}} </div>
@@ -34,7 +34,7 @@
               <div class="ratings-column col-lg6 col-md-6 col-sm-6">
                 <div class="ratings-container">
                   <div class="row"  ng-if="movie.allowDeleteEdit"><span class="movie-label">Your Rating:</span> <span id="RateIt-{{movie.id}}" class="rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="16" rating="0" imdb-user-rate></span> </div>
-                  <div class="row"> <span class="movie-label">IMDb Rating:</span> <span id="IMDb-RateIt-{{movie.id}}" class="rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="16" data-rating="{{movie.rating}}" imdb-rate></span> </div>
+                  <div class="row"> <span class="movie-label">Rating:</span> <span id="IMDb-RateIt-{{movie.id}}" class="rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="16" data-rating="{{movie.rating}}" imdb-rate></span> </div>
                   <div class="imdb-votes row"> <span class="votes-count">( Rating: {{movie.rating}} from {{movie.imdbVotes}} users)</span></div>
                 </div>
                 <!-- /ratings-container --> 
@@ -59,3 +59,4 @@
   <!-- /movies-list --> 
 </div>
 <!-- /TemplateWrapper --> 
+<dialog-container></dialog-container>

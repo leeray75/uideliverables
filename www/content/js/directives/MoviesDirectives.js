@@ -25,34 +25,67 @@ angular.module('movieApp.directives', [])
             }
         }
     })
+	.directive('contenteditable',function(){
+		return {
+            restrict: 'A',
+            link: function(scope, elem, attrs, ctrl) {
+                    //console.log("Inline Edit Ready!")	
+                    elem.on('blur',function(){
+						var value = elem.html();
+						var key = attrs['modelKey'];
+						console.log(key);
+						console.log(value);
+					});
+                } // end link
+        } // end return
+	})
     .directive('InlineEditTemplateReady', function() {
         return {
             restrict: 'C',
             link: function(scope, elem, attrs) {
-                    //console.log("Inline Edit Ready!")	
-                    scope.$watch('previewMovieItem', function() {
-                            if (scope.previewMovieItem != null) {
-                                MoviesPlugins.setEditables(scope,elem,attrs);				 
-                            } // end scope.previewMovieItem!=null
-
-                        }) // end scope.$watch
-                } // end link
+				scope.$watch('previewMovieItem', function() {
+						if (scope.previewMovieItem != null) {
+							MoviesPlugins.setEditables(scope,elem,attrs);				 
+						} // end scope.previewMovieItem!=null
+					}) // end scope.$watch
+			} // end link
         }
     })
-	/*
-    .directive('inlineEditTopCopy', function() {
-        return {
+	.directive('numericField',function(){
+		return {
             restrict: 'C',
-            templateUrl: '/www/content/snippets/portfolio/movies-rating/inline-edit-top-copy.html'
-        } // end return
-    })
-	*/
+            link: function(scope, elem, attrs) {
+				MoviesPlugins.setNumericField(scope,elem,attrs);	
+			} // end link
+        }
+	})
 	.directive('maskedDate',function(){
 		return {
             restrict: 'C',
             link: function(scope, elem, attrs) {
-                    //console.log("Inline Edit Ready!")	
-					MoviesPlugins.setMaskedDate(scope,elem,attrs);	
+				MoviesPlugins.setMaskedDate(scope,elem,attrs);	
+			} // end link
+        }
+	})
+	.directive('maskedYear',function(){
+		return {
+            restrict: 'C',
+            link: function(scope, elem, attrs) {
+				MoviesPlugins.setMaskedYear(scope,elem,attrs);	
+			} // end link
+        }
+	})
+	.directive('dialogContainer',function(){
+		return {
+            restrict: 'E',
+			templateUrl: '/www/content/partials/movies-rating/movies-dialog.html',			
+            link: function(scope, elem, attrs) {
+				scope.$watch('statusCount', function() {
+						if (scope.statusCount >0 ) {
+							MoviesPlugins.setDialog(scope,elem,attrs);				 
+						} // end scope.previewMovieItem!=null
+
+					}) // end scope.$watch
 
                 } // end link
         }

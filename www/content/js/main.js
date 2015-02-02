@@ -6,7 +6,7 @@ String.prototype.trim = function() {
 }
 jQuery.fn.exists = function(){return jQuery(this).length>0;} 
 
-jQuery.fn.isNumeric = function(event)
+jQuery.fn.isNumericEvent = function(event)
 {
 	//alert(event.keyCode);
 	var keyCode = event.keyCode;

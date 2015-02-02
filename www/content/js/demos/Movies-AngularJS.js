@@ -17,12 +17,34 @@ var DefaultMovieModel = {
 	   "imdbRating":"0",
 	   "imdbVotes":"0"
 	}
+var MovieModelLabels = {
+	   "title": "Title",
+	   "plot": "Plot",
+	   "genre": "Genre",
+	   "director": "Director",
+	   "writers": "Writers",
+	   "actors":"Actors",
+	   "poster": "Poster",
+	   "rated":"Rated",
+	   "released":"Release Date",
+	   "year":"Year",
+	   "runtime":"Run Time",
+	   "imdbID":"IMDB ID",
+	   "imdbRating":"Movie Rating",
+	   "imdbVotes":"Movie Votes"
+	}	
 	
 var MovieTemplateHelper =
 {
 	getUpdatedModel: function(movie){
 		//console.log("Inside MovieTemplateHelper");
-		movie.allowDeleteEdit = ( (movie["user_id"]==user.get("id")) || user.get("isAdmin")=="1");	
+		var userId = 0;
+		var isAdmin = false;
+		try{
+			userId = user.get("id");
+			isAdmin = user.get("isAdmin")=="1";
+		}catch(e){}
+		movie.allowDeleteEdit = ( (movie["user_id"]==userId) || isAdmin);	
 		movie.poster = this.getPosterImageSrc(movie.poster);					
 		movie.GenreLabel = this.getGenreLabel(movie.genre);
 		movie.DisplayReleaseDate = this.getReleaseDateDisplay(movie.released)
@@ -123,6 +145,32 @@ var MovieTemplateHelper =
 }
 	
 var MoviesPlugins = {
+	setNumericField: function(scope,elem,attrs){
+		$(elem).keydown(function(e) {
+			// Allow: backspace, delete, tab, escape, enter and .
+			//console.log(e.keyCode);
+			if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+				 // Allow: Ctrl+A
+				(e.keyCode == 65 && e.ctrlKey === true) || 
+				// Allow: Ctrl+C
+				(e.keyCode == 67 && e.ctrlKey === true) || 
+				// Allow: Ctrl+Z
+				(e.keyCode == 90 && e.ctrlKey === true) || 
+				 // Allow: home, end, left, right, down, up
+				(e.keyCode >= 35 && e.keyCode <= 40)) {
+					 // let it happen, don't do anything
+					 return;
+			}
+			// Ensure that it is a number and stop the keypress
+			if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+				e.preventDefault();
+			}
+        });
+	},
+	setMaskedYear: function(scope, elem, attrs){
+		$(elem).mask("9999");
+		
+	},
 	setMaskedDate: function(scope,elem,attrs){
 		$(elem).mask("99-99-9999",{placeholder:"MM-DD-YYYY"});
 		$(elem).on('blur',function(){
@@ -203,6 +251,8 @@ var MoviesPlugins = {
 					scope.movie[key] = value;
 					if (scope.movie["id"] == 0) {
 						MovieTemplateHelper.setLocalCopy(scope.movie);
+						$('#AddEditForm').submit();
+						scope.theForm[key].$setViewValue(value);
 					} else {
 						scope.updateMovie();
 					}
@@ -230,6 +280,7 @@ var MoviesPlugins = {
 
 					if (scope.movie["id"] == 0) {
 						MovieTemplateHelper.setLocalCopy(scope.movie);
+						scope.theForm[key].$setViewValue(value);
 					} else {
 						scope.updateMovie();
 					}
@@ -251,6 +302,7 @@ var MoviesPlugins = {
 					scope.movie[key] = value;
 					if (scope.movie["id"] == 0) {
 						MovieTemplateHelper.setLocalCopy(scope.movie);
+						scope.theForm[key].$setViewValue(value);
 					} else {
 						scope.updateMovie();
 					}
@@ -272,6 +324,7 @@ var MoviesPlugins = {
 					scope.movie[key] = value;
 					if (scope.movie["id"] == 0) {
 						MovieTemplateHelper.setLocalCopy(scope.movie);
+						scope.theForm[key].$setViewValue(value);
 					} else {
 						scope.updateMovie();
 					}
@@ -281,5 +334,46 @@ var MoviesPlugins = {
 				}
 			},textareaSettings); // end .editable						 
 
-	} // end MoviesPlugins.setEditables
+	}, // end MoviesPlugins.setEditables
+	setDialog: function(scope,elem,attrs){
+		 var status = scope.status;
+		 var okButton = { text: "OK", click: function() {  
+		 	$(this).dialog( "close" ); 
+			try{		 
+		 		status.okCallback();
+			}catch(e){
+				console.log("OK Callback error: "+e);	
+			}
+		}};
+		 var settings = {}
+		 if(status["type"]=="CONFIRM"){
+			settings = {
+				draggable: false,
+				title: status["title"],
+				dialogClass: "confirm-dialog",
+				buttons: [
+				okButton,
+				{
+					text: "CANCEL",
+					click: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+				
+				]
+			} // end settings;			
+		}
+		else{
+			var dClass=status["type"]=="SUCCESS" ? "success-dialog" : "error-dialog";
+			settings = {
+				draggable: false,
+				title: status["title"],
+				dialogClass: dClass,
+				buttons: [ okButton	]
+			}	// end settings
+		}
+		$('#Movies-Dialog').attr("title",status["title"]);
+		$('#Movies-Dialog .status-message').html(status["message"]);
+		 $( "#Movies-Dialog" ).dialog(settings);
+	}
 } //end MoviesPlugins
