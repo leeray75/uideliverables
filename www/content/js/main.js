@@ -151,11 +151,13 @@ function getDateObject(dateString)
 var UI = UI || {};
 
 UI = {
-	sidrId: '#sidr',
+	isLoginModuleInit: false,
+	LoginModal: null,
 	init: function()
 	{
 		//console.log("intiializing!");
 		initUser();
+		this.updateUser(user);
 		GlobalVariables = GlobalVariables || {};
 		var now = new Date();
 		var year = now.getFullYear();
@@ -164,7 +166,130 @@ UI = {
 		month = month<10 ? "0"+month : month;
 		day = day<10 ? "0"+day : day;
 		GlobalVariables.CurrentDate = year+"-"+month+"-"+day+" 00:00:00";
+		this.initLogInOutLinks();
+	},
+	updateUser: function(){
+		var hdr = UI.services.getUser()
+		.done(function(data){
+		  	user = new User(data);
+			if(user.get("isGuest")==false){
+				$('.log-in-out-copy').html("Log Out");	
+			}
+			else{
+				$('.log-in-out-copy').html("Log In");					
+			}		  
+		}).fail(function(data){});		
+
+
+	},
+	initLogInOutLinks: function(){
+		$('.log-in-out-link').on('click.loginout',function(){
+			if(user.get("isGuest")==false){
+				UI.loadLogoutModule();
+			}
+			else{
+				UI.loadLoginModule();					
+		}			
+			
+		});
+	},
+	loadLogoutModule: function(){
+		var hdr = UI.services.logout()
+			.done(function(){
+				UI.updateUser();
+			})
+			.fail(function(){				
+			});
 		
+	},
+	loadLoginModule: function(){
+		if(this.isLoginModuleInit){
+			UI.showModal('#LoginModal')
+		}
+		else{
+			angular.module('UIDeliverablesApp', [
+			'UIDeliverablesApp.controllers',
+			'UIDeliverablesApp.directives'
+			])	
+			
+			var UIDeliverablesControllers = angular.module('UIDeliverablesApp.controllers', []);	
+			UIDeliverablesControllers.controller('loginController', function ($scope,$http) {
+				$scope.isWaiting = false;
+				$scope.isLoginSuccess = false;
+				$scope.errorMessage = "";
+				$scope.master = {
+					username: "",
+					password: ""	
+				};
+				$scope.copy = angular.copy($scope.master);
+				$scope.resetLogin = function(form){									
+					form.$setPristine();
+					form.$setUntouched();
+					$scope.user = angular.copy($scope.master);
+					$scope.errorMessage = "";
+					console.log(form);
+										
+					
+				}
+				$scope.login = function(form){
+					form.$submitted = true;
+					console.log(form.$submitted);
+					var data = { callback: "JSON_CALLBACK" };
+					angular.copy($scope.user,data);
+					console.log(data);
+					if(form.$valid){
+						var api = window.location.hostname == "localhost" ? UI.services.dev_api["login"] : UI.services.prod_api["login"];
+						$scope.isWaiting = true;
+						$http({ method: 'jsonp', 
+							url: api+"?callback=JSON_CALLBACK",  /// Add '?callback=JSON_CALLBACK'
+							params: $scope.user
+						})
+						.success(function (data, status, headers, config) { 
+								console.log("Success");
+								$scope.isLoginSuccess = true;								
+								$scope.resetLogin(form);
+								$scope.isWaiting = false;
+								UI.updateUser(data);
+						})
+						.error(function (data, status, headers, config) { 
+								$scope.resetLogin(form);								
+								$scope.isLoginSuccess = false;
+								$scope.errorMessage = "Error Login Attempt";
+								$scope.isWaiting = false;
+						});					
+										
+					}
+					
+				}
+			})// end controllers
+			
+			angular.module('UIDeliverablesApp.directives', [])
+				.directive('loginModalContainer', function() {
+					return {
+						restrict: 'C',
+						link: function(scope, elem, attrs) {
+							console.log("In Directives");
+							var selector = '#'+attrs["id"];
+							setTimeout(function(){
+								UI.showModal(selector)
+							},500);
+							UI.isLoginModuleInit = true;
+							scope.closeModal = function(form){
+								console.log("resetting");
+								scope.isLoginSuccess = false;
+								scope.resetLogin(form);
+							}
+						} // end link
+					} // end return obj;
+				})
+			angular.bootstrap(document.getElementById("UIDeliverablesLogin"),['UIDeliverablesApp']);
+		}// end if isLoginModuleInit else 
+	},
+	showModal: function(selector){
+	   UI.LoginModal = $(selector).modal(function () {
+		   console.log("Modal Shown!");
+			$('#username').focus()
+		 })			
 	},
 	loadGoogleSearch: function()
 	{
@@ -183,11 +308,49 @@ UI = {
 		LazyLoad.js(gsURL,function(){
 			console.log("loaded: "+gsURL);
 		});		
-	}
+	},
+	services: {
+		dev_api:{
+			login: "/www/index.php/api/user/0",
+			logout: "/www/index.php/api/user/0?logout=1"
+		},
+		prod_api:{
+			login: "https://www.uideliverables.com/www/index.php/api/user/0",
+			logout: "https://www.uideliverables.com/www/index.php/api/user/0?logout=1"
+			
+		},		
+		logout: function(){
+			var api = window.location.hostname == "localhost" ? UI.services.dev_api["logout"] : UI.services.prod_api["logout"];
+			return $.ajax({
+				dataType: "jsonp",
+				url: api
+			});	
+		},
+		login: function(userData){
+			var api = window.location.hostname == "localhost" ? UI.services.dev_api["login"] : UI.services.prod_api["login"];
+			return $.ajax({
+				dataType: "jsonp",
+				url: api,
+				data: userData
+			});					
+		},
+	
+		getUser: function(){
+			var api = window.location.hostname == "localhost" ? UI.services.dev_api["login"] : UI.services.prod_api["login"];
+			return $.ajax({
+				dataType: "jsonp",
+				url: api
+			});
+		}
+				
+	} // services
+
 	
 }
 $(function(){	
+
 	UI.init();
+
 	
 	
 });

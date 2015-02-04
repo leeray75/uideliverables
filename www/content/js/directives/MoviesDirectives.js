@@ -1,10 +1,4 @@
 angular.module('movieApp.directives', [])
-    .directive('formContainer', function() {
-        return {
-            restrict: 'C',
-            templateUrl: '/www/content/partials/movies-rating/movies-add-edit.html'
-        }
-    })
     .directive('imdbUserRate', function(dataFactory) {
         return {
             restrict: 'A',
@@ -25,20 +19,6 @@ angular.module('movieApp.directives', [])
             }
         }
     })
-	.directive('contenteditable',function(){
-		return {
-            restrict: 'A',
-            link: function(scope, elem, attrs, ctrl) {
-                    //console.log("Inline Edit Ready!")	
-                    elem.on('blur',function(){
-						var value = elem.html();
-						var key = attrs['modelKey'];
-						console.log(key);
-						console.log(value);
-					});
-                } // end link
-        } // end return
-	})
     .directive('InlineEditTemplateReady', function() {
         return {
             restrict: 'C',

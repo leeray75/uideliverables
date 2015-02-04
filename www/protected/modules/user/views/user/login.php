@@ -1,4 +1,5 @@
 <?php
+echo "<!-- Setting SSL -->";
 include $_SERVER['DOCUMENT_ROOT']."/www/protected/modules/user/views/user-global-setup.php";
 $this->pageTitle=Yii::app()->name . ' - '.UserModule::t("Login");
 $this->breadcrumbs=array(

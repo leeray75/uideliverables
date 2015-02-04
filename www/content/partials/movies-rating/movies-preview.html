@@ -1,7 +1,7 @@
 <div id="TemplateSpinner" ng-show="previewMovieItem == null"> <img src="/www/content/images/apps/movies/ajax-loader.gif" /> </div>
 <div id="TemplateWrapper" ng-show="previewMovieItem!=null">
   <form name="AddEditMovieForm" id="AddEditMovieForm" novalidate >
-  <div ng-init="setForm(AddEditMovieForm);"></div>
+    <div ng-init="setForm(AddEditMovieForm);"></div>
     <div id="Movie-Page-Title">
       <h2>{{ pageTitle }}</h2>
     </div>
@@ -13,16 +13,16 @@
     </div>
     <div id="FORM-ERROR" class="error-container" ng-show="AddEditMovieForm.$submitted && AddEditMovieForm.$invalid">
       <div class="clearfix" ng-show="AddEditMovieForm.$submitted">
-      	<h4>Enter the following:</h4>
+        <h4>Enter the following:</h4>
         <ul>
-        <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.title.$error.required">Title</li>
-        <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.runtime.$error.required">Run Time</li>
-        <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.genre.$error.required">Genre</li>
-        <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.released.$error.required">Release Date</li>
-        <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.plot.$error.required">Plot</li>
-        <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.director.$error.required">Director</li>
-        <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.writers.$error.required">Writer</li>
-        <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.actors.$error.required">Actor</li>
+          <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.title.$error.required">Title</li>
+          <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.runtime.$error.required">Run Time</li>
+          <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.genre.$error.required">Genre</li>
+          <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.released.$error.required">Release Date</li>
+          <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.plot.$error.required">Plot</li>
+          <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.director.$error.required">Director</li>
+          <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.writers.$error.required">Writer</li>
+          <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.actors.$error.required">Actor</li>
         </ul>
       </div>
       <input  name="title" id="title" ng-model="movie.title" value="" required type="text" class="hidden">
@@ -73,12 +73,9 @@
       </div>
       <!-- /movie-list-item-container -->
       
-      <div class="button-container"> <span ng-if="movie.id == null || movie.id=='0' ">
-        <span class="btn btn-warning" ng-click="resetMovie()">{{ resetLabel }}</span> <!-- /btn -->
-        </span> <span>
-        <a class="btn btn-info" ng-click="showMovieForm()">Edit Form</a>
-        </span> <span ng-if="movie.id == null || movie.id=='0' ">
-        <button class="btn btn-primary" ng-click="addMovie(AddEditMovieForm)">{{ addLabel }}</button>
+      <div class="button-container"> <span ng-if="movie.id == null || movie.id=='0' "> <span class="btn btn-warning" ng-click="resetMovie()">{{ resetLabel }}</span> <!-- /btn --> 
+        </span> <span> <a class="btn btn-info" ng-click="showMovieForm()">Edit Form</a> </span> <span ng-if="movie.id == null || movie.id=='0' ">
+        <button class="btn btn-primary" ng-click="addMovie()">{{ addLabel }}</button>
         </span> 
         <!--<span ng-if="movie.id != null">
       <button class="btn btn-primary" ng-click="updateMovie(movie)">Update Movie</button>

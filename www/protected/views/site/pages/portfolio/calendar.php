@@ -10,14 +10,9 @@ $this->pageCSS = array(
 );
 $this->pageJS = array(
 
-"/www/content/js/libs/jquery/jquery-ui-1.9.1.custom.js",
-
-"/www/content/js/libs/underscore/underscore-1.5.2.js",
-"/www/content/js/libs/backbone/backbone-min-1.0.0.js",
-"/www/content/js/libs/modernizr/modernizr-custom-2.6.2.js",
-"/www/content/js/models/Users/User.js",
-"/www/content/js/main.js",
-"/www/content/js/libs/jquery/plugins/jquery.simplemodal-1.4.4.js",
+	"/www/content/js/libs/jquery/jquery-ui-1.9.1.custom.js",
+	"/www/content/js/libs/modernizr/modernizr-custom-2.6.2.js",
+	"/www/content/js/libs/jquery/plugins/jquery.simplemodal-1.4.4.js",
 	"/www/content/js/libs/jquery/plugins/jquery.NobleCount.js",
 	"/www/content/plugins/fullcalendar/fullcalendar.js",
 	"/www/content/js/libs/jquery/plugins/jquery-ui-timepicker-addon.js",

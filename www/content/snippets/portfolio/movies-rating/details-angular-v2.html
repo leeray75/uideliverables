@@ -1,0 +1,1423 @@
+<article id="DETAILS-CONTENT">
+  <section id="About-Details">
+    <h3>About</h3>
+    <p> I wanted to learn more about AngularJS and needed a project to work on. So I decided to build on a demo that I developed as an assignment from a job interview. In the original, I only developed a prototype that received data from a API call. It also notified users if their votes were successful or not. I created one version using Backbone.js and another using AngularJS. In this version, I wanted the data to be stored in a database and have RESTful APIs to 'GET', 'POST', 'UPDATE', and 'DELETE' the data.</p>
+  </section>
+  <!-- /About-Details -->
+  <section id="GettingStarted-Details">
+    <h3>Getting Started</h3>
+    <p>Before I do any of the front-end developement work. I first needed to take care of some of the back-end work. I'm not going to get into too much details about the back-end stuff, because my primary goal is to work with the AngularJS framework. I decided to use the same movie data model for this project as the previous demo. In the MySQL database, the 'movies' table columns will match the keys from the JSON data model that I was using. For this demo, I wanted to keep things simple as possible. So, I only created one 'movies' table and didn't create other tables and their relationships. For the RESTful APIs, I added the 'movie' API, to the backend PHP's Yii framework.</p>
+  </section>
+  <!-- /GettingStarted-Details -->
+  
+  <section id="JSON-SQL-CODE-SECTION" class="code-section">
+    <div class="accordion" id="Accordian-JSON-SQL">
+      <div class="accordion-group">
+        <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#Accordian-JSON-SQL" href="#JSON-CODE">JSON - DATA MODEL</a> </div>
+        <div id="JSON-CODE" class="accordion-body collapse">
+          <div class="accordion-inner code">
+            <pre class="prettyprint linenums">
+{
+   "id":"2",
+   "user_id":"1",
+   "title":"Star Wars: Episode I - The Phantom Menace",
+   "plot":"Two Jedi Knights escape a hostile blockade to find allies and come across a young boy who may bring balance to the Force, but the long dormant Sith resurface to reclaim their old glory.",
+   "genre":"Action, Adventure, Fantasy, Sci-Fi",
+   "director":"George Lucas",
+   "writers":"George Lucas",
+   "actors":"Ewan McGregor, Liam Neeson, Natalie Portman, Jake Lloyd",
+   "poster":"http:\/\/ia.media-imdb.com\/images\/M\/MV5BMTQ4NjEwNDA2Nl5BMl5BanBnXkFtZTcwNDUyNDQzNw@@._V1_SX300.jpg",
+   "rated":"PG",
+   "released":"1999-05-19",
+   "year":"1999",
+   "runtime":"136",
+   "type":"movie",
+   "imdbID":"tt0120915",
+   "imdbRating":"0",
+   "imdbVotes":"0"
+}
+              </pre>
+          </div>
+          <!-- /accordion-inner --> 
+        </div>
+        <!-- /accordion-body --> 
+      </div>
+      <!-- /accordion-group -->
+      <div class="accordion-group">
+        <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#Accordian-JSON-SQL" href="#SQL-CODE">SQL - CREATE MOVIES TABLE</a> </div>
+        <div id="SQL-CODE" class="accordion-body collapse">
+          <div class="accordion-inner code">
+            <pre class="prettyprint linenums">
+CREATE TABLE movies (
+	id bigint(20) NOT NULL auto_increment,
+	user_id int(11) NOT NULL,
+	title varchar(250) NOT NULL,
+	plot varchar(500) default NULL,
+	genre varchar(100) NOT NULL,
+	director varchar(100) NOT NULL,
+	writers varchar(100) NOT NULL,
+	actors varchar(250) NOT NULL,
+	poster varchar(200) NOT NULL,
+	rated varchar(5) NOT NULL,
+	released date not null,
+	year smallint(4) not null,
+	runtime smallint(3) NOT NULL,
+	type varchar(30) NOT NULL default "movie",
+	imdbID varchar(30) NOT NULL,
+	imdbRating int(11) NOT NULL default 0,
+	imdbVotes int(11) NOT NULL default 0,
+  PRIMARY KEY  (id)
+);
+              </pre>
+          </div>
+          <!-- /accordion-inner --> 
+        </div>
+        <!-- /accordion-body --> 
+      </div>
+      <!-- /accordion-group --> 
+    </div>
+    <!-- /Accordian-JSON --> 
+  </section>
+  <!--/JSON-SQL-CODE-SECTION -->
+  
+  <section id="Templates-Details">
+    <h3>Creating Template Views</h3>
+    <p>Now is the time to start doing some front-end work. For this demo, there will be 3 templates that are needed. The first template is to list all the movies. This template will display the following attributes: title, poster image, rated, run time, genres, release date, plot, director, writer, stars, and the votes. In the list view, the user can edit or delete the movie, if they share the same user id as the user who created the movie, or if the user has admin privileges, that will be validated in the back-end. So, for this demo, I allow 'Guest' users to create movies and allow them to edit and/or delete other 'Guest' users' movies.</p>
+    <p>The other two templates will be used to Add or Edit the movies.</p>
+    <ol>
+      <li>A traditional form input based UI.</li>
+      <li>A preview inline editor.</li>
+    </ol>
+    <p>I didn't create separate location routes, templates, or controllers for the Add/Edit views. The two are really identical. Instead, I set the movie id to equal zero when I want to add a new movie. Otherwise the controller, will get the movie based on the id and will be in a edit mode.</p>
+  </section>
+  <!-- /Templates-Details -->
+  <section id="TEMPLATES-CODE-SECTION" class="code-section">
+    <div class="accordion" id="Accordian-Templates-Code">
+      <div class="accordion-group">
+        <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#Accordian-Templates-Code" href="#LIST-TEMPLATE-CODE">TEMPLATE - MOVIES LIST</a> </div>
+        <div id="LIST-TEMPLATE-CODE" class="accordion-body collapse">
+          <div class="accordion-inner code">
+            <pre class="prettyprint linenums">
+&lt;div id=&quot;TemplateSpinner&quot; ng-show=&quot;movies == null&quot;&gt; &lt;img src=&quot;/www/content/images/apps/movies/ajax-loader.gif&quot; /&gt; &lt;/div&gt;
+&lt;div id=&quot;TemplateWrapper&quot; ng-show=&quot;movies!=null&quot;&gt;
+  &lt;div id=&quot;Movie-Page-Title&quot;&gt;
+    &lt;h2&gt;{{ pageTitle }}&lt;/h2&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;movies-search-container&quot;&gt;
+    &lt;div class=&quot;row&quot;&gt;
+      &lt;div class=&quot;col-lg-12 col-md-12 col-sm-12 col-xs-12&quot;&gt;
+        &lt;form id=&quot;MovieTitlesSearchForm&quot;&gt;
+          &lt;div class=&quot;movie-search-field&quot;&gt; &lt;span class=&quot;glyphicon glyphicon-search&quot;&gt;&lt;/span&gt;
+            &lt;input id=&quot;MovieTitleSearchFilterField&quot; type=&quot;text&quot; ng-model=&quot;titleFilter&quot; placeholder=&quot;Search Movie Titles & Plots&quot; /&gt;
+          &lt;/div&gt;
+        &lt;/form&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;ul id=&quot;movies-list&quot;&gt;
+    &lt;li ng-repeat=&quot;movie in movies | filter: moviesSearchFilter | orderBy: 'title' &quot;&gt;
+      &lt;div id=&quot;#MovieItem-{{movie.imdbID}}&quot; class=&quot;movie-list-item-container clear-fix row&quot;&gt;
+        &lt;div class=&quot;row&quot;&gt;
+          &lt;div class=&quot;image-col col-lg-3 col-md-3 col-sm-3&quot;&gt; &lt;img name=&quot;PosterImage-{{movie.imdbID}}&quot; ng-src=&quot;{{movie.poster}}&quot; class=&quot;img-responsive&quot;/&gt;
+            &lt;div class=&quot;edit-delete-links&quot; ng-if=&quot;movie.allowDeleteEdit&quot;&gt;&lt;a href=&quot;#/edit/preview/{{movie.id}}&quot; class=&quot;btn btn-primary&quot;&gt;Edit&lt;/a&gt; &lt;a href=&quot;&quot; ng-click=&quot;deleteMovie(movie)&quot; class=&quot;btn btn-danger&quot;&gt;Delete&lt;/a&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;data-col col-lg-9 col-md-9 col-sm-9&quot;&gt;
+            &lt;div class=&quot;movie-title row&quot;&gt; {{movie.title}} &lt;/div&gt;
+            &lt;div class=&quot;row &quot;&gt;
+              &lt;div class=&quot;col-lg-6 col-md-6 col-sm-6 info-column&quot;&gt;
+                &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;movie-label&quot;&gt;Rated:&lt;/span&gt; &lt;span class=&quot;rated&quot;&gt;{{movie.rated}}&lt;/span&gt;&lt;/div&gt;
+                &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;movie-label&quot;&gt;Run Time:&lt;/span&gt; &lt;span class=&quot;run-time&quot;&gt;{{movie.runtime}} minutes&lt;/span&gt;&lt;/div&gt;
+                &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;movie-label&quot;&gt;{{movie.GenreLabel}}:&lt;/span&gt; &lt;span class=&quot;genre&quot;&gt;{{movie.genre}}&lt;/span&gt;&lt;/div&gt;
+                &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;movie-label&quot;&gt;Release Date: &lt;/span&gt; &lt;span class=&quot;release-date&quot;&gt;{{movie.DisplayReleaseDate}}&lt;/span&gt;&lt;/div&gt;
+              &lt;/div&gt;
+              &lt;!-- /info-column --&gt;
+              &lt;div class=&quot;ratings-column col-lg6 col-md-6 col-sm-6&quot;&gt;
+                &lt;div class=&quot;ratings-container&quot;&gt;
+                  &lt;div class=&quot;row&quot;  ng-if=&quot;movie.allowDeleteEdit&quot;&gt;&lt;span class=&quot;movie-label&quot;&gt;Your Rating:&lt;/span&gt; &lt;span id=&quot;RateIt-{{movie.id}}&quot; class=&quot;rateit bigstars&quot; data-rateit-starwidth=&quot;32&quot; data-rateit-starheight=&quot;16&quot; rating=&quot;0&quot; imdb-user-rate&gt;&lt;/span&gt; &lt;/div&gt;
+                  &lt;div class=&quot;row&quot;&gt; &lt;span class=&quot;movie-label&quot;&gt;Rating:&lt;/span&gt; &lt;span id=&quot;IMDb-RateIt-{{movie.id}}&quot; class=&quot;rateit bigstars&quot; data-rateit-starwidth=&quot;32&quot; data-rateit-starheight=&quot;16&quot; data-rating=&quot;{{movie.rating}}&quot; imdb-rate&gt;&lt;/span&gt; &lt;/div&gt;
+                  &lt;div class=&quot;imdb-votes row&quot;&gt; &lt;span class=&quot;votes-count&quot;&gt;( Rating: {{movie.rating}} from {{movie.imdbVotes}} users)&lt;/span&gt;&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;!-- /ratings-container --&gt; 
+              &lt;/div&gt;
+              &lt;!-- /ratings-column --&gt; 
+            &lt;/div&gt;
+            &lt;!-- /row --&gt;
+            &lt;div class=&quot;plot row&quot;&gt; {{movie.plot}} &lt;/div&gt;
+            &lt;!-- /plot --&gt;
+            &lt;div class=&quot;additional-info-rows&quot;&gt;
+              &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;movie-label&quot;&gt;{{movie.DirectorLabel}}:&lt;/span&gt; &lt;span class=&quot;directors&quot;&gt;{{movie.director}}&lt;/span&gt;&lt;/div&gt;
+              &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;movie-label&quot;&gt;{{movie.WriterLabel}}:&lt;/span&gt; &lt;span class=&quot;writers&quot;&gt;{{movie.writers}}&lt;/span&gt;&lt;/div&gt;
+              &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;movie-label&quot;&gt;{{movie.ActorsLabel}}:&lt;/span&gt; &lt;span class=&quot;actors&quot;&gt;{{movie.actors}}&lt;/span&gt;&lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;!-- /data-col --&gt; 
+          
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;!-- /movies-list --&gt; 
+&lt;/div&gt;
+&lt;!-- /TemplateWrapper --&gt; 
+&lt;dialog-container&gt;&lt;/dialog-container&gt;
+             </pre>
+          </div>
+          <!-- /accordion-inner --> 
+        </div>
+        <!-- /accordion-body --> 
+      </div>
+      <!-- /accordion-group -->
+      <div class="accordion-group">
+        <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#Accordian-Templates-Code" href="#ADD-EDIT-FORM-TEMPLATE-CODE">TEMPLATE - ADD/EDIT FORM</a> </div>
+        <div id="ADD-EDIT-FORM-TEMPLATE-CODE" class="accordion-body collapse">
+          <div class="accordion-inner code">
+            <pre class="prettyprint linenums">
+&lt;div id=&quot;TemplateSpinner&quot; ng-show=&quot;movie == null&quot;&gt; &lt;img src=&quot;/www/content/images/apps/movies/ajax-loader.gif&quot; /&gt; &lt;/div&gt;
+&lt;div id=&quot;TemplateWrapper&quot; ng-show=&quot;movie!=null&quot;&gt;
+  &lt;div id=&quot;Add-Edit-Movie&quot;&gt;
+    &lt;div id=&quot;Movie-Page-Title&quot;&gt;
+      &lt;h2&gt;{{ pageTitle }}&lt;/h2&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;movie-top-copy&quot;&gt;
+      &lt;p ng-if=&quot;movie.id != null && movie.id !='0'&quot;&gt;The movie data won't be saved unless you click on the '{{ updateLabel }}' Button.&lt;/p&gt;
+      &lt;p ng-if=&quot;movie.id == null || movie.id=='0'&quot;&gt;Click on the &lt;span class=&quot;add-label-text&quot;&gt;'{{ addLabel }}'&lt;/span&gt; Button, to add the movie to the list.&lt;br&gt;
+        Click on the &lt;span class=&quot;reset-label-text&quot;&gt;'{{ resetLabel }}'&lt;/span&gt; Button, to reset all the movie data back to the default state.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;form name=&quot;AddEditMovieForm&quot; id=&quot;AddEditMovieForm&quot; novalidate&gt;
+    &lt;div ng-init=&quot;setForm(AddEditMovieForm);&quot;&gt;&lt;/div&gt;
+      &lt;div id=&quot;Add-Movie-Row-1&quot; class=&quot;row&quot;&gt;
+        &lt;div id=&quot;Add-Movie-Col-1&quot; class=&quot;col-lg-6 col-md-6 col-sm-6&quot;&gt;
+          &lt;div class=&quot;input-row row&quot;&gt;
+            &lt;div class=&quot;label-col col-lg-3 col-md-3 col-sm-3 col-xs-4&quot;&gt;
+              &lt;label for=&quot;title&quot;&gt;Title:&lt;/label&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;input-col col-lg-9 col-md-9 col-sm-9 col-xs-8&quot;&gt;
+              &lt;input type=&quot;text&quot; name=&quot;title&quot; id=&quot;title&quot; placeholder=&quot;Title&quot; ng-model=&quot;movie.title&quot; required=&quot;&quot; /&gt;
+              &lt;div class=&quot;check-input-field-container&quot; ng-show=&quot;AddEditMovieForm.$submitted || AddEditMovieForm.title.$touched&quot;&gt;
+                &lt;div class=&quot;error-msg&quot; ng-show=&quot;AddEditMovieForm.title.$error.required&quot;&gt;Enter a Title.&lt;/div&gt;
+              &lt;/div&gt;&lt;!-- /check-input-field-container --&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;input-row row&quot;&gt;
+            &lt;div class=&quot;label-col col-lg-3 col-md-3 col-sm-3 col-xs-4&quot;&gt;
+              &lt;label for=&quot;director&quot;&gt;Director:&lt;/label&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;input-col col-lg-9 col-md-9 col-sm-9 col-xs-8&quot;&gt;
+              &lt;input type=&quot;text&quot; name=&quot;director&quot; id=&quot;director&quot; placeholder=&quot;Director&quot; ng-model=&quot;movie.director&quot; required /&gt;
+              &lt;div class=&quot;check-input-field-container&quot; ng-show=&quot;AddEditMovieForm.$submitted || AddEditMovieForm.director.$touched&quot;&gt;
+                &lt;div class=&quot;error-msg&quot; ng-show=&quot;AddEditMovieForm.director.$error.required&quot;&gt;Enter a Director.&lt;/div&gt;
+              &lt;/div&gt;&lt;!-- /check-input-field-container --&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;input-row row&quot;&gt;
+            &lt;div class=&quot;label-col col-lg-3 col-md-3 col-sm-3 col-xs-4&quot;&gt;
+              &lt;label for=&quot;writer&quot;&gt;Writers:&lt;/label&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;input-col col-lg-9 col-md-9 col-sm-9 col-xs-8&quot;&gt;
+              &lt;input type=&quot;text&quot; name=&quot;writers&quot; id=&quot;writers&quot; placeholder=&quot;Writers&quot; ng-model=&quot;movie.writers&quot; required /&gt;
+              &lt;div class=&quot;check-input-field-container&quot; ng-show=&quot;AddEditMovieForm.$submitted || AddEditMovieForm.writers.$touched&quot;&gt;
+                &lt;div class=&quot;error-msg&quot; ng-show=&quot;AddEditMovieForm.writers.$error.required&quot;&gt;Enter a Writer.&lt;/div&gt;
+              &lt;/div&gt;&lt;!-- /check-input-field-container --&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;input-row row&quot;&gt;
+            &lt;div class=&quot;label-col col-lg-3 col-md-3 col-sm-3 col-xs-4&quot;&gt;
+              &lt;label for=&quot;actors&quot;&gt;Actors:&lt;/label&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;input-col col-lg-9 col-md-9 col-sm-9 col-xs-8&quot;&gt;
+              &lt;input type=&quot;text&quot; name=&quot;actors&quot; id=&quot;actors&quot; placeholder=&quot;Actors separated by commas&quot; ng-model=&quot;movie.actors&quot; required /&gt;
+              &lt;div class=&quot;check-input-field-container&quot; ng-show=&quot;AddEditMovieForm.$submitted || AddEditMovieForm.actors.$touched&quot;&gt;
+                &lt;div class=&quot;error-msg&quot; ng-show=&quot;AddEditMovieForm.actors.$error.required&quot;&gt;Enter Actors.&lt;/div&gt;
+              &lt;/div&gt;&lt;!-- /check-input-field-container --&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;input-row row&quot;&gt;
+            &lt;div class=&quot;label-col col-lg-3 col-md-3 col-sm-3 col-xs-4&quot;&gt;
+              &lt;label for=&quot;genre&quot;&gt;Genre:&lt;/label&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;input-col col-lg-9 col-md-9 col-sm-9 col-xs-8&quot;&gt;
+              &lt;input type=&quot;text&quot; name=&quot;genre&quot; id=&quot;genre&quot; placeholder=&quot;Genres separated by commas&quot; ng-model=&quot;movie.genre&quot; required /&gt;
+              &lt;div class=&quot;check-input-field-container&quot; ng-show=&quot;AddEditMovieForm.$submitted || AddEditMovieForm.genre.$touched&quot;&gt;
+                &lt;div class=&quot;error-msg&quot; ng-show=&quot;AddEditMovieForm.genre.$error.required&quot;&gt;Enter a Genre.&lt;/div&gt;
+              &lt;/div&gt;&lt;!-- /check-input-field-container --&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;input-row row&quot;&gt;
+            &lt;div class=&quot;label-col col-lg-3 col-md-3 col-sm-3 col-xs-4&quot;&gt;
+              &lt;label for=&quot;rated&quot;&gt;Rated:&lt;/label&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;input-col col-lg-9 col-md-9 col-sm-9 col-xs-8&quot;&gt;
+              &lt;select ng-model=&quot;movie.rated&quot; name=&quot;rated&quot; id=&quot;rated&quot;&gt;
+                &lt;option value=&quot;G&quot;&gt;G&lt;/option&gt;
+                &lt;option value=&quot;PG&quot;&gt;PG&lt;/option&gt;
+                &lt;option value=&quot;PG-13&quot;&gt;PG-13&lt;/option&gt;
+                &lt;option value=&quot;R&quot;&gt;R&lt;/option&gt;
+              &lt;/select&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;!-- /Add-Movie-Col-1 --&gt;
+        &lt;div id=&quot;Add-Movie-Col-2&quot; class=&quot;col-lg-6 col-md-6 col-sm-6&quot;&gt;
+          &lt;div class=&quot;input-row row&quot;&gt;
+            &lt;div class=&quot;label-col col-lg-4 col-md-4 col-sm-4 col-xs-4&quot;&gt;
+              &lt;label for=&quot;runtime&quot;&gt;Run Time:&lt;/label&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;input-col col-lg-8 col-md-8 col-sm-8 col-xs-8&quot;&gt;
+              &lt;input type=&quot;text&quot; name=&quot;runtime&quot; id=&quot;runtime&quot; placeholder=&quot;Run Time In Minutes&quot; ng-model=&quot;movie.runtime&quot; class=&quot;numeric-field&quot; required /&gt;
+              &lt;div class=&quot;check-input-field-container&quot; ng-show=&quot;AddEditMovieForm.$submitted || AddEditMovieForm.runtime.$touched&quot;&gt;
+                &lt;div class=&quot;error-msg&quot; ng-show=&quot;AddEditMovieForm.runtime.$error.required&quot;&gt;Enter Run Time.&lt;/div&gt;
+              &lt;/div&gt;&lt;!-- /check-input-field-container --&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;input-row row&quot;&gt;
+            &lt;div class=&quot;label-col col-lg-4 col-md-4 col-sm-4 col-xs-4&quot;&gt;
+              &lt;label for=&quot;released&quot;&gt;Release Date:&lt;/label&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;input-col col-lg-8 col-md-8 col-sm-8 col-xs-8&quot;&gt;
+              &lt;input type=&quot;text&quot; name=&quot;released&quot; id=&quot;released&quot; placeholder=&quot;MM-DD-YYYY&quot; maxlength=&quot;10&quot; ng-model=&quot;previewMovieItem.DisplayReleaseDate&quot; class=&quot;masked-date&quot; required /&gt;
+              &lt;div class=&quot;check-input-field-container&quot; ng-show=&quot;AddEditMovieForm.$submitted || AddEditMovieForm.released.$touched&quot;&gt;
+                &lt;div class=&quot;error-msg&quot; ng-show=&quot;AddEditMovieForm.released.$error.required&quot;&gt;Enter Released Date.&lt;/div&gt;
+              &lt;/div&gt;&lt;!-- /check-input-field-container --&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;input-row row&quot;&gt;
+            &lt;div class=&quot;label-col col-lg-4 col-md-4 col-sm-4 col-xs-4&quot;&gt;
+              &lt;label for=&quot;year&quot;&gt;Year:&lt;/label&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;input-col col-lg-8 col-md-8 col-sm-8 col-xs-8&quot;&gt;
+              &lt;input type=&quot;text&quot; name=&quot;year&quot; id=&quot;year&quot; placeholder=&quot;YYYY&quot; maxlength=&quot;4&quot; ng-model=&quot;movie.year&quot; class=&quot;masked-year&quot; /&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;input-row row&quot;&gt;
+            &lt;div class=&quot;label-col col-lg-4 col-md-4 col-sm-4 col-xs-4&quot;&gt;
+              &lt;label for=&quot;imdbRating&quot;&gt;IMDB Rating:&lt;/label&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;input-col col-lg-8 col-md-8 col-sm-8 col-xs-8&quot;&gt;
+              &lt;input type=&quot;text&quot; name=&quot;imdbRating&quot; id=&quot;imdbRating&quot; placeholder=&quot;Rating&quot; ng-model=&quot;movie.imdbRating&quot; class=&quot;numeric-field&quot; /&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;input-row row&quot;&gt;
+            &lt;div class=&quot;label-col col-lg-4 col-md-4 col-sm-4 col-xs-4&quot;&gt;
+              &lt;label for=&quot;imdbVotes&quot;&gt;Votes:&lt;/label&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;input-col col-lg-8 col-md-8 col-sm-8 col-xs-8&quot;&gt;
+              &lt;input type=&quot;text&quot; name=&quot;imdbVotes&quot; id=&quot;imdbVotes&quot; placeholder=&quot;# of Votes&quot; ng-model=&quot;movie.imdbVotes&quot; class=&quot;numeric-field&quot; /&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;!-- /Add-Movie-Col-2 --&gt; 
+      &lt;/div&gt;
+      &lt;!-- /Add-Movie-Row-1 --&gt;
+      &lt;div id=&quot;Add-Movie-Row-2&quot;&gt;
+        &lt;div class=&quot;input-row row&quot;&gt;
+          &lt;div class=&quot;label-col col-lg-3 col-md-3 col-sm-3 col-xs-4&quot;&gt;
+            &lt;label for=&quot;imdbID&quot;&gt;IMDB ID:&lt;/label&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;input-col col-lg-9 col-md-9 col-sm-9 col-xs-8&quot;&gt;
+            &lt;input type=&quot;text&quot; name=&quot;imdbID&quot; id=&quot;imdbID&quot; placeholder=&quot;IMDB ID&quot; ng-model=&quot;movie.imdbID&quot; /&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;input-row row&quot;&gt;
+          &lt;div class=&quot;label-col col-lg-3 col-md-3 col-sm-3 col-xs-4&quot;&gt;
+            &lt;label for=&quot;poster&quot;&gt;Poster:&lt;/label&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;input-col col-lg-9 col-md-9 col-sm-9 col-xs-8&quot;&gt;
+            &lt;input type=&quot;text&quot; name=&quot;poster&quot; id=&quot;poster&quot; placeholder=&quot;Poster URL Location&quot; ng-model=&quot;movie.poster&quot; required /&gt;
+            &lt;div class=&quot;check-input-field-container&quot; ng-show=&quot;AddEditMovieForm.$submitted || AddEditMovieForm.poster.$touched&quot;&gt;
+                &lt;div class=&quot;error-msg&quot; ng-show=&quot;AddEditMovieForm.poster.$error.required&quot;&gt;Enter a Poster URL Location.&lt;/div&gt;
+              &lt;/div&gt;&lt;!-- /check-input-field-container --&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;input-row row&quot;&gt;
+          &lt;div class=&quot;label-col col-lg-3 col-md-3 col-sm-3 col-xs-4&quot;&gt;
+            &lt;label for=&quot;plot&quot;&gt;Plot:&lt;/label&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;input-col col-lg-9 col-md-9 col-sm-9 col-xs-8&quot;&gt;
+            &lt;textarea name=&quot;plot&quot; id=&quot;plot&quot; ng-model=&quot;movie.plot&quot; required &gt;&lt;/textarea&gt;
+            &lt;div class=&quot;check-input-field-container&quot; ng-show=&quot;AddEditMovieForm.$submitted || AddEditMovieForm.plot.$touched&quot;&gt;
+                &lt;div class=&quot;error-msg&quot; ng-show=&quot;AddEditMovieForm.plot.$error.required&quot;&gt;Enter a Plot.&lt;/div&gt;
+              &lt;/div&gt;&lt;!-- /check-input-field-container --&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;!-- /Add-Movie-Row-2 --&gt;
+      &lt;div class=&quot;row&quot;&gt;
+        &lt;div class=&quot;button-container&quot; movie-id=&quot;{{movie.id}}&quot;&gt; &lt;span&gt;
+          &lt;span class=&quot;btn btn-warning&quot; ng-click=&quot;resetMovie()&quot;&gt;Reset Movie&lt;/span&gt;&lt;!-- /btn --&gt;
+          &lt;/span&gt; &lt;span&gt;
+          &lt;a class=&quot;btn btn-info&quot; ng-click=&quot;previewMovie()&quot;&gt;Inline Edit&lt;/a&gt;
+          &lt;/span&gt; &lt;span ng-if=&quot;movie.id == null || movie.id=='0'&quot;&gt;
+          &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;addMovie()&quot;&gt;{{ addLabel }}&lt;/button&gt;
+          &lt;/span&gt; &lt;span ng-if=&quot;movie.id != null && movie.id !='0'&quot;&gt;
+          &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;updateMovie()&quot;&gt;{{ updateLabel }}&lt;/button&gt;
+          &lt;/span&gt; &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- /TemplateWrapper --&gt; 
+&lt;dialog-container&gt;&lt;/dialog-container&gt;
+             </pre>
+          </div>
+          <!-- /accordion-inner --> 
+        </div>
+        <!-- /accordion-body --> 
+      </div>
+      <!-- /accordion-group -->
+      <div class="accordion-group">
+        <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#Accordian-Templates-Code" href="#ADD-EDIT-INLINE-FORM-TEMPLATE-CODE">TEMPLATE - ADD/EDIT INLINE PREVIEW</a> </div>
+        <div id="ADD-EDIT-INLINE-FORM-TEMPLATE-CODE" class="accordion-body collapse">
+          <div class="accordion-inner code">
+            <pre class="prettyprint linenums">
+&lt;div id=&quot;TemplateSpinner&quot; ng-show=&quot;previewMovieItem == null&quot;&gt; &lt;img src=&quot;/www/content/images/apps/movies/ajax-loader.gif&quot; /&gt; &lt;/div&gt;
+&lt;div id=&quot;TemplateWrapper&quot; ng-show=&quot;previewMovieItem!=null&quot;&gt;
+  &lt;form name=&quot;AddEditMovieForm&quot; id=&quot;AddEditMovieForm&quot; novalidate &gt;
+    &lt;div ng-init=&quot;setForm(AddEditMovieForm);&quot;&gt;&lt;/div&gt;
+    &lt;div id=&quot;Movie-Page-Title&quot;&gt;
+      &lt;h2&gt;{{ pageTitle }}&lt;/h2&gt;
+    &lt;/div&gt;
+    &lt;!-- /Movie-Page-Title --&gt;
+    &lt;div class=&quot;movie-top-copy&quot;&gt;
+      &lt;p&gt;Click on the &lt;span class=&quot;editable-color&quot;&gt;RED&lt;/span&gt; copy below to edit the data. Click on the 'OK' button to save the changes. Click outside of the edit field or the 'Cancel' button to ignore the changes.&lt;/p&gt;
+      &lt;p ng-if=&quot;movie.id == null || movie.id=='0'&quot;&gt;Click on the &lt;span class=&quot;add-label-text&quot;&gt;'{{ addLabel }}'&lt;/span&gt; Button, to add the movie to the list.&lt;br&gt;
+        Click on the &lt;span class=&quot;reset-label-text&quot;&gt;'{{ resetLabel }}'&lt;/span&gt; Button, to reset all the movie data back to the default state.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div id=&quot;FORM-ERROR&quot; class=&quot;error-container&quot; ng-show=&quot;AddEditMovieForm.$submitted && AddEditMovieForm.$invalid&quot;&gt;
+      &lt;div class=&quot;clearfix&quot; ng-show=&quot;AddEditMovieForm.$submitted&quot;&gt;
+        &lt;h4&gt;Enter the following:&lt;/h4&gt;
+        &lt;ul&gt;
+          &lt;li class=&quot;col-xs-6 col-sm-6 col-md-6 col-lg-6&quot; ng-show=&quot;AddEditMovieForm.title.$error.required&quot;&gt;Title&lt;/li&gt;
+          &lt;li class=&quot;col-xs-6 col-sm-6 col-md-6 col-lg-6&quot; ng-show=&quot;AddEditMovieForm.runtime.$error.required&quot;&gt;Run Time&lt;/li&gt;
+          &lt;li class=&quot;col-xs-6 col-sm-6 col-md-6 col-lg-6&quot; ng-show=&quot;AddEditMovieForm.genre.$error.required&quot;&gt;Genre&lt;/li&gt;
+          &lt;li class=&quot;col-xs-6 col-sm-6 col-md-6 col-lg-6&quot; ng-show=&quot;AddEditMovieForm.released.$error.required&quot;&gt;Release Date&lt;/li&gt;
+          &lt;li class=&quot;col-xs-6 col-sm-6 col-md-6 col-lg-6&quot; ng-show=&quot;AddEditMovieForm.plot.$error.required&quot;&gt;Plot&lt;/li&gt;
+          &lt;li class=&quot;col-xs-6 col-sm-6 col-md-6 col-lg-6&quot; ng-show=&quot;AddEditMovieForm.director.$error.required&quot;&gt;Director&lt;/li&gt;
+          &lt;li class=&quot;col-xs-6 col-sm-6 col-md-6 col-lg-6&quot; ng-show=&quot;AddEditMovieForm.writers.$error.required&quot;&gt;Writer&lt;/li&gt;
+          &lt;li class=&quot;col-xs-6 col-sm-6 col-md-6 col-lg-6&quot; ng-show=&quot;AddEditMovieForm.actors.$error.required&quot;&gt;Actor&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+      &lt;input  name=&quot;title&quot; id=&quot;title&quot; ng-model=&quot;movie.title&quot; value=&quot;&quot; required type=&quot;text&quot; class=&quot;hidden&quot;&gt;
+      &lt;input name=&quot;director&quot; id=&quot;director&quot; ng-model=&quot;movie.director&quot; value=&quot;&quot; required type=&quot;text&quot; class=&quot;hidden&quot;&gt;
+      &lt;input name=&quot;writers&quot; id=&quot;writers&quot; ng-model=&quot;movie.writers&quot; value=&quot;&quot; required type=&quot;text&quot; class=&quot;hidden&quot;&gt;
+      &lt;input name=&quot;actors&quot; id=&quot;actors&quot; ng-model=&quot;movie.actors&quot; value=&quot;&quot; required type=&quot;text&quot; class=&quot;hidden&quot;&gt;
+      &lt;input name=&quot;genre&quot; id=&quot;genre&quot; ng-model=&quot;movie.genre&quot; value=&quot;&quot; required type=&quot;text&quot; class=&quot;hidden&quot;&gt;
+      &lt;input name=&quot;runtime&quot; id=&quot;runtime&quot; ng-model=&quot;movie.runtime&quot; value=&quot;&quot;  required=&quot;&quot;type=&quot;text&quot; class=&quot;hidden&quot;&gt;
+      &lt;input name=&quot;released&quot; id=&quot;released&quot; ng-model=&quot;movie.released&quot; value=&quot;&quot; required type=&quot;text&quot; class=&quot;hidden&quot;&gt;
+      &lt;input name=&quot;plot&quot; id=&quot;plot&quot; ng-model=&quot;movie.plot&quot; value=&quot;&quot; required type=&quot;text&quot; class=&quot;hidden&quot;&gt;
+    &lt;/div&gt;
+    &lt;div id=&quot;Movie-Preview-Container&quot; class=&quot;editable-preview-container&quot;&gt;
+      &lt;div id=&quot;#MovieItem-{{previewMovieItem.id}}&quot; class=&quot;movie-list-item-container clear-fix row&quot;&gt;
+        &lt;div class=&quot;row&quot;&gt;
+          &lt;div class=&quot;image-col col-lg-3 col-md-3 col-sm-3&quot;&gt; &lt;img ng-src=&quot;{{previewMovieItem.poster}}&quot; class=&quot;img-responsive&quot;/&gt; &lt;/div&gt;
+          &lt;div class=&quot;data-col col-lg-9 col-md-9 col-sm-9&quot;&gt;
+            &lt;div class=&quot;movie-title row editable-text&quot; model-key=&quot;title&quot;&gt;{{previewMovieItem.title}}&lt;/div&gt;
+            &lt;div class=&quot;row &quot;&gt;
+              &lt;div class=&quot;col-lg-6 col-md-6 col-sm-6 info-column&quot;&gt;
+                &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;movie-label&quot;&gt;Rated:&lt;/span&gt; &lt;span id=&quot;Editable-Select-Rated&quot; class=&quot;rated&quot; model-key=&quot;rated&quot;&gt;{{previewMovieItem.rated}}&lt;/span&gt;&lt;/div&gt;
+                &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;movie-label&quot;&gt;Run Time:&lt;/span&gt; &lt;span class=&quot;run-time&quot;&gt;&lt;span class=&quot;editable-text&quot; model-key=&quot;runtime&quot;&gt;{{previewMovieItem.runtime}}&lt;/span&gt; minutes&lt;/span&gt;&lt;/div&gt;
+                &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;movie-label&quot;&gt;{{previewMovieItem.GenreLabel}}:&lt;/span&gt; &lt;span class=&quot;genre editable-text&quot; model-key=&quot;genre&quot;&gt;{{previewMovieItem.genre}}&lt;/span&gt;&lt;/div&gt;
+                &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;movie-label&quot;&gt;Release Date: &lt;/span&gt; &lt;span class=&quot;release-date editable-date masked&quot; model-key=&quot;released&quot;&gt;{{previewMovieItem.DisplayReleaseDate}}&lt;/span&gt;&lt;/div&gt;
+              &lt;/div&gt;
+              &lt;!-- /info-column --&gt;
+              &lt;div class=&quot;ratings-column col-lg6 col-md-6 col-sm-6&quot;&gt;
+                &lt;div class=&quot;ratings-container&quot;&gt;
+                  &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;movie-label&quot;&gt;Your Rating:&lt;/span&gt; &lt;span id=&quot;RateIt-User-Preview&quot; class=&quot;rateit bigstars&quot; data-rateit-starwidth=&quot;32&quot; data-rateit-starheight=&quot;16&quot; rating=&quot;0&quot; imdb-rate&gt;&lt;/span&gt; &lt;/div&gt;
+                  &lt;div class=&quot;row&quot;&gt; &lt;span class=&quot;movie-label&quot;&gt;IMDb Rating:&lt;/span&gt; &lt;span id=&quot;IMDb-RateIt&quot; class=&quot;rateit bigstars&quot; data-rateit-starwidth=&quot;32&quot; data-rateit-starheight=&quot;16&quot; data-rating=&quot;{{previewMovieItem.imdbRating}}&quot; imdb-rate&gt;&lt;/span&gt; &lt;/div&gt;
+                  &lt;div class=&quot;imdb-votes row&quot;&gt; &lt;span class=&quot;votes-count&quot;&gt;( Rating: {{previewMovieItem.imdbRating}} from {{previewMovieItem.imdbVotes}} users)&lt;/span&gt;&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;!-- /ratings-container --&gt; 
+              &lt;/div&gt;
+              &lt;!-- /ratings-column --&gt; 
+            &lt;/div&gt;
+            &lt;!-- /row --&gt;
+            &lt;div class=&quot;plot editable-textarea&quot; model-key=&quot;plot&quot;&gt;{{previewMovieItem.plot}}&lt;/div&gt;
+            &lt;!-- /plot --&gt;
+            &lt;div class=&quot;additional-info-rows&quot;&gt;
+              &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;movie-label&quot;&gt;{{previewMovieItem.DirectorLabel}}:&lt;/span&gt; &lt;span class=&quot;directors editable-text&quot; model-key=&quot;director&quot;&gt;{{previewMovieItem.director}}&lt;/span&gt;&lt;/div&gt;
+              &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;movie-label&quot;&gt;{{previewMovieItem.WriterLabel}}:&lt;/span&gt; &lt;span class=&quot;writers editable-text&quot; model-key=&quot;writers&quot;&gt;{{previewMovieItem.writers}}&lt;/span&gt;&lt;/div&gt;
+              &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;movie-label&quot;&gt;{{previewMovieItem.ActorsLabel}}:&lt;/span&gt; &lt;span class=&quot;actors editable-text&quot; model-key=&quot;actors&quot;&gt;{{previewMovieItem.actors}}&lt;/span&gt;&lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;!-- /data-col --&gt; 
+          
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;!-- /movie-list-item-container --&gt;
+      
+      &lt;div class=&quot;button-container&quot;&gt; &lt;span ng-if=&quot;movie.id == null || movie.id=='0' &quot;&gt; &lt;span class=&quot;btn btn-warning&quot; ng-click=&quot;resetMovie()&quot;&gt;{{ resetLabel }}&lt;/span&gt; &lt;!-- /btn --&gt; 
+        &lt;/span&gt; &lt;span&gt; &lt;a class=&quot;btn btn-info&quot; ng-click=&quot;showMovieForm()&quot;&gt;Edit Form&lt;/a&gt; &lt;/span&gt; &lt;span ng-if=&quot;movie.id == null || movie.id=='0' &quot;&gt;
+        &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;addMovie()&quot;&gt;{{ addLabel }}&lt;/button&gt;
+        &lt;/span&gt; 
+        &lt;!--&lt;span ng-if=&quot;movie.id != null&quot;&gt;
+      &lt;button class=&quot;btn btn-primary&quot; ng-click=&quot;updateMovie(movie)&quot;&gt;Update Movie&lt;/button&gt;
+      &lt;/span&gt;--&gt; 
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;!-- /Movie-Preview-Container --&gt; 
+    &lt;span class=&quot;InlineEditTemplateReady&quot; style=&quot;display:none;&quot;&gt;&lt;/span&gt;
+  &lt;/form&gt;
+&lt;/div&gt;
+
+&lt;!-- /TemplateWrapper --&gt;
+&lt;dialog-container&gt;&lt;/dialog-container&gt;
+             </pre>
+          </div>
+          <!-- /accordion-inner --> 
+        </div>
+        <!-- /accordion-body --> 
+      </div>
+      <!-- /accordion-group --> 
+    </div>
+    <!-- /Accordian-Templates-Code --> 
+  </section>
+  <!--/TEMPLATES-CODE-SECTION -->
+  
+  <section id="AppSetup-Details">
+    <h3>Setting up the Application</h3>
+    <p>In this section, I defined the application's name 'moviesApp', and register these modules:</p>
+    <ul>
+      <li><b>ngRoute</b> - for the routing.</li>
+      <li><b>moviesApp.services</b> - for the API calls</li>
+      <li><b>movieApp.controllers</b> - for the application's controllers</li>
+      <li><b>movieApp.directives'</b> - for the application's directives</li>
+    </ul>
+    <p>Now that I have my APIs and templates ready, I can configure and define the application's routers and services. With the three templates, I will set up three route locations that defaults to the list route. These three routes will be: </p>
+    <ol>
+      <li>Movies List</li>
+      <li>Movie Add/Edit Form</li>
+      <li>Movie Add/Edit Inline Preview</li>
+    </ol>
+    <p>These are the six services that are needed:</p>
+    <ol>
+      <li>Get all the movies</li>
+      <li>Get a movie by id</li>
+      <li>Update a movie by id</li>
+      <li>Insert a new movie</li>
+      <li>Delete a movie by id</li>
+      <li>Submit a Vote - for this application, since there is only one table, it will call the movie's Update service</li>
+    </ol>
+  </section>
+  <!-- /AppSetup-Details -->
+  
+  <section id="APP-SETUP-CODE-SECTION" class="code-section">
+    <div class="accordion" id="Accordian-App-Setup">
+      <div class="accordion-group">
+        <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#Accordian-App-Setup" href="#APP-ROUTER-CODE">APPLICATION CONFIGURATION CODE - moviesApp</a> </div>
+        <div id="APP-ROUTER-CODE" class="accordion-body collapse">
+          <div class="accordion-inner code">
+            <pre class="prettyprint linenums">
+angular.module('moviesApp', [
+  'ngRoute',
+  'moviesApp.services',
+  'movieApp.controllers',
+  'movieApp.directives'
+]).config(['$routeProvider', function($routeProvider) {
+  $routeProvider.
+  when('/list', {
+    templateUrl: '/www/content/partials/movies-rating/movies-list-v2.html',
+    controller: 'MoviesListController'
+  }).
+  when('/edit/preview/:id', {
+    templateUrl: '/www/content/partials/movies-rating/movies-preview.html',
+    controller: 'MoviesAddEditController'
+  }).
+  when('/edit/form/:id', {
+    templateUrl: '/www/content/partials/movies-rating/movies-add-edit.html',
+    controller: 'MoviesAddEditController'
+  }).
+  otherwise({
+    redirectTo: '/list'
+  });
+}])
+
+              </pre>
+          </div>
+          <!-- /accordion-inner --> 
+        </div>
+        <!-- /accordion-body --> 
+      </div>
+      <!-- /accordion-group -->
+      <div class="accordion-group">
+        <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#Accordian-App-Setup" href="#APP-SERVICE-CODE">APPLICATION SERVICES CODE - moviesApp.services</a> </div>
+        <div id="APP-SERVICE-CODE" class="accordion-body collapse">
+          <div class="accordion-inner code">
+            <pre class="prettyprint linenums">
+angular.module('moviesApp.services',[]).factory('dataFactory', ['$http', function($http) {
+
+    var urlBase = '/www/index.php/api/movies';
+    var dataFactory = {};
+
+    dataFactory.getMovies = function () {
+        return $http.get(urlBase);
+    };
+
+    dataFactory.getMovie = function (id) {
+        return $http.get(urlBase + '/' + id);
+    };
+
+    dataFactory.insertMovie = function (movie) {
+		/* Remove the Movie's ID key, otherwise after the API Call, the response will come back with this ID instead of the newly created ID */
+		delete movie.id;
+		return $http.post(urlBase, movie);
+    };
+
+    dataFactory.updateMovie = function (movie) {
+        return $http.put(urlBase + '/' + movie.id, movie)
+    };
+
+    dataFactory.deleteMovie = function (id) {
+		var deleteApi = urlBase + '/' + id;
+		return $http({
+        	method: 'DELETE', 
+        	url: deleteApi
+    	});
+		/* The following throws an error in IE8. Because 'delete' is a reserved word */
+        //return $http.delete(urlBase + '/' + id);
+    };
+	
+	dataFactory.submitVote = function(movie, rating){	
+		/* Removes keys that were created in the model that aren't part of the original model */			
+		for(key in movie){
+			if(!DefaultMovieModel.hasOwnProperty(key)){
+				delete movie[key];	
+			}
+		}
+		movie['imdbRating'] = (parseInt(movie['imdbRating'])+rating).toString();
+		movie['imdbVotes'] = (parseInt(movie['imdbVotes'])+1).toString();
+		return dataFactory.updateMovie(movie);			
+	};
+    return dataFactory;
+}]);
+              </pre>
+          </div>
+          <!-- /accordion-inner --> 
+        </div>
+        <!-- /accordion-body --> 
+      </div>
+      <!-- /accordion-group --> 
+      
+    </div>
+    <!-- /Accordian-JSON --> 
+  </section>
+  <!--/APP-SETUP-CODE-SECTION -->
+  <section id="Controllers-Setup-Details">
+    <h3>Setting up the Controllers</h3>
+    <p>In this section, I created three Controllers.</p>
+    <ol>
+      <li><b>asideMenuController</b> - sets the navigation buttons' active and inactive states.</li>
+      <li><b>MoviesListController</b> - sets up the movies displayed in the list view.</li>
+      <li><b>MoviesAddEditController</b> - setups up the logic for the Form's and Inline Preview's Add/Edit views.</li>
+    </ol>
+    <p>I separated the three controllers in this section and defined the application's controller: <br/>
+      <span class="line-code">var MoviesControllers = angular.module('movieApp.controllers', []);</span> 
+  </section>
+  <!-- /Controllers-Setup-Details -->
+  
+  <section id="CONTROLLERS-CODE-SECTION" class="code-section">
+    <div class="accordion" id="Accordian-Controllers">
+      <div class="accordion-group">
+        <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#Accordian-Controllers" href="#APP-NAV-CONTROLLER-CODE">APPLICATION NAVIGATION CONTROLLER CODE - asideMenuController</a> </div>
+        <div id="APP-NAV-CONTROLLER-CODE" class="accordion-body collapse">
+          <div class="accordion-inner code">
+            <pre class="prettyprint linenums">
+MoviesControllers.controller('asideMenuController', function ($scope,   $location) {
+      $scope.$on('$routeChangeSuccess', function() {
+		  var array = $location.path().split("/");
+		  var loc = array[array.length-1]=="0" ? "add" : array[1];
+          $scope.menuActive = loc;
+      });
+  })
+
+              </pre>
+          </div>
+          <!-- /accordion-inner --> 
+        </div>
+        <!-- /accordion-body --> 
+      </div>
+      <!-- /accordion-group -->
+      <div class="accordion-group">
+        <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#Accordian-Controllers" href="#MOVIES-LIST-CONTROLLER-CODE">MOVIES LIST CONTROLLER CODE - MoviesListController</a> </div>
+        <div id="MOVIES-LIST-CONTROLLER-CODE" class="accordion-body collapse">
+          <div class="accordion-inner code">
+            <pre class="prettyprint linenums">
+MoviesControllers.controller('MoviesListController', ['$scope', 'dataFactory', function($scope, dataFactory) {
+	$scope.pageTitle = "Movies List";
+	$scope.statusCount=0;
+	$scope.status = {};
+	$scope.movies = null;
+	$scope.moviesSearchFilter = function (movie) {
+        var re = new RegExp($scope.titleFilter, 'i');
+        return !$scope.titleFilter || re.test(movie.title) || re.test(movie.plot);
+    };
+	$scope.deleteMovie = function(movie){
+		var message = "Delete Movie: "+movie.title+"?";
+		var status = {
+			type:"CONFIRM",
+			message: message,
+			title: "Movie Delete Confirmation",
+			okCallback: function(){
+				dataFactory.deleteMovie(movie["id"])
+				.success(function(data){					
+					var message = movie.title+" Deleted Successfully!";
+					var status = {
+						type:"SUCCESS",
+						message: message,
+						title: "Movie Deleted",
+						okCallback: function(){ console.log( "In Callback: "+message); }											
+					};
+					angular.copy(status,$scope.status);
+					$scope.statusCount++;
+					getMovies();
+				}) // end success
+				.error(function(error){				
+					message = error.errorMessage;
+					var status = {
+						type:"ERROR",
+						message: message,
+						title: "ERROR"	
+					};	
+					angular.copy(status,$scope.status);
+					$scope.statusCount++;				
+				});	// end error
+			} //end okCallback
+		};// end status
+		angular.copy(status,$scope.status);
+		$scope.statusCount++;
+
+	} // end scope.deleteMovie
+	function getMovies(){
+		dataFactory.getMovies()
+			.success(function(data){
+				for (var obj in data){
+					var movie=data[obj];					
+					movie = MovieTemplateHelper.getUpdatedModel(movie);			
+				}				
+				$scope.movies = data;
+			})
+			.error(function(error){
+				var message = 'Unable to load movies data: '+error.errorMessage;
+				var status = {
+					type:"ERROR",
+					message: message,
+					title: "ERROR"	
+				};	
+				angular.copy(status,$scope.status);
+				$scope.statusCount++;			
+			});
+	}
+	getMovies();
+
+}]);
+
+              </pre>
+          </div>
+          <!-- /accordion-inner --> 
+        </div>
+        <!-- /accordion-body --> 
+      </div>
+      <!-- /accordion-group -->
+      <div class="accordion-group">
+        <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#Accordian-Controllers" href="#APP-ADD-EDIT-CONTROLLER-CODE">ADD/EDIT MOVIE CONTROLLER CODE - MoviesAddEditController</a> </div>
+        <div id="APP-ADD-EDIT-CONTROLLER-CODE" class="accordion-body collapse">
+          <div class="accordion-inner code">
+            <pre class="prettyprint linenums">
+MoviesControllers.controller('MoviesAddEditController', ['$scope', '$routeParams', '$route', '$location', 'dataFactory',  function($scope, $routeParams, $route, $location, dataFactory) {
+	$scope.theForm = null;
+	$scope.id = $routeParams.id;
+	$scope.statusCount=0;
+	$scope.status = {};
+	$scope.updateLabel = "Update Movie";
+	$scope.addLabel = "Add Movie";
+	$scope.resetLabel = "Reset Movie";
+	$scope.resetData = {};
+	$scope.movie;
+	$scope.previewMovieItem = null;
+	
+	if($scope.id=="0"){
+		$scope.pageTitle = "Create New Movie";	
+		$scope.movie = MovieTemplateHelper.getLocalCopy();
+		$scope.resetData = angular.copy($scope.movie);
+		$scope.previewMovieItem = MovieTemplateHelper.getUpdatedModel(angular.copy($scope.movie));
+	}	
+	else{
+		$scope.pageTitle = "Update Movie";	
+		dataFactory.getMovie($scope.id).success(function(data){			
+			$scope.movie = data;
+			$scope.resetData = angular.copy($scope.movie);
+			$scope.previewMovieItem = MovieTemplateHelper.getUpdatedModel(angular.copy($scope.movie));
+		})
+		.error(function(error){				
+			var message = 'Unable to load movies data: '+error.errorMessage;
+			var status = {
+				type:"ERROR",
+				message: message,
+				title: "ERROR"	
+			};
+			angular.copy(status,$scope.status);
+			$scope.statusCount++;
+		});	
+	}
+	$scope.addMovie = function(){
+		if($scope.theForm.$valid){
+			dataFactory.insertMovie($scope.movie)
+				.success(function(data){										
+					var message = "Movie Created Successfully!";
+					$scope.movie["id"] = "0";
+					var status  = {
+						type:"SUCCESS",
+						message: message,
+						title: "Add Movie Success",
+						okCallback: function(){
+							$scope.resetMovie();
+						}					
+					};	
+					angular.copy(status,$scope.status);
+					$scope.statusCount++;					
+				})
+				.error(function(error){				
+					var message = error.errorMessage;
+					$scope.movie["id"] = "0";
+					var status = {
+						type:"ERROR",
+						message: message,
+						title: "Error Adding Movie"	
+					};				
+					angular.copy(status,$scope.status);
+					$scope.statusCount++;							
+				});	
+		}
+	}	
+	$scope.setForm = function(form){
+		$scope.theForm = form;
+	}
+
+	$scope.updateMovie = function(){
+		if($scope.theForm.$valid){
+			var updatedAttributes="";
+			var updates = 0;
+			for(key in $scope.movie){
+				if($scope.movie[key]!=$scope.resetData[key]){
+					if(updates>0){
+						updatedAttributes += ", ";
+					}					
+					updatedAttributes += MovieModelLabels[key];
+					updates++;
+				}				
+			}
+			if(updates>0){
+				dataFactory.updateMovie($scope.movie)
+					.success(function(data){
+						angular.copy(data,$scope.movie);							
+						var previewMovieItem = MovieTemplateHelper.getUpdatedModel(angular.copy($scope.movie));				
+						angular.copy(previewMovieItem,$scope.previewMovieItem);
+						$scope.resetData = angular.copy($scope.movie);
+						var message = "Updated Successfully: "+updatedAttributes;	
+						var status = {
+							type:"SUCCESS",
+							message: message,
+							title: "Update Success"	
+						};		
+						angular.copy(status,$scope.status);
+						$scope.statusCount++;								
+					})
+					.error(function(error){		
+						var message = error.errorMessage;	
+						var status = {
+							type:"ERROR",
+							message: error.errorMessage,
+							title: "Update Error"	
+						};
+						angular.copy(status,$scope.status);
+						$scope.statusCount++;
+					});		
+			}// if updates>0
+			else{
+					var message = "Nothing To Update!";	
+					var status = {
+						type:"ERROR",
+						message: message,
+						title: "Update Warning"	
+					};
+					angular.copy(status,$scope.status);
+					$scope.statusCount++;
+			}
+		}
+	} // updateMovie
+	
+	$scope.resetMovie = function(){
+		if($scope.movie["id"]=="0"){	
+			MovieTemplateHelper.clearLocalCopy();	
+			$route.reload();		
+		}
+		else{		
+			if((typeof $scope.theForm != 'undefined') && $scope.theForm !=null){
+				$scope.theForm.$setPristine();
+				$scope.theForm.$setUntouched();
+			}					
+			angular.copy($scope.resetData,$scope.movie);	
+		}
+	}
+	
+	$scope.previewMovie = function(){
+		if((typeof $scope.movie["id"] == 'undefined') || $scope.movie["id"]=="0"){
+			MovieTemplateHelper.setLocalCopy($scope.movie);
+		}
+		$location.path('/edit/preview/'+$scope.movie["id"]);		
+					
+	}
+	$scope.showMovieForm = function(){
+		var movieId = $scope.movie["id"];
+		$location.path('/edit/form/'+movieId);		
+
+	}
+
+}]);
+
+              </pre>
+          </div>
+          <!-- /accordion-inner --> 
+        </div>
+        <!-- /accordion-body --> 
+      </div>
+      <!-- /accordion-group --> 
+      
+    </div>
+    <!-- /Accordian-JSON --> 
+  </section>
+  <!--/CONTROLLERS-CODE-SECTION -->
+  <section id="Directives-Setup-Details">
+    <h3>Setting up the Directives</h3>
+    <p>I created multiple directives to load plugins and other custom event listenters with the controllers and the views.</p>
+    <ol>
+      <li><b>Rate It</b> - sets ups the RateIt plugin to display rating stars and allows users to vote in the List View.</li>
+      <li><b>Inline Edit</b> - sets up the Jeditable plugin for the Inline Add/Edit Preview View</li>
+      <li><b>Numeric Fields</b> - sets up a event listner for input fields that have the 'numeric-field' class</li>
+      <li><b>Masked Date &amp; Masked Year</b> - sets up the Masked Input Plugin for the input fields with classes 'masked-date' and 'masked-year'</li>
+      <li><b>Dialog</b> - creates a dialog box, that displays successful, error, or confirmation messages.</li>
+    </ol>
+  </section>
+  <!-- /Directives-Setup-Details -->
+  
+  <section id="DIRECTIVES-CODE-SECTION" class="code-section">
+    <div class="accordion" id="Accordian-Directives">
+      <div class="accordion-group">
+        <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#Accordian-Directives" href="#DIRECTIVES-CODE">DIRECTIVES CODE</a> </div>
+        <div id="DIRECTIVES-CODE" class="accordion-body collapse">
+          <div class="accordion-inner code">
+            <pre class="prettyprint linenums">
+angular.module('movieApp.directives', [])
+    .directive('imdbUserRate', function(dataFactory) {
+        return {
+            restrict: 'A',
+            link: function(scope, elem, attrs) {
+                   MoviesPlugins.setUsersRateIt(scope,elem,attrs,dataFactory);		
+                } // end link
+        } // end return obj;
+    })
+    .directive('imdbRate', function() {
+        return {
+            restrict: 'A',
+            link: function(scope, elem, attrs) {
+                scope.$watch('movie', function() {
+                    if (scope.movie != null) {
+                       MoviesPlugins.setReadOnlyRateIt(scope,elem,attrs); 
+                    }
+                });
+            }
+        }
+    })
+    .directive('InlineEditTemplateReady', function() {
+        return {
+            restrict: 'C',
+            link: function(scope, elem, attrs) {
+				scope.$watch('previewMovieItem', function() {
+						if (scope.previewMovieItem != null) {
+							MoviesPlugins.setEditables(scope,elem,attrs);				 
+						} // end scope.previewMovieItem!=null
+					}) // end scope.$watch
+			} // end link
+        }
+    })
+	.directive('numericField',function(){
+		return {
+            restrict: 'C',
+            link: function(scope, elem, attrs) {
+				MoviesPlugins.setNumericField(scope,elem,attrs);	
+			} // end link
+        }
+	})
+	.directive('maskedDate',function(){
+		return {
+            restrict: 'C',
+            link: function(scope, elem, attrs) {
+				MoviesPlugins.setMaskedDate(scope,elem,attrs);	
+			} // end link
+        }
+	})
+	.directive('maskedYear',function(){
+		return {
+            restrict: 'C',
+            link: function(scope, elem, attrs) {
+				MoviesPlugins.setMaskedYear(scope,elem,attrs);	
+			} // end link
+        }
+	})
+	.directive('dialogContainer',function(){
+		return {
+            restrict: 'E',
+			templateUrl: '/www/content/partials/movies-rating/movies-dialog.html',			
+            link: function(scope, elem, attrs) {
+				scope.$watch('statusCount', function() {
+						if (scope.statusCount >0 ) {
+							MoviesPlugins.setDialog(scope,elem,attrs);				 
+						} // end scope.previewMovieItem!=null
+
+					}) // end scope.$watch
+
+                } // end link
+        }
+	});
+              </pre>
+          </div>
+          <!-- /accordion-inner --> 
+        </div>
+        <!-- /accordion-body --> 
+      </div>
+      <!-- /accordion-group --> 
+    </div>
+    <!-- /Accordian-JSON --> 
+  </section>
+  <!--/DIRECTIVES-CODE-SECTION -->
+  <section id="Custom-Objects-Details">
+    <h3>Custom JavaScript Helper Objects</h3>
+    <p>I created my own custom helper objects that removes all the ugly non-AngularJS JavaScript codes that are useful to the application outside of the AngularJS framework.</p>
+    <ol>
+      <li><b>DefaultMovieModel</b> - this is the JSON object that represents the Movie model.</li>
+      <li><b>MovieModelLabels</b> - this is a object that maps the movie JSON keys with the correct label name to display what attributes were updated successfully when users updates a movie.</li>
+      <li><b>MovieTemplateHelper</b> - this object is used to help the controllers set the display parameters for the view. It also sets and updates the user's local storage while they are adding a new movie.</li>
+      <li><b>MoviesPlugins</b> - this object is used to set up the plugins and event listeners used in the Directives.</li>
+    </ol>
+  </section>
+  <!-- /Custom-Objects-Details -->
+  <section id="CUSTOM-OBJECTS-CODE-SECTION" class="code-section">
+    <div class="accordion" id="Accordian-Custom-Objects">
+      <div class="accordion-group">
+        <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#Accordian-Custom-Objects" href="#CUSTOM-MODELS-CODE">DefaultMovieModel &amp; MovieModelLabels</a> </div>
+        <div id="CUSTOM-MODELS-CODE" class="accordion-body collapse">
+          <div class="accordion-inner code">
+            <pre class="prettyprint linenums">
+var DefaultMovieModel = {
+	   "id":"0",
+	   "user_id": user.id,
+	   "title": "",
+	   "plot": "",
+	   "genre": "",
+	   "director": "",
+	   "writers": "",
+	   "actors":"",
+	   "poster": "/www/content/images/movie-posters/default.gif",
+	   "rated":"PG",
+	   "released":"",
+	   "year":"",
+	   "runtime":"",
+	   "type":"movie",
+	   "imdbID":"",
+	   "imdbRating":"0",
+	   "imdbVotes":"0"
+	}
+    
+var MovieModelLabels = {
+	   "title": "Title",
+	   "plot": "Plot",
+	   "genre": "Genre",
+	   "director": "Director",
+	   "writers": "Writers",
+	   "actors":"Actors",
+	   "poster": "Poster",
+	   "rated":"Rated",
+	   "released":"Release Date",
+	   "year":"Year",
+	   "runtime":"Run Time",
+	   "imdbID":"IMDB ID",
+	   "imdbRating":"Movie Rating",
+	   "imdbVotes":"Movie Votes"
+	}	
+              </pre>
+          </div>
+          <!-- /accordion-inner --> 
+        </div>
+        <!-- /accordion-body --> 
+      </div>
+      <!-- /accordion-group -->
+      <div class="accordion-group">
+        <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#Accordian-Custom-Objects" href="#CUSTOM-MOVIE-TEMPLATE-HELPER-CODE">MovieTemplateHelper</a> </div>
+        <div id="CUSTOM-MOVIE-TEMPLATE-HELPER-CODE" class="accordion-body collapse">
+          <div class="accordion-inner code">
+            <pre class="prettyprint linenums">
+var MovieTemplateHelper =
+{
+	getUpdatedModel: function(movie){
+		var userId = 0;
+		var isAdmin = false;
+		try{
+			userId = user.get("id");
+			isAdmin = user.get("isAdmin")=="1";
+		}catch(e){}
+		movie.allowDeleteEdit = ( (movie["user_id"]==userId) || isAdmin);	
+		movie.poster = this.getPosterImageSrc(movie.poster);					
+		movie.GenreLabel = this.getGenreLabel(movie.genre);
+		movie.DisplayReleaseDate = this.getReleaseDateDisplay(movie.released)
+		movie.DirectorLabel = this.getDirectorsLabel(movie.director);
+		movie.WriterLabel = this.getWritersLabel(movie.writers);
+		movie.ActorsLabel =this.getActorsLabel(movie.actors);		
+		movie.rating = this.getImdbRating(movie.imdbRating, movie.imdbVotes);	
+		
+		return movie;		
+	},
+	getReleaseDateDisplay: function(Released)
+	{
+		var dateArray = Released.split("-");
+		var returnVal = "";
+		if(dateArray.length==3){
+			returnVal = dateArray[1] + "-" + dateArray[2] + "-" + dateArray[0];	
+		}
+		return returnVal;
+	},
+	getGenreLabel: function(Genre)
+	{
+		var genresArray = Genre.split(",");
+		return genresArray.length>1 ? "Genres" : "Genre";		
+	},
+	getDirectorsLabel: function(Director)
+	{
+		var directorsArray = Director.split(",");
+		return directorsArray.length>1 ? "Directors" : "Director";		
+	},
+	getWritersLabel: function(Writer)
+	{
+		var writersArray = Writer.split(",");
+		return writersArray.length>1 ? "Writers" : "Writer";		
+	},
+	getActorsLabel: function(Actors)
+	{
+		var actorsArray = Actors.split(",");
+		return actorsArray.length>1 ? "Stars" : "Star";
+	},
+	getPosterImageSrc: function(Poster)
+	{
+		return Poster.replace('http://ia.media-imdb.com/images/',MoviesSettings.PosterImageUri);	
+	},
+	getImdbRating: function(ratings, votes){
+		var rating = ratings/votes;		
+		var roundedRating = (votes>0) ? Math.round(rating*10)/10 : 0;
+		return roundedRating.toFixed(1);	
+	},
+	updateMovie: function(origData,newData){
+		for(key in newData)
+		{
+			var value = newData[key];
+			origData[key] = value;				
+		}		
+	},
+	setLocalCopy: function(movie){
+		var localMovie = angular.copy(DefaultMovieModel);
+		this.updateMovie(localMovie,movie);
+		localStorage.setItem("MovieModel",angular.toJson(localMovie));
+		for(key in movie)
+		{		
+			var value = movie[key];		
+			if((typeof value != 'undefined') && value.length>0){
+				localMovie[key] = value;	
+			}			
+		}	
+		localStorage.setItem("MovieModel",angular.toJson(localMovie));		
+	},
+	getLocalCopy: function(){
+		var isAvailable = !(typeof localStorage.getItem("MovieModel") == 'undefined' || localStorage.getItem("MovieModel")==null);
+		var movie = isAvailable ? angular.fromJson(localStorage.getItem("MovieModel")) : angular.copy(DefaultMovieModel) ;
+		return movie;
+	},
+	clearLocalCopy: function(){
+		localStorage.removeItem("MovieModel");
+	}
+
+}
+              </pre>
+          </div>
+          <!-- /accordion-inner --> 
+        </div>
+        <!-- /accordion-body --> 
+      </div>
+      <!-- /accordion-group -->
+      <div class="accordion-group">
+        <div class="accordion-heading"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#Accordian-Custom-Objects" href="#CUSTOM-MOVIE-PLUGINS-CODE">MoviePlugins</a> </div>
+        <div id="CUSTOM-MOVIE-PLUGINS-CODE" class="accordion-body collapse">
+          <div class="accordion-inner code">
+            <pre class="prettyprint linenums">
+var MoviesPlugins = {
+	setNumericField: function(scope,elem,attrs){
+		$(elem).keydown(function(e) {
+			// Allow: backspace, delete, tab, escape, enter and .
+			if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+				 // Allow: Ctrl+A
+				(e.keyCode == 65 && e.ctrlKey === true) || 
+				// Allow: Ctrl+C
+				(e.keyCode == 67 && e.ctrlKey === true) || 
+				// Allow: Ctrl+Z
+				(e.keyCode == 90 && e.ctrlKey === true) || 
+				 // Allow: home, end, left, right, down, up
+				(e.keyCode >= 35 && e.keyCode <= 40)) {
+					 // let it happen, don't do anything
+					 return;
+			}
+			// Ensure that it is a number and stop the keypress
+			if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+				e.preventDefault();
+			}
+        });
+	},
+	setMaskedYear: function(scope, elem, attrs){
+		$(elem).mask("9999");
+		
+	},
+	setMaskedDate: function(scope,elem,attrs){
+		$(elem).mask("99-99-9999",{placeholder:"MM-DD-YYYY"});
+		$(elem).on('blur',function(){
+			var released = $(this).val();
+			var dateArray = released.split("-");
+			if (dateArray[0].length < 4) {
+				released = dateArray[2] + "-" + dateArray[0] + "-" + dateArray[1];
+			}
+			scope.movie["released"] = released;
+		});
+	},// end MoviesPlugins.setMaskedDate
+	setReadOnlyRateIt: function(scope,elem,attrs){
+		var imdbRating = 0;
+		if (attrs.rating != "0") {
+			imdbRating = MovieTemplateHelper.getImdbRating(scope.movie.imdbRating, scope.movie.imdbVotes) / 2;;
+		}
+		$(elem).rateit({
+			"readonly": true,
+			"value": imdbRating,
+			"max": 5
+		});		
+	}, //end MoviePlugins.setReadOnlyRateIt
+	setUsersRateIt: function(scope,elem,attrs,dataFactory){
+ 		var previousVal = parseInt(attrs.rating) / 2;	
+		var rateitObj = $(elem).rateit({
+			"beforeSelection": function(prevVal) {
+				previousVal = prevVal;
+			},
+			"afterSelection": function(val) {
+					var thisObj = this;
+					var movie = angular.copy(scope.movie);
+					var votes = (typeof localStorage.getItem("MovieVotes") == 'undefined' || localStorage.getItem("MovieVotes") == null) ? {} : angular.fromJson(localStorage.getItem("MovieVotes"));
+					if (!votes.hasOwnProperty("movie_" + movie["id"]) || user.get("isAdmin") == "1") {
+						var movieID = movie['id'];
+						var title = movie['title'];
+						var rating = val * 2;
+						dataFactory.submitVote(movie, rating)
+							.success(function(data) {
+								var movie = MovieTemplateHelper.getUpdatedModel(data);
+								votes["movie_" + movie["id"]] = rating;
+								localStorage.setItem("MovieVotes", angular.toJson(votes));
+								for (key in movie) {
+									scope.movie[key] = movie[key];
+								}
+								thisObj.readonly = true;
+								var message = "Your vote for \"" + movie["title"] + "\" is successful!";
+								$(elem).parent().find('.message').remove();
+								$(elem).parent().prepend('<div class="message" style="color:#f00;">'+message+'</div>');
+
+							})
+							.error(function(error) {
+								message = 'Unable to submit vote: ' + error.errorMessage;
+								$(elem).parent().find('.message').remove();
+								$(elem).parent().prepend('<div class="message" style="color:#f00;">'+message+'</div>');
+							});
+					} else {
+						var message = "You have already voted for this movie!";
+						$(elem).parent().find('.message').remove();
+						$(elem).parent().prepend('<div class="message" style="color:#f00;">'+message+'</div>');
+					}
+				} // end afterSelection
+		}); // end rateitObj		
+	}, // end MoviesPlugins.setUsersRateIt
+	setEditables: function(scope,elem,attrs){
+			var textSettings = {
+				cssclass: 'editable-item',
+				type: 'text',
+				submit: 'OK',
+				cancel: 'CANCEL'
+			};
+			$('.editable-text').editable(function(value, settings) {
+				var key = $(this).attr('model-key');
+				if ($.trim(value) != "") {
+					scope.movie[key] = value;
+					if (scope.movie["id"] == 0) {
+						MovieTemplateHelper.setLocalCopy(scope.movie);
+						$('#AddEditForm').submit();
+						scope.theForm[key].$setViewValue(value);
+					} else {
+						scope.updateMovie();
+					}
+					return (value);
+				} else {
+					return (scope.movie[key]);
+				}
+			},textSettings); // end .editable-text
+			var dateSettings =  {
+				cssclass: 'editable-item',
+				type: "masked",
+				mask: "99-99-9999",
+				submit: 'OK',
+				cancel: 'CANCEL'
+			};
+			$('.editable-date').editable(function(value, settings) {
+				var key = $(this).attr('model-key');
+				if ($.trim(value) != "") {
+					var released = value;
+					var dateArray = released.split("-");
+					if (dateArray[0].length < 4) {
+						released = dateArray[2] + "-" + dateArray[0] + "-" + dateArray[1];
+					}
+					scope.movie[key] = released;
+
+					if (scope.movie["id"] == 0) {
+						MovieTemplateHelper.setLocalCopy(scope.movie);
+						scope.theForm[key].$setViewValue(value);
+					} else {
+						scope.updateMovie();
+					}
+					return (value);
+				} else {
+					return (scope.previewMovieItem["DisplayReleaseDate"]);
+				}
+			},dateSettings); // end .editable-date
+
+			var ratingSettings = {
+				data: " {'G':'G','PG':'PG','PG-13':'PG-13', 'R':'R'}",
+				type: 'select',
+				submit: 'OK',
+				cancel: 'CANCEL'
+			}
+			$('#Editable-Select-Rated').editable(function(value, settings) {
+				var key = $(this).attr('model-key');
+				if ($.trim(value) != "") {
+					scope.movie[key] = value;
+					if (scope.movie["id"] == 0) {
+						MovieTemplateHelper.setLocalCopy(scope.movie);
+						scope.theForm[key].$setViewValue(value);
+					} else {
+						scope.updateMovie();
+					}
+					return (value);
+				} else {
+					return (scope.movie[key]);
+				}
+			},ratingSettings); // end .editable-rated	
+
+			var textareaSettings =  {
+				cssclass: 'editable-item',
+				type: 'textarea',
+				submit: 'OK',
+				cancel: 'CANCEL'
+			}
+			$('.editable-textarea').editable(function(value, settings) {
+				var key = $(this).attr('model-key');
+				if ($.trim(value) != "") {
+					scope.movie[key] = value;
+					if (scope.movie["id"] == 0) {
+						MovieTemplateHelper.setLocalCopy(scope.movie);
+						scope.theForm[key].$setViewValue(value);
+					} else {
+						scope.updateMovie();
+					}
+					return (value);
+				} else {
+					return (scope.movie[key]);
+				}
+			},textareaSettings); // end .editable						 
+
+	}, // end MoviesPlugins.setEditables
+	setDialog: function(scope,elem,attrs){
+		 var status = scope.status;
+		 var okButton = { text: "OK", click: function() {  
+		 	$(this).dialog( "close" ); 
+			try{		 
+		 		status.okCallback();
+			}catch(e){
+				//console.log("OK Callback error: "+e);	
+			}
+		}};
+		 var settings = {}
+		 if(status["type"]=="CONFIRM"){
+			settings = {
+				draggable: false,
+				title: status["title"],
+				dialogClass: "confirm-dialog",
+				buttons: [
+				okButton,
+				{
+					text: "CANCEL",
+					click: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+				
+				]
+			} // end settings;			
+		}
+		else{
+			var dClass=status["type"]=="SUCCESS" ? "success-dialog" : "error-dialog";
+			settings = {
+				draggable: false,
+				title: status["title"],
+				dialogClass: dClass,
+				buttons: [ okButton	]
+			}	// end settings
+		}
+		$('#Movies-Dialog').attr("title",status["title"]);
+		$('#Movies-Dialog .status-message').html(status["message"]);
+		$("#Movies-Dialog" ).dialog(settings);
+	}
+} //end MoviesPlugins
+              </pre>
+          </div>
+          <!-- /accordion-inner --> 
+        </div>
+        <!-- /accordion-body --> 
+      </div>
+      <!-- /accordion-group --> 
+    </div>
+    <!-- /Accordian-JSON --> 
+  </section>
+  <!--/CUSTOM-OBJECTS-CODE-SECTION -->
+  <section id="Conclusion-Details">
+    <h3>Conclusion</h3>
+    <p>This was a great AngularJS learning experience. I'll probably make some more tweaks and enchancements from time to time. In the future, I'll try to develop another movie demo that will list movie cast members, such as actors, directors, and writers. And also to allow users to Add/Edit the cast members. It will involve creating a relational database and adding more back-end APIs for the project.</p>
+    <p>Thanks for visiting and feel free to try this Demo!</p>
+    <p>-<span itemprop="name">Raymond Lee</span> 
+  </section>
+  <!-- /Conclusion-Details -->
+  
+  <section id="Conclusion-Details">
+    <h3>Useful Resources</h3>
+    <p>Here's a list of useful resources that I used to develop this application.</p>
+    <ul>
+      <li><a href="https://angularjs.org/" target="_blank">AngularJS</a> - this is AngularJS website, with full documentation on everything you need to know about this framework. </li>
+      <li><a href="http://www.toptal.com/angular-js/a-step-by-step-guide-to-your-first-angularjs-app" target="_blank">A Step-by-Step Guide to Your First AngularJS App</a> - this has very useful detailed description on a Formula F1 demo application written by <span itemprop="name">Raoni Boaventura</span>. He also has a <a href="http://www.toptal.com/angular-js/your-first-angularjs-app-part-2-scaffolding-building-and-testing" target="_blank">Part 2</a> article on how to do unit testing.</li>
+      <li><a href="http://www.lynda.com" target="_blank">lynda.com</a> - this has very useful video tutorials on many topics. Including two on AngularJS, written by <span itemprop="name">Ray Villalobos</span>. You have to be registered user with them, to view these videos: "<a href="http://www.lynda.com/AngularJS-tutorials/Up-Running-AngularJS/154414-2.html" target="_blank">Up and Running with AngularJS</a>" and "<a href="http://www.lynda.com/AngularJS-tutorials/Building-Data-Driven-App-AngularJS/174237-2.html" target="_blank"> Building a Data-Driven App with AngularJS</a>
+      <li><a href="http://jquery.com/" target="_blank">jQuery</a> - a very useful and my favorite JavaScript library. Most of the plugins and code my AngularJS Directives were written with jQuery.</li>
+      <li><a href="http://rateit.codeplex.com/" target="_blank">RateIt</a> - a jQuery (star) rating plugin that I used for the movies' ratings.</li>
+      <li><a href="http://www.appelsiini.net/projects/jeditable" target="_blank">Jeditable</a> - Edit In Place Plugin For jQuery, that I used in the Add/Edit Inline Preview page.</li>
+      <li><a href="http://digitalbush.com/projects/masked-input-plugin/" target="_blank">Masked Input Plugin</a> - It allows a user to more easily enter fixed width input where you would like them to enter the data in a certain format. I used some of the numeric and dates input fields.</li>
+      
+
+
+    </ul>
+  </section>
+  <!-- /Conclusion-Details --> 
+</article>
+<!-- /DETAILS-CONTENT --> 
+

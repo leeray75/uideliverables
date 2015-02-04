@@ -1,26 +1,7 @@
 <!DOCTYPE HTML>
 <?php /* @var $this Controller */ 
-$baseURL = Yii::app()->request->baseUrl;
-header('Content-language: en');
-?>
-<!-- 
-<?php /* echo 'Current PHP version: ' . phpversion(); */ ?>
--->
-<?php 
-if(isset($_GET["portfolio"]) and ($_GET["portfolio"] == "angular-movies-rating"))
-{
-	echo('<html lang="en" ng-app="myApp">');
-}else{
-	echo('<html lang="en">');
-}
-?><head>
-<meta charset="utf-8">
-<!--
-<meta name="google-site-verification" content="EPIlhr6_ScpRyrPBAia0j6H8ooaKOa4Y8nmF9SrSZv4" />
--->
-<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-<link href='//fonts.googleapis.com/css?family=Lobster|Open+Sans:400,300,300italic,600,400italic,600italic,700,700italic,800,800italic|Roboto+Condensed:400,300,300italic,400italic,700,700italic|Source+Sans+Pro:400,200,200italic,300,300italic,400italic,600,600italic,700,700italic,900,900italic|PT+Sans:400,400italic,700,700italic|Droid+Serif:400,400italic,700,700italic|Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic|Merriweather:400,300,300italic,400italic,700,700italic,900,900italic|Play:400,700' rel='stylesheet' type='text/css'>
-<?php
+echo "<!-- isSSL: ".$this->isSSL." -->";
+
 if ( (isset($this->isSSL) and $this->isSSL === true) and (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on')) {
     if(!headers_sent()) {
         header("Status: 301 Moved Permanently");
@@ -47,17 +28,38 @@ else if((isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] === 'on')){
 		}
     }
 }
+
 ?>
+<!-- 
+<?php /* echo 'Current PHP version: ' . phpversion(); */ ?>
+-->
+<?php 
+$baseURL = Yii::app()->request->baseUrl;
+header('Content-language: en');
+if(isset($_GET["portfolio"]) and ($_GET["portfolio"] == "angular-movies-rating"))
+{
+	echo('<html lang="en" ng-app="myApp">');
+}else{
+	echo('<html lang="en">');
+}
+?>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--
+<meta name="google-site-verification" content="EPIlhr6_ScpRyrPBAia0j6H8ooaKOa4Y8nmF9SrSZv4" />
+-->
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+<link href='//fonts.googleapis.com/css?family=Lobster|Open+Sans:400,300,300italic,600,400italic,600italic,700,700italic,800,800italic|Roboto+Condensed:400,300,300italic,400italic,700,700italic|Source+Sans+Pro:400,200,200italic,300,300italic,400italic,600,600italic,700,700italic,900,900italic|PT+Sans:400,400italic,700,700italic|Droid+Serif:400,400italic,700,700italic|Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic|Merriweather:400,300,300italic,400italic,700,700italic,900,900italic|Play:400,700' rel='stylesheet' type='text/css'>
 <?php if(isset($this->metaDescription)): ?>
 <meta name="description" content="<?php echo $this->metaDescription; ?>">
 <?php endif ?>
 <?php if(isset($this->metaKeywords)): ?>
 <meta name="keywords" content="<?php echo $this->metaKeywords; ?>">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <?php endif ?>
-<meta name="author" content="Raymond Lee" />
-
 <?php include_once "includes/css-files.php"; ?>
+<?php include_once "includes/js-files.php"; ?>
+<meta name="author" content="Raymond Lee" />
 <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 <body>
@@ -65,7 +67,6 @@ else if((isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] === 'on')){
   <?php include "includes/header.php" ?>
   <section id="main" class="row" data-role="content">
     <div class="content-container col-xs-12 clearfix">
-    	
       <?php if(isset($this->breadcrumbs)):?>
       <?php $this->widget('zii.widgets.CBreadcrumbs', array(
 			'links'=>$this->breadcrumbs,
@@ -73,9 +74,7 @@ else if((isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] === 'on')){
       <!-- breadcrumbs -->
       
       <?php endif?>
- 		
-      <?php echo $content; ?> 
-      </div>
+      <?php echo $content; ?> </div>
     <!-- /content-container --> 
   </section>
   <!-- /main -->
@@ -85,12 +84,12 @@ else if((isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] === 'on')){
         <!--
 <script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
 --> 
-<!--
+        <!--
         <script language="javascript">
 	LazyLoad.js("//platform.linkedin.com/in.js", function () {});
 </script> 
         <script type="IN/MemberProfile" data-id="http://www.linkedin.com/pub/raymond-lee/3/946/382" data-format="click" data-related="false"></script> 
-        -->
+        --> 
       </div>
       <!-- /linkedin-plugin-container --> 
       Copyright &copy; <?php echo date('Y'); ?> by <?php echo CHtml::encode(Yii::app()->name); ?>.<br/>
@@ -98,16 +97,16 @@ else if((isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] === 'on')){
       <?php echo Yii::powered(); ?> </div>
     <!-- /content-container --> 
   </footer>
-
 </div>
 <!-- page -->
-<?php include_once "includes/js-files.php"; ?>
+<div id="UIDeliverablesLogin">
+	<div ng-include src="'/www/content/partials/global/login-modal.html'"></div>
+</div>
 <?php 
 if(strpos($_SERVER['SERVER_NAME'], "localhost")===false){
 	include_once $_SERVER['DOCUMENT_ROOT']."/analyticstracking.php"; 
 }
 ?>
-
 
 <!--
 <script type="text/javascript">stLight.options({publisher: "0749a3e4-1b28-453c-8ace-e949971754c9", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>

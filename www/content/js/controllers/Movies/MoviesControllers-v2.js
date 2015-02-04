@@ -19,19 +19,14 @@ MoviesControllers.controller('MoviesListController', ['$scope', 'dataFactory', f
         return !$scope.titleFilter || re.test(movie.title) || re.test(movie.plot);
     };
 	$scope.deleteMovie = function(movie){
-		//console.log(movie);
 		var message = "Delete Movie: "+movie.title+"?";
 		var status = {
 			type:"CONFIRM",
 			message: message,
 			title: "Movie Delete Confirmation",
 			okCallback: function(){
-				console.log("deleting movie: "+movie["id"]);
 				dataFactory.deleteMovie(movie["id"])
-				.success(function(data){				
-					//$scope.movie = data;		
-					console.log('SUCCESS!');
-					console.log(data);			
+				.success(function(data){					
 					var message = movie.title+" Deleted Successfully!";
 					var status = {
 						type:"SUCCESS",
@@ -62,8 +57,6 @@ MoviesControllers.controller('MoviesListController', ['$scope', 'dataFactory', f
 	function getMovies(){
 		dataFactory.getMovies()
 			.success(function(data){
-				//console.clear();
-				//console.log(data);
 				for (var obj in data){
 					var movie=data[obj];					
 					movie = MovieTemplateHelper.getUpdatedModel(movie);			
@@ -85,8 +78,8 @@ MoviesControllers.controller('MoviesListController', ['$scope', 'dataFactory', f
 
 }]);
 
-/* Edit Movies Controller */
-MoviesControllers.controller('MoviesEditController', ['$scope', '$routeParams', '$route', '$location', 'dataFactory',  function($scope, $routeParams, $route, $location, dataFactory) {
+/* Add/Edit Movies Controller */
+MoviesControllers.controller('MoviesAddEditController', ['$scope', '$routeParams', '$route', '$location', 'dataFactory',  function($scope, $routeParams, $route, $location, dataFactory) {
 	$scope.theForm = null;
 	$scope.id = $routeParams.id;
 	$scope.statusCount=0;
@@ -95,7 +88,6 @@ MoviesControllers.controller('MoviesEditController', ['$scope', '$routeParams', 
 	$scope.addLabel = "Add Movie";
 	$scope.resetLabel = "Reset Movie";
 	$scope.resetData = {};
-
 	$scope.movie;
 	$scope.previewMovieItem = null;
 	
@@ -114,7 +106,6 @@ MoviesControllers.controller('MoviesEditController', ['$scope', '$routeParams', 
 		})
 		.error(function(error){				
 			var message = 'Unable to load movies data: '+error.errorMessage;
-			//$('#HTTP-ERROR').html($scope.status);
 			var status = {
 				type:"ERROR",
 				message: message,
@@ -124,10 +115,8 @@ MoviesControllers.controller('MoviesEditController', ['$scope', '$routeParams', 
 			$scope.statusCount++;
 		});	
 	}
-	$scope.addMovie = function(form){
-		//console.log(movie);	
-		//console.log(form.$valid)
-		if(form.$valid){
+	$scope.addMovie = function(){
+		if($scope.theForm.$valid){
 			dataFactory.insertMovie($scope.movie)
 				.success(function(data){										
 					var message = "Movie Created Successfully!";
@@ -142,8 +131,6 @@ MoviesControllers.controller('MoviesEditController', ['$scope', '$routeParams', 
 					};	
 					angular.copy(status,$scope.status);
 					$scope.statusCount++;					
-					
-					//$('#HTTP-SUCCESS').html($scope.status).show();
 				})
 				.error(function(error){				
 					var message = error.errorMessage;
@@ -154,9 +141,7 @@ MoviesControllers.controller('MoviesEditController', ['$scope', '$routeParams', 
 						title: "Error Adding Movie"	
 					};				
 					angular.copy(status,$scope.status);
-					$scope.statusCount++;						
-					//$('#HTTP-ERROR').html($scope.status);
-	
+					$scope.statusCount++;							
 				});	
 		}
 	}	
@@ -165,20 +150,17 @@ MoviesControllers.controller('MoviesEditController', ['$scope', '$routeParams', 
 	}
 
 	$scope.updateMovie = function(){
-		//console.log(movie);		
 		if($scope.theForm.$valid){
 			var updatedAttributes="";
 			var updates = 0;
 			for(key in $scope.movie){
-
 				if($scope.movie[key]!=$scope.resetData[key]){
 					if(updates>0){
 						updatedAttributes += ", ";
 					}					
 					updatedAttributes += MovieModelLabels[key];
 					updates++;
-				}
-				
+				}				
 			}
 			if(updates>0){
 				dataFactory.updateMovie($scope.movie)
@@ -195,7 +177,6 @@ MoviesControllers.controller('MoviesEditController', ['$scope', '$routeParams', 
 						};		
 						angular.copy(status,$scope.status);
 						$scope.statusCount++;								
-						//$('#HTTP-SUCCESS').html(updatedKey+" Updated Successfully!").show();
 					})
 					.error(function(error){		
 						var message = error.errorMessage;	
@@ -222,10 +203,8 @@ MoviesControllers.controller('MoviesEditController', ['$scope', '$routeParams', 
 	} // updateMovie
 	
 	$scope.resetMovie = function(){
-
 		if($scope.movie["id"]=="0"){	
 			MovieTemplateHelper.clearLocalCopy();	
-			//MovieTemplateHelper.setLocalCopy(DefaultMovieModel);	
 			$route.reload();		
 		}
 		else{		
@@ -235,7 +214,6 @@ MoviesControllers.controller('MoviesEditController', ['$scope', '$routeParams', 
 			}					
 			angular.copy($scope.resetData,$scope.movie);	
 		}
-
 	}
 	
 	$scope.previewMovie = function(){

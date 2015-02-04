@@ -171,11 +171,11 @@
         <div class="button-container" movie-id="{{movie.id}}"> <span>
           <span class="btn btn-warning" ng-click="resetMovie()">Reset Movie</span><!-- /btn -->
           </span> <span>
-          <a class="btn btn-info" ng-click="previewMovie(movie)">Inline Edit</a>
+          <a class="btn btn-info" ng-click="previewMovie()">Inline Edit</a>
           </span> <span ng-if="movie.id == null || movie.id=='0'">
-          <button class="btn btn-primary" ng-click="addMovie(AddEditMovieForm)">{{ addLabel }}</button>
+          <button class="btn btn-primary" ng-click="addMovie()">{{ addLabel }}</button>
           </span> <span ng-if="movie.id != null && movie.id !='0'">
-          <button class="btn btn-primary" ng-click="updateMovie(AddEditMovieForm)">{{ updateLabel }}</button>
+          <button class="btn btn-primary" ng-click="updateMovie()">{{ updateLabel }}</button>
           </span> </div>
       </div>
     </form>

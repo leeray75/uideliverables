@@ -8,34 +8,18 @@ footer {
 	color: #999;
 	text-align: center;
 }
+h1{ font-size: 28px; }
+h2{ font-size: 24px;}
+h3{ font-size: 20px;}
+h4{ font-size: 16px;}
 
-.glyphicon {
-	color: #cdae51;
-}
-.glyphicon-pushpin, 
-.glyphicon-heart {
-	color: #3F2B22;
-}
-
-.pull-right.img-responsive {
-	margin: 0 0 1em 1em;
-}
-
-.btn-info {
-    background-color: #CCC;
-    border-color: #3F2B22;
-    color: #062a53;
+.tab-pane {
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;	
+	border-bottom: 1px solid #ddd;
+	padding: 10px;
 }
 
-.btn-info:hover,
-.btn-info:focus,
-.btn-info:active,
-.btn-info.active,
-.open .dropdown-toggle.btn-info {
-  background-color: #eee;
-  border-color: #333;
-  color: #062a53;
-}
 .panel-default {
     border-color: #3F2B22;
 }
@@ -47,6 +31,8 @@ footer {
 .breadcrumb > li + li:before {
   content: none;
 }
+
+/* Begin Top Global Nav */
 
 #UI-Deliverables-Nav.navbar-inverse {
     background-color: #CCC;
@@ -65,13 +51,6 @@ footer {
 	#UI-Deliverables-Nav .ui-logo-sm{ display: none;}
 }
 
-/*
-@media (min-width: 768px) {
-#UI-Deliverables-Nav.navbar-default.navbar-inverse .navbar-nav > li.dropdown:hover ul.dropdown-menu{
-	display: block !important;
-}
-}
-*/
 #UI-Deliverables-Nav.navbar-default.navbar-inverse .navbar-nav > li > a {
     color: #062a53;
 }
@@ -123,84 +102,14 @@ footer {
 #UI-Deliverables-Nav.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
     background-color: #999;
 }
-/*
-.navbar-inverse .navbar-toggle:hover {
-	background-color: #ddd;
-	color: #333;
-}
-.navbar-inverse .navbar-toggle .glyphicon {
-	color: white;
-}
-*/
-.navbar-inverse .navbar-toggle:hover .glyphicon {
-	color: #333;
-}
-.tab-pane {
-	border-left: 1px solid #ddd;
-	border-right: 1px solid #ddd;	
-	border-bottom: 1px solid #ddd;
-	padding: 0.8em;
-}
 
-/* remove this style */
-.glyphicon-pushpin, 
-.glyphicon-heart {
-	color: #3F2B22;
-}
 
-/* add these styles */
 
-.glyphicon {
-	color: #3F2B22;
-}
-.active .glyphicon {
-	color: #cdae51;
-}
 
-#Google-Search-Container
-{  }
-
-#Google-Search-Container .gsc-control-cse
-{ 
-	background-color: transparent !important; 
-	border: none;
-	padding: 5px; 
-}
-#Google-Search-Container .gsc-input-box 
-{
-	border: 1px solid #062A53;	
-	border-radius:5px;
-	height: 30px;
-	-moz-border-radius: 5px;
-}
-
-#Google-Search-Container table.gsc-search-box td{
-	vertical-align: top;
-}
-#Google-Search-Container table.gsc-search-box td .gsc-input{
-	color: #000;	
-}
-#Google-Search-Container .gsc-search-button 
-{
-	background-color: #006DCC;
-	background-image: linear-gradient(to bottom, #0088CC, #0044CC);
-	background-repeat: repeat-x;
-    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);	
-	border-radius:5px;
-	-moz-border-radius: 5px;
-	padding: 5px 5px 0 5px;	
-}
-#Google-Search-Container  .gsc-results-wrapper-overlay  .gsc-result .gs-title
-{ overflow: visible;}
-
-@media (max-width: 991px) {
+@media (max-width: 990px) {
     body{font-size: 12px;}
 }
-@media (max-width: 767px) {
-    body{font-size: 12px;}
 
-	}
-}
 @media print {
 	body{ padding-top: 0px;}
 	#sharebar,

@@ -1,5 +1,3 @@
-//var MoviesFactory = angular.module('moviesApp',[]);
-
 angular.module('moviesApp.services',[]).factory('dataFactory', ['$http', function($http) {
 
     var urlBase = '/www/index.php/api/movies';
@@ -14,8 +12,9 @@ angular.module('moviesApp.services',[]).factory('dataFactory', ['$http', functio
     };
 
     dataFactory.insertMovie = function (movie) {
+		/* Remove the Movie's ID key, otherwise after the API Call, the response will come back with this ID instead of the newly created ID */
 		delete movie.id;
-        return $http.post(urlBase, movie);
+		return $http.post(urlBase, movie);
     };
 
     dataFactory.updateMovie = function (movie) {
@@ -39,21 +38,9 @@ angular.module('moviesApp.services',[]).factory('dataFactory', ['$http', functio
 				delete movie[key];	
 			}
 		}
-
 		movie['imdbRating'] = (parseInt(movie['imdbRating'])+rating).toString();
 		movie['imdbVotes'] = (parseInt(movie['imdbVotes'])+1).toString();
 		return dataFactory.updateMovie(movie);			
-			
-		
-		/*
-		var AjaxData = { "movieId": movieId, "rating": rating};
-		return $.ajax({
-			url: MoviesSettings.RateMovieUri,
-			type: "POST",
-			dataType: 'json',
-			data: AjaxData	
-		});
-		*/
 	};
     return dataFactory;
 }]);

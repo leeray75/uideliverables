@@ -34,10 +34,12 @@ var FullCalendarView = Backbone.View.extend({
         },
         addAll: function() {
 			console.log("addAll");
+			console.log(this.collection.toJSON());
             this.$el.fullCalendar('addEventSource', this.collection.toJSON());
         },
         addOne: function(event) {
 			console.log("FullCalenderView addOne");
+			console.log(event);
 			//console.log("event.errorMessage = "+event.get("errorMessage"));
 			if(event.id != null)
 			{

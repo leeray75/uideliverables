@@ -23,6 +23,11 @@
 				$user_models = new stdClass();	// empty object
 				$models = $all_models;				
 				break;
+			case 'MoviesView':
+				$all_models = MoviesView::model()->findAll();		
+				$user_models = new stdClass();	// empty object
+				$models = $all_models;				
+				break;
 			default:
 				// Model not implemented error
 				$this->_sendResponse(501);

@@ -10,12 +10,7 @@ $this->pageCSS = array(
 
 $this->pageJS = array(
 
-"/www/content/js/libs/jquery/jquery-ui-1.10.3.custom.min.js",
-"/www/content/js/libs/underscore/underscore-1.5.2.js",
-"/www/content/js/libs/backbone/backbone-min-1.0.0.js",
-"/www/content/js/models/Users/User.js",
-"/www/content/js/main.js",
-
+	"/www/content/js/libs/jquery/jquery-ui-1.10.3.custom.min.js",
 	"/www/content/js/libs/angular/angular.min.js",	
 	"/www/content/js/controllers/two-way-binding.js",
 	//

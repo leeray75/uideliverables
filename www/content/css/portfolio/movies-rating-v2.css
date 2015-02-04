@@ -75,6 +75,7 @@
 -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
 box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
 }
+#MovieTitlesSearchForm .glyphicon{ color: #000; }
 /* RateiIt plugin style */
 
 .rateit-range{ height: 16px; overflow: hidden;}
@@ -124,16 +125,12 @@ button.rateit-reset{ display: none !important;}
   	background: -moz-linear-gradient(#FFF, #CCC); /* For Firefox 3.6 to 15 */
   	background: linear-gradient(#FFF, #CCC); /* Standard syntax */	
 }
-@media (max-width: 360px) {
+@media (max-width: 399px) {
 #MoviesNavContainer ul.movies-navbar li.movies-brand-logo { display: none; }	
-	#MoviesNavContainer ul.movies-navbar li.nav-link-item {
-		/* width: 43%; display: none;*/
-
-	}	
-	#MoviesNavContainer ul li.nav-link-item a{
-		width: 100%;
-		font-size: 12px;	
-	}
+#MoviesNavContainer ul li.nav-link-item a{
+	width: 100%;
+	font-size: 12px;	
+}
 }
 
 #MoviesNavContainer ul li.nav-link-item a:hover{
@@ -155,7 +152,7 @@ button.rateit-reset{ display: none !important;}
 	cursor: default;
 }
 #MoviesNavContainer ul li.nav-link-item  a .glyphicon{
-	color: #062a53 font-size: .8em;
+	color: #062a53; font-size: .8em;
 }
 #MoviesNavContainer ul li.nav-link-item.active .glyphicon
 { color: #fff; }
@@ -241,3 +238,32 @@ ul.movies-navbar li{ margin: 0 auto 0 auto; width: 100%;}
 .movie-top-copy span.editable-color{ color: #f00; font-weight: bold;}
 .movie-top-copy span.add-label-text{ color: #337ab7; font-weight: bold; }
 .movie-top-copy span.reset-label-text { color: #f0ad4e; font-weight: bold; }
+
+
+#DETAILS-CONTENT{}
+#DETAILS-CONTENT .accordion {
+    margin-bottom: 20px;
+}
+#DETAILS-CONTENT .accordion-group {
+    border: 1px solid #333;
+    border-radius: 4px;
+    margin-bottom: 2px;
+}
+#DETAILS-CONTENT .accordion-heading {
+    border-bottom: 0 none;
+	background-color: #ccc;
+}
+#DETAILS-CONTENT .accordion-heading a{ color: #062a53; text-decoration: none; font-weight: bold;}
+#DETAILS-CONTENT .accordion-heading a:hover{ text-decoration: none; background: #999;}
+#DETAILS-CONTENT .accordion-heading .accordion-toggle {
+    display: block;
+    padding: 8px 15px;
+}
+#DETAILS-CONTENT .accordion-toggle {
+    cursor: pointer;
+}
+#DETAILS-CONTENT .accordion-inner {
+    border-top: 1px solid #e5e5e5;
+    padding: 9px 15px;
+}
+#DETAILS-CONTENT .line-code{ font-weight: bold;}

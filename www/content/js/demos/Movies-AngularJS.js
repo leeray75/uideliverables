@@ -37,7 +37,6 @@ var MovieModelLabels = {
 var MovieTemplateHelper =
 {
 	getUpdatedModel: function(movie){
-		//console.log("Inside MovieTemplateHelper");
 		var userId = 0;
 		var isAdmin = false;
 		try{
@@ -51,7 +50,6 @@ var MovieTemplateHelper =
 		movie.DirectorLabel = this.getDirectorsLabel(movie.director);
 		movie.WriterLabel = this.getWritersLabel(movie.writers);
 		movie.ActorsLabel =this.getActorsLabel(movie.actors);		
-		//movie._imdbRating = movie.imdbRating;
 		movie.rating = this.getImdbRating(movie.imdbRating, movie.imdbVotes);	
 		
 		return movie;		
@@ -84,24 +82,6 @@ var MovieTemplateHelper =
 	{
 		var actorsArray = Actors.split(",");
 		return actorsArray.length>1 ? "Stars" : "Star";
-	},
-	getRuntimeMinutes: function(Runtime)
-	{
-		RuntimeMinutes = 0;
-		var RuntimeArray = Runtime.split(" ");	
-		if(RuntimeArray.length==4)
-		{
-			RuntimeMinutes = parseInt(RuntimeArray[0])*60 + parseInt(RuntimeArray[2]);
-		}
-		else if(RuntimeArray[1] == "h")
-		{	
-			RuntimeMinutes = parseInt(RuntimeArray[0])*60	
-		}
-		else
-		{
-			RuntimeMinutes = parseInt(RuntimeArray[0]);
-		}	
-		return RuntimeMinutes;	
 	},
 	getPosterImageSrc: function(Poster)
 	{
@@ -140,15 +120,13 @@ var MovieTemplateHelper =
 	clearLocalCopy: function(){
 		localStorage.removeItem("MovieModel");
 	}
-	
-	
+
 }
 	
 var MoviesPlugins = {
 	setNumericField: function(scope,elem,attrs){
 		$(elem).keydown(function(e) {
 			// Allow: backspace, delete, tab, escape, enter and .
-			//console.log(e.keyCode);
 			if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
 				 // Allow: Ctrl+A
 				(e.keyCode == 65 && e.ctrlKey === true) || 
@@ -201,14 +179,12 @@ var MoviesPlugins = {
 			},
 			"afterSelection": function(val) {
 					var thisObj = this;
-					//console.log("Val="+val);
 					var movie = angular.copy(scope.movie);
 					var votes = (typeof localStorage.getItem("MovieVotes") == 'undefined' || localStorage.getItem("MovieVotes") == null) ? {} : angular.fromJson(localStorage.getItem("MovieVotes"));
 					if (!votes.hasOwnProperty("movie_" + movie["id"]) || user.get("isAdmin") == "1") {
 						var movieID = movie['id'];
 						var title = movie['title'];
 						var rating = val * 2;
-						//console.log("rating = "+rating);
 						dataFactory.submitVote(movie, rating)
 							.success(function(data) {
 								var movie = MovieTemplateHelper.getUpdatedModel(data);
@@ -218,9 +194,7 @@ var MoviesPlugins = {
 									scope.movie[key] = movie[key];
 								}
 								thisObj.readonly = true;
-								//MoviesPlugins.setReadOnlyRateIt(scope,elem,attrs);
 								var message = "Your vote for \"" + movie["title"] + "\" is successful!";
-								console.log("Your vote for \"" + movie["title"] + "\" is successful!");
 								$(elem).parent().find('.message').remove();
 								$(elem).parent().prepend('<div class="message" style="color:#f00;">'+message+'</div>');
 
@@ -342,7 +316,7 @@ var MoviesPlugins = {
 			try{		 
 		 		status.okCallback();
 			}catch(e){
-				console.log("OK Callback error: "+e);	
+				//console.log("OK Callback error: "+e);	
 			}
 		}};
 		 var settings = {}
@@ -374,6 +348,6 @@ var MoviesPlugins = {
 		}
 		$('#Movies-Dialog').attr("title",status["title"]);
 		$('#Movies-Dialog .status-message').html(status["message"]);
-		 $( "#Movies-Dialog" ).dialog(settings);
+		$("#Movies-Dialog" ).dialog(settings);
 	}
 } //end MoviesPlugins

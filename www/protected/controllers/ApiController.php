@@ -82,7 +82,13 @@ class ApiController extends Controller
 		if($status==200 and $body != '')
 		{
 			// send the body
-			echo $body;
+	 		if(isset($_GET["callback"])){
+				$callback = $_GET["callback"]; 
+				echo $callback."(".$body.")";
+			}
+			else{			
+				echo $body;
+			}
 		}
 		else if($body!='')
 		{
@@ -94,7 +100,13 @@ class ApiController extends Controller
 												
 			);
 			$body = json_encode($errorObj);
-			echo $body;
+	 		if(isset($_GET["callback"])){
+				$callback = $_GET["callback"]; 
+				echo $callback."(".$body.")";
+			}
+			else{			
+				echo $body;
+			}
 		}
 		// we need to create the body if none is passed
 		else
@@ -133,8 +145,8 @@ class ApiController extends Controller
 				"errorCode" => $status								
 			);
 			$body = json_encode($errorObj);
-	 
-			echo $body;
+
+				echo $body;
 		}
 		Yii::app()->end();
 	}

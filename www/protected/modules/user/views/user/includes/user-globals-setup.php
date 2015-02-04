@@ -1,4 +1,5 @@
 <?php
+
 $this->isSSL = true;
 $this->pageCSS = array(
 	"/www/content/css/user-profile.css"

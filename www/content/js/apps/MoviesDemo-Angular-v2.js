@@ -1,6 +1,5 @@
 angular.module('moviesApp', [
   'ngRoute',
-  /*'ngAnimate',*/
   'moviesApp.services',
   'movieApp.controllers',
   'movieApp.directives'
@@ -10,19 +9,13 @@ angular.module('moviesApp', [
     templateUrl: '/www/content/partials/movies-rating/movies-list-v2.html',
     controller: 'MoviesListController'
   }).
-  /*
-  when('/add', {
-    templateUrl: '/www/content/partials/movies-rating/movies-add-edit.html',
-    controller: 'MoviesAddController'
-  }).
-  */
   when('/edit/preview/:id', {
     templateUrl: '/www/content/partials/movies-rating/movies-preview.html',
-    controller: 'MoviesEditController'
+    controller: 'MoviesAddEditController'
   }).
   when('/edit/form/:id', {
     templateUrl: '/www/content/partials/movies-rating/movies-add-edit.html',
-    controller: 'MoviesEditController'
+    controller: 'MoviesAddEditController'
   }).
   otherwise({
     redirectTo: '/list'

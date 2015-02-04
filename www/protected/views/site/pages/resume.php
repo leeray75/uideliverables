@@ -4,8 +4,6 @@
 		"/www/content/css/resume.css",
 	);
 	$this->pageJS = array(
-"/www/content/js/libs/underscore/underscore-1.5.2.js",
-"/www/content/js/libs/backbone/backbone-min-1.0.0.js",	
 		"/www/content/js/resume.js",
 	);
 $this->metaKeyWords = "resume, html, css, javascript, jquery, ajax, json, frontend, developer";

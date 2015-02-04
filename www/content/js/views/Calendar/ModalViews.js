@@ -1,16 +1,15 @@
 // JavaScript Document
 
 var AddEditEventModalOverlayView, DeleteEventModalOverlayView, DisplayEventModalOverlayView;
-
-$(document).ready(function(){
-	
-	$.ajax({
-		url: "/www/content/templates/calendar/calendar-modals-template.html",
-		}).done(function(data) {
+$.ajax({
+	url: "/www/content/templates/calendar/calendar-modals-template.html",
+	}).done(function(data) {
+		$(document).ready(function(){	
 			$('body').append(data);
 			ModalViews.init();
-	});
+		});			
 });
+
 
 var ModalViews =
 {

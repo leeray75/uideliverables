@@ -1,7 +1,11 @@
 <?php
-if( !$_SERVER['SERVER_NAME']=="localhost")
+if( $_SERVER['SERVER_NAME']!="localhost")
 {
 	$this->isSSL = true;
+}
+else
+{
+	$this->isSSL = false;	
 }
 $this->pageCSS = array(
 	"/www/content/css/user-profile.css"

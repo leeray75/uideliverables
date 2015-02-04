@@ -2,11 +2,13 @@
 
 class SiteController extends Controller
 {
+	private $_isSecure = false;
 	private $_pageCSS = array();
 	private $_pageJS = array();
 	private $_metaKeyWords;
 	private $_metaDescription;
-	private $_isSSL;
+	
+
 	
 	public function getPageJS()
 	{
@@ -18,16 +20,12 @@ class SiteController extends Controller
 	}
 	public function getIsSSL()
 	{
-		if($this->_isSSL!==null)
-			return $this->_isSSL;
-		else
-		{
-			return "";
-		}
+		return $this->_isSecure;
 	}
 	public function setIsSSL($value)
 	{
-		$this->_isSSL=$value;
+		$this->_isSecure = $value;
+
 	}
 	public function getPageCSS()
 	{

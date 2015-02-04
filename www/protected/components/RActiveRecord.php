@@ -6,7 +6,7 @@ class RActiveRecord extends CActiveRecord {
  
     private static $dbadvert = null;
  
-    protected static function getAdvertDbConnection()
+    protected static function getAdvertDbConnection($db_host,$db_name,$db_password)
     {
  
         if (self::$dbadvert !== null)
@@ -14,17 +14,17 @@ class RActiveRecord extends CActiveRecord {
         else
         {
              $User=User::model()->findByPk(Yii::app()->user->id);
-             $db_name = $user->db_name;
- 
+             //$db_name = $user->db_name;
+ 				//$db_name = "devImdbMovies";
  
              self::$dbadvert = Yii::createComponent(array(
              'class' => 'CDbConnection',
             // other config properties...
-             'connectionString'=>"mysql:host=localhost;dbname=".$db_name, //dynamic database name here
+             'connectionString'=>"mysql:host=".$db_host.";dbname=".$db_name, //dynamic database name here
               'enableProfiling' => true,
               'enableParamLogging' => true,
-              'username'=>'root',
-              'password'=> '', //password here
+              'username'=>$db_name,
+              'password'=> $db_password, //password here
               'charset'=>'utf8',
               'emulatePrepare' => true,
               'enableParamLogging'=>true,

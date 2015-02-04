@@ -1,10 +1,11 @@
 <?php 
 $cssArray =  array(
     /* $baseURL."/content/css/reset.css", */
-	 $baseURL."/content/css/bootstrap.min.css", 
+	 
+	 //$baseURL."/content/css/bootstrap.min.css", 
 	/* $baseURL."/content/css/jquery-ui-1.10.3.custom.css", */
 	/* $baseURL."/content/plugins/jquery.mobile/1.3.2/jquery.mobile-1.3.2.min.css", */
-	
+	"//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css",
      $baseURL."/content/css/global.css", 
 );
 $cssArray = isset($this->pageCSS) ? array_merge($cssArray, $this->pageCSS) : $cssArray;

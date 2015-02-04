@@ -8,7 +8,7 @@
 	comparator: function(model) {
 		var startDate = new Date(getDateObject(model.get('start')));
 		var endDate = new Date(getDateObject(model.get('end')));
-		console.log("comparator: "+model.get('start'));
+		//console.log("comparator: "+model.get('start'));
         return [model.get('start'),model.get('end')];
     },
 	setFilter: function(filter)
