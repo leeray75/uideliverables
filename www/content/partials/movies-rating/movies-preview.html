@@ -10,6 +10,8 @@
       <p>Click on the <span class="editable-color">RED</span> copy below to edit the data. Click on the 'OK' button to save the changes. Click outside of the edit field or the 'Cancel' button to ignore the changes.</p>
       <p ng-if="movie.id == null || movie.id=='0'">Click on the <span class="add-label-text">'{{ addLabel }}'</span> Button, to add the movie to the list.<br>
         Click on the <span class="reset-label-text">'{{ resetLabel }}'</span> Button, to reset all the movie data back to the default state.</p>
+        <p ng-show="isDraggable">Drag a image file from your computer onto the poster image to update it.</p>
+        <p>Click on the <span class="edit-label-text">'{{ editLabel }}'</span> button to edit all the movie's attributes.</p>
     </div>
     <div id="FORM-ERROR" class="error-container" ng-show="AddEditMovieForm.$submitted && AddEditMovieForm.$invalid">
       <div class="clearfix" ng-show="AddEditMovieForm.$submitted">
@@ -37,7 +39,9 @@
     <div id="Movie-Preview-Container" class="editable-preview-container">
       <div id="#MovieItem-{{previewMovieItem.id}}" class="movie-list-item-container clear-fix row">
         <div class="row">
-          <div class="image-col col-lg-3 col-md-3 col-sm-3"> <img ng-src="{{previewMovieItem.poster}}" class="img-responsive"/> </div>
+          <div class="image-col col-lg-3 col-md-3 col-sm-3">
+          	<div id="Movie-Poster" Movie-Poster ng-class="{noBorder: isDraggable==false}"><img ng-src="{{previewMovieItem.poster}}" class="img-responsive"/></div><!-- /Movie-Poster -->
+          </div>
           <div class="data-col col-lg-9 col-md-9 col-sm-9">
             <div class="movie-title row editable-text" model-key="title">{{previewMovieItem.title}}</div>
             <div class="row ">
@@ -50,9 +54,10 @@
               <!-- /info-column -->
               <div class="ratings-column col-lg6 col-md-6 col-sm-6">
                 <div class="ratings-container">
+                
                   <div class="row"><span class="movie-label">Your Rating:</span> <span id="RateIt-User-Preview" class="rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="16" rating="0" imdb-rate></span> </div>
-                  <div class="row"> <span class="movie-label">IMDb Rating:</span> <span id="IMDb-RateIt" class="rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="16" data-rating="{{previewMovieItem.imdbRating}}" imdb-rate></span> </div>
-                  <div class="imdb-votes row"> <span class="votes-count">( Rating: {{previewMovieItem.imdbRating}} from {{previewMovieItem.imdbVotes}} users)</span></div>
+                  <div class="row"> <span class="movie-label">Rating:</span> <span id="IMDb-RateIt" class="rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="16" data-rating="{{previewMovieItem.imdbRating}}" imdb-rate></span> </div>
+                  <div class="imdb-votes row"> <span class="votes-count">( Rating: {{previewMovieItem.rating}} from {{previewMovieItem.imdbVotes}} users)</span></div>
                 </div>
                 <!-- /ratings-container --> 
               </div>
@@ -74,12 +79,9 @@
       <!-- /movie-list-item-container -->
       
       <div class="button-container"> <span ng-if="movie.id == null || movie.id=='0' "> <span class="btn btn-warning" ng-click="resetMovie()">{{ resetLabel }}</span> <!-- /btn --> 
-        </span> <span> <a class="btn btn-info" ng-click="showMovieForm()">Edit Form</a> </span> <span ng-if="movie.id == null || movie.id=='0' ">
+        </span> <span> <a class="btn btn-info" ng-click="showMovieForm()">{{ editLabel }}</a> </span> <span ng-if="movie.id == null || movie.id=='0' ">
         <button class="btn btn-primary" ng-click="addMovie()">{{ addLabel }}</button>
         </span> 
-        <!--<span ng-if="movie.id != null">
-      <button class="btn btn-primary" ng-click="updateMovie(movie)">Update Movie</button>
-      </span>--> 
       </div>
     </div>
     <!-- /Movie-Preview-Container --> 

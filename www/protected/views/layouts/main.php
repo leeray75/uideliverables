@@ -1,33 +1,35 @@
 <!DOCTYPE HTML>
 <?php /* @var $this Controller */ 
-echo "<!-- isSSL: ".$this->isSSL." -->";
 
-if ( (isset($this->isSSL) and $this->isSSL === true) and (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on')) {
-    if(!headers_sent()) {
-        header("Status: 301 Moved Permanently");
-        header(sprintf(
-            'Location: https://%s%s',
-            $_SERVER['HTTP_HOST'],
-            $_SERVER['REQUEST_URI']
-        ));
-        exit();
-    }
-}
-else if((isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] === 'on')){
+	echo "<!-- isSSL: ".$this->isSSL." -->";
 	
-	if(isset($this->isSSL) and !$this->isSSL === true)
-	{
+	if ( (isset($this->isSSL) and $this->isSSL === true) and (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on')) {
 		if(!headers_sent()) {
 			header("Status: 301 Moved Permanently");
 			header(sprintf(
-				'Location: http://%s%s',
+				'Location: https://%s%s',
 				$_SERVER['HTTP_HOST'],
 				$_SERVER['REQUEST_URI']
 			));
 			exit();
 		}
-    }
-}
+	}
+	else if((isset($_SERVER['HTTPS']) and $_SERVER['HTTPS'] === 'on')){
+		
+		if(isset($this->isSSL) and !$this->isSSL === true)
+		{
+			if(!headers_sent()) {
+				header("Status: 301 Moved Permanently");
+				header(sprintf(
+					'Location: http://%s%s',
+					$_SERVER['HTTP_HOST'],
+					$_SERVER['REQUEST_URI']
+				));
+				exit();
+			}
+		}
+	}
+
 
 ?>
 <!-- 

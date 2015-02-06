@@ -14,7 +14,6 @@ $this->pageJS = array(
 
 	"/www/content/js/libs/jquery/jquery-ui-1.10.3.custom.min.js",
 	"/www/content/js/libs/jquery/plugins/rateit/jquery.rateit-modified.js",
-	"/www/content/js/libs/angular/angular.min.js",	
 	"/www/content/js/libs/angular/angular-route.min.js",
 	"/www/content/js/apps/MoviesDemo-Angular.js",
 	"/www/content/js/controllers/Movies/MoviesControllers.js",

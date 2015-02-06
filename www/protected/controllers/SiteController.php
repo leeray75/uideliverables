@@ -25,7 +25,6 @@ class SiteController extends Controller
 	public function setIsSSL($value)
 	{
 		$this->_isSecure = $value;
-
 	}
 	public function getPageCSS()
 	{

@@ -2,10 +2,19 @@
 
 class AdminController extends Controller
 {
+	private $_isSecure = false;
 	public $defaultAction = 'admin';
 	public $layout='//layouts/column2';
 	
 	private $_model;
+	public function getIsSSL()
+	{
+		return $this->_isSecure;
+	}
+	public function setIsSSL($value)
+	{
+		$this->_isSecure = $value;
+	}
 
 	/**
 	 * @return array action filters

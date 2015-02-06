@@ -1,5 +1,5 @@
 <?php
-
+include_once $_SERVER['DOCUMENT_ROOT']."/private/www-db-connections.php"; 
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
 
@@ -120,10 +120,10 @@ return array(
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
-			'connectionString' => 'mysql:host=uideliverables.db.8707434.hostedresource.com;dbname=uideliverables',
+			'connectionString' => $mainDb["connectionString"],
 			'emulatePrepare' => true,
-			'username' => 'uideliverables',
-			'password' => 'Hoyen%75',
+			'username' => $mainDb["username"],
+			'password' => $mainDb["password"],
 			'charset' => 'utf8',
 			'tablePrefix' => 'tbl_',
 		),

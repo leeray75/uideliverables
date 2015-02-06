@@ -3,15 +3,15 @@
 $this->pageCSS = array(
 /* "/www/content/css/jquery-ui-1.10.3.custom.css", */
 //"/mediamorph/css/global.css",s
+	"//google-code-prettify.googlecode.com/svn/loader/prettify.css",
 	"/www/content/css/portfolio.css",
-	 "/www/content/css/portfolio/angular-two-way-binding.css",
+	"/www/content/css/portfolio/angular-two-way-binding.css",
 );
 
 
 $this->pageJS = array(
-
+	"//google-code-prettify.googlecode.com/svn/loader/run_prettify.js",
 	"/www/content/js/libs/jquery/jquery-ui-1.10.3.custom.min.js",
-	"/www/content/js/libs/angular/angular.min.js",	
 	"/www/content/js/controllers/two-way-binding.js",
 	//
 );
@@ -54,8 +54,8 @@ $this->breadcrumbs=array(
 <h3>DEMO</h3>
 <div class="code">
   <div id="TWO-WAY-BINDING">
-    <div ng-app id="ng-app" class="main">
-      <div ng-controller="TWO_WAY_BINDING.commentsController">
+    <div ng-app="TwoWayBindingApp" id="ng-app" class="main">
+      <div ng-controller="commentsController">
         <div class="row"> 
           <!-- Update Box -->
           <div class="col-xs-8 col-sm-10 col-md-10 col-lg-10">

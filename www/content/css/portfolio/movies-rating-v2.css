@@ -206,7 +206,17 @@ ul.movies-navbar li{ margin: 0 auto 0 auto; width: 100%;}
 
 #Movie-Preview-Container .button-container,
 #Add-Edit-Movie .button-container{ text-align: center;}
-
+#Movie-Preview-Container #Movie-Poster.noBorder{ border: none;}
+#Movie-Preview-Container #Movie-Poster{ 
+	width: 100%;
+	border: 1px dashed #f00;
+	min-height: 125px;
+	min-width: 125px;
+	padding: 10px;
+}
+#Movie-Preview-Container #Movie-Poster:hover{
+	border-color: #00f;
+}
 #Movie-Preview-Container .button-container { margin-top: 20px; padding-top: 20px; border-top: 1px solid #999;}
 .editable-item form input{ width: 100% !important;}
 .editable-item textarea{ width: 100% !important; height: 10em !important;}
@@ -231,13 +241,15 @@ ul.movies-navbar li{ margin: 0 auto 0 auto; width: 100%;}
 #Movie-Preview-Container .editable-textarea form, 
 #Movie-Preview-Container #Editable-Select-Rated form{ display: inline; color: #000;}
 
-#Movie-Preview-Container .movie-title form input{ width: 50% !important;}
+#Movie-Preview-Container form input{min-height: 1.5em; }
+#Movie-Preview-Container .movie-title form input{  width: 50% !important;}
 #Movie-Preview-Container .run-time form input{ width: 5em !important;}
 #Movie-Preview-Container .release-date  form input{ width: 100px!important; }
 
 .movie-top-copy span.editable-color{ color: #f00; font-weight: bold;}
 .movie-top-copy span.add-label-text{ color: #337ab7; font-weight: bold; }
 .movie-top-copy span.reset-label-text { color: #f0ad4e; font-weight: bold; }
+.movie-top-copy span.edit-label-text{ color: #5bc0de; font-weight: bold;}
 
 
 #DETAILS-CONTENT{}

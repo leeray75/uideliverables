@@ -29,23 +29,18 @@ var MoviesSettings =
 <?php 
 	
 $jsArray =  array(
-
-    $baseURL."/content/js/json2.js",
-    //$baseURL."/content/js/libs/jquery/jquery-1.9.1.min.js",
-	$baseURL."/content/js/libs/jquery/jquery-1.10.1.min.js",
-	//$baseURL."/content/js/libs/bootstrap/bootstrap.min.js",
+    "//cdnjs.cloudflare.com/ajax/libs/json2/20140204/json2.min.js",
+	"//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js",
 	"//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js",
 	"//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js",
-	/* $baseURL."/content/js/libs/modernizr/modernizr-custom-2.6.2.js", */
-	/* 
-	$baseURL."/content/plugins/jquery.mobile/1.3.2/jquery.mobile-1.3.2.min.js",
-	$baseURL."/content/js/libs/jquery/jquery-ui-1.9.1.custom.js",
-	*/
-	$baseURL."/content/js/libs/underscore/underscore-1.5.2.js",	
-	$baseURL."/content/js/libs/backbone/backbone-min-1.0.0.js",		
+	"//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js",
+	"//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js",
+	//$baseURL."/content/js/libs/underscore/underscore-1.5.2.js",	
+	//$baseURL."/content/js/libs/backbone/backbone-min-1.0.0.js",		
 	$baseURL."/content/js/models/Users/User.js",
 	$baseURL."/content/js/main.js",
-	$baseURL."/content/js/libs/angular/angular-1.3.11/angular.min.js",	
+	"//ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.min.js"
+	//$baseURL."/content/js/libs/angular/angular-1.3.11/angular.min.js",	
 	//$baseURL."/content/js/libs/jquery/plugins/jquery.simplemodal-1.4.4.js", 
 	
 	

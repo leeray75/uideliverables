@@ -124,6 +124,7 @@ var MovieTemplateHelper =
 }
 	
 var MoviesPlugins = {
+	RateItObj : {},
 	setNumericField: function(scope,elem,attrs){
 		$(elem).keydown(function(e) {
 			// Allow: backspace, delete, tab, escape, enter and .
@@ -150,7 +151,7 @@ var MoviesPlugins = {
 		
 	},
 	setMaskedDate: function(scope,elem,attrs){
-		$(elem).mask("99-99-9999",{placeholder:"MM-DD-YYYY"});
+		$(elem).mask("99-99-9999");
 		$(elem).on('blur',function(){
 			var released = $(this).val();
 			var dateArray = released.split("-");
@@ -162,14 +163,31 @@ var MoviesPlugins = {
 	},// end MoviesPlugins.setMaskedDate
 	setReadOnlyRateIt: function(scope,elem,attrs){
 		var imdbRating = 0;
-		if (attrs.rating != "0") {
+		if ((typeof scope.movie!="undefined") && scope.movie["imdbVotes"] != "0") {
 			imdbRating = MovieTemplateHelper.getImdbRating(scope.movie.imdbRating, scope.movie.imdbVotes) / 2;;
 		}
-		$(elem).rateit({
-			"readonly": true,
-			"value": imdbRating,
-			"max": 5
-		});		
+		var rateIt;
+		var id = attrs["id"];
+		var selector = '#'+id;
+		if(this.RateItObj.hasOwnProperty(id)){
+			$(selector).find('span.rateit-range').attr('aria-valuenow',imdbRating);
+			this.RateItObj[id].rateit("value",imdbRating);				
+		}
+		else{
+			var selector = '#'+id;
+			this.RateItObj[id] = $(selector).rateit({
+				"readonly": true,
+				"value": imdbRating,
+				"max": 5
+			});		
+			if(id=="RateIt-User-Preview"){
+				this.RateItObj[id].rateit("value",0);	
+			}
+			else{
+				this.RateItObj[id].rateit("value",imdbRating);	
+			}
+		}
+	
 	}, //end MoviePlugins.setReadOnlyRateIt
 	setUsersRateIt: function(scope,elem,attrs,dataFactory){
  		var previousVal = parseInt(attrs.rating) / 2;	
@@ -180,7 +198,8 @@ var MoviesPlugins = {
 			"afterSelection": function(val) {
 					var thisObj = this;
 					var movie = angular.copy(scope.movie);
-					var votes = (typeof localStorage.getItem("MovieVotes") == 'undefined' || localStorage.getItem("MovieVotes") == null) ? {} : angular.fromJson(localStorage.getItem("MovieVotes"));
+					var moviesKey = "MovieVotes-"+user.get("id");
+					var votes = (typeof localStorage.getItem(moviesKey) == 'undefined' || localStorage.getItem(moviesKey) == null) ? {} : angular.fromJson(localStorage.getItem(moviesKey));
 					if (!votes.hasOwnProperty("movie_" + movie["id"]) || user.get("isAdmin") == "1") {
 						var movieID = movie['id'];
 						var title = movie['title'];
@@ -189,10 +208,8 @@ var MoviesPlugins = {
 							.success(function(data) {
 								var movie = MovieTemplateHelper.getUpdatedModel(data);
 								votes["movie_" + movie["id"]] = rating;
-								localStorage.setItem("MovieVotes", angular.toJson(votes));
-								for (key in movie) {
-									scope.movie[key] = movie[key];
-								}
+								localStorage.setItem(moviesKey, angular.toJson(votes));
+								angular.copy(movie, scope.movie);
 								thisObj.readonly = true;
 								var message = "Your vote for \"" + movie["title"] + "\" is successful!";
 								$(elem).parent().find('.message').remove();
@@ -326,14 +343,13 @@ var MoviesPlugins = {
 				title: status["title"],
 				dialogClass: "confirm-dialog",
 				buttons: [
-				okButton,
-				{
-					text: "CANCEL",
-					click: function() {
-						$( this ).dialog( "close" );
-					}
-				}
-				
+					okButton,
+					{
+						text: "CANCEL",
+						click: function() {
+							$( this ).dialog( "close" );
+						}
+					}				
 				]
 			} // end settings;			
 		}
@@ -349,5 +365,79 @@ var MoviesPlugins = {
 		$('#Movies-Dialog').attr("title",status["title"]);
 		$('#Movies-Dialog .status-message').html(status["message"]);
 		$("#Movies-Dialog" ).dialog(settings);
-	}
+		scope.status = angular.copy({});
+	}, // end setDialog
+	setPosterUpload: function(scope,elem,attrs){
+		var selector = '#'+attrs["id"];
+		$(selector).on(
+			'dragover',
+			function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+			}
+		)
+		$(selector).on(
+			'dragenter',
+			function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+			}
+		)
+		$(selector).on('drop', function(event) {
+			event.preventDefault();		
+			event.stopPropagation();	
+			var files = event.originalEvent.dataTransfer.files;
+			var file = files[0];
+			var fileType = file["type"];
+			var ValidImageTypes = ["image/gif","image/jpeg","image/png"];
+			if($.inArray(fileType,ValidImageTypes)<0){
+				var status = {
+					type: "ERROR",
+					title: "Upload Error",
+					message: "Invalid Image Type! "+fileType
+				}
+				scope.status = angular.copy(status);
+				MoviesPlugins.setDialog(scope,elem,attrs);				
+			}
+			else{
+				var api = '/api/movies/poster-upload.php?mid='+scope.movie["id"];
+				var xhr = new XMLHttpRequest();	
+				xhr.open('POST', api,true);
+				xhr.onload = function() {
+					var data = angular.fromJson(xhr.responseText);		
+					if(data["status"]==1){
+						scope.movie["poster"] = data["image-src"];
+						if(scope.movie["id"]!="0"){
+							scope.updateMovie();
+						}
+						else{
+							MovieTemplateHelper.setLocalCopy(scope.movie);	
+							scope.reloadView();						
+						}
+					}
+					else{
+						var status = {
+							type: "ERROR",
+							title: "Upload Error",
+							message: "File Upload Error: "+data["message"]
+							
+						}
+						scope.status = angular.copy(status);
+						MoviesPlugins.setDialog(scope,elem,attrs);
+					}
+				}; //end xhr.onload	
+				xhr.upload.onprogress = function(event) {
+					if (event.lengthComputable) {
+						var complete = (event.loaded / event.total * 100 | 0);					
+					}
+				}; // end xhr.upload.onprogress
+				var formData = new FormData();			
+			
+				formData.append('file', file);
+				xhr.send(formData);
+			} // end if else Valid image check
+			//Use FormData to send the files
+		});	// end $(selector).on('drop'
+
+	}// setPosterUpload
 } //end MoviesPlugins

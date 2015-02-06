@@ -4,25 +4,26 @@ $this->pageCSS = array(
 /* "/www/content/css/jquery-ui-1.10.3.custom.css", */
 //"/mediamorph/css/global.css",s
 	"/www/content/css/portfolio.css",
-	//"/www/content/css/google-code-prettify/prettify.css",
+	"/www/content/css/portfolio/movies-rating-v2.css",
 	"//google-code-prettify.googlecode.com/svn/loader/prettify.css",
-	 "/www/content/css/jquery-ui-1.10.3.custom.css",
+	"//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css",
+	// "/www/content/css/jquery-ui-1.10.3.custom.css",
 	 "/www/content/js/libs/jquery/plugins/rateit/rateit.css",
-	 "/www/content/css/portfolio/movies-rating-v2.css",
+	 
 );
 
 
 $this->pageJS = array(
 
-"/www/content/js/libs/jquery/jquery-ui-1.10.3.custom.min.js",
-"//google-code-prettify.googlecode.com/svn/loader/run_prettify.js",
-//"/www/content/js/libs/jquery/plugins/google-code-prettify/prettify.js",
-"/www/content/js/demos/Movies-AngularJS.js",
-
+	"//code.jquery.com/ui/1.10.4/jquery-ui.min.js",
+	"//google-code-prettify.googlecode.com/svn/loader/run_prettify.js",
+	"/www/content/js/demos/Movies-AngularJS.js",
 	"/www/content/js/libs/jquery/plugins/rateit/jquery.rateit-modified.js",
-	"/www/content/js/libs/jquery/plugins/jeditable/jquery.jeditable-1.7.3.js",
+	//"/www/content/js/libs/jquery/plugins/jeditable/jquery.jeditable-1.7.3.js",
+	"//cdnjs.cloudflare.com/ajax/libs/jeditable.js/1.7.3/jeditable.min.js",
 	"/www/content/js/libs/jquery/plugins/jeditable/jquery.jeditable.masked.js",	
-	"/www/content/js/libs/jquery/plugins/jquery.maskedinput.js",
+	//"/www/content/js/libs/jquery/plugins/jquery.maskedinput.js",
+	"//cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.3.1/jquery.maskedinput.min.js",
 //	"/www/content/js/libs/angular/angular-1.3.11/angular.min.js",	
 	"/www/content/js/libs/angular/angular-1.3.11/angular-route.min.js",
 	//"/www/content/js/libs/angular/angular-animate.min.js",

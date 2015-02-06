@@ -4,7 +4,7 @@
 			$this->_sendResponse(500, 'Error: Parameter <b>id</b> is missing' );
 			
 		$secure_connection = (isset($_SERVER['HTTPS']) && $_SERVER["HTTPS"] == "on") ? true : false;
-		$hostname = $_SERVER['HTTP_HOST'];
+		$hostname = $_SERVER['SERVER_NAME'];
 	 
 		switch($_GET['model'])
 		{
@@ -29,7 +29,9 @@
 					}
 
 					else{
-						$this->_sendResponse(404, 'Invalid Username and Password');
+						$response["errorMessage"] = "Invalid Username and Password";
+						$response["errorCode"] = "200";
+						$this->_sendResponse(200, CJSON::encode($response));
 					}
 				}
 				else{

@@ -22,9 +22,10 @@ class MoviesView extends RActiveRecord
 	private $_oldTags;
     public function getDbConnection()
     {
-		$db_host = "devImdbMovies.db.8707434.hostedresource.com";
-		$db_name = "devImdbMovies";
-		$db_password = "Hoyen%75";
+		include $_SERVER['DOCUMENT_ROOT']."/private/www-db-connections.php"; 
+		$db_host = $movies["db_host"];
+		$db_name = $movies["db_name"];
+		$db_password = $movies["db_password"];
         return self::getAdvertDbConnection($db_host,$db_name,$db_password);
     }
 	/**
