@@ -3,7 +3,13 @@ angular.module('moviesApp', [
   'moviesApp.services',
   'movieApp.controllers',
   'movieApp.directives'
-]).config(['$routeProvider', function($routeProvider) {
+]).run(function($rootScope,$route){
+	$rootScope.message = '';
+	$rootScope.updateView = function(){
+		$route.reload();	
+	}
+	UI.setLogInOutCallback($rootScope.updateView);	
+}).config(['$routeProvider', function($routeProvider) {
   $routeProvider.
   when('/list', {
     templateUrl: '/www/content/partials/movies-rating/movies-list-v2.html',
@@ -20,5 +26,6 @@ angular.module('moviesApp', [
   otherwise({
     redirectTo: '/list'
   });
+ 
 }])
 

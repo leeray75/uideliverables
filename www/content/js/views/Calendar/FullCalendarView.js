@@ -34,23 +34,37 @@ var FullCalendarView = Backbone.View.extend({
         },
         addAll: function() {
 			console.log("addAll");
-			console.log(this.collection.toJSON());
-            this.$el.fullCalendar('addEventSource', this.collection.toJSON());
+			var events = this.collection.toJSON();
+			//console.log(events);
+            //this.$el.fullCalendar('addEventSource', this.collection.toJSON());
+			this.$el.fullCalendar('removeEvents');
+			var model = new Event().toJSON();
+			for(i=0;i<events.length;i++){
+				var e = events[i];
+				for(key in e){
+					if(!model.hasOwnProperty(key) && key!="id"){
+						delete e[key];	
+					}
+				}								
+				this.addOne(new Event(e));	
+			}
+			console.log('done adding');
         },
-        addOne: function(event) {
-			console.log("FullCalenderView addOne");
-			console.log(event);
+        addOne: function(event_data) {
+			//console.log("FullCalenderView addOne");
+			//console.log(event);
 			//console.log("event.errorMessage = "+event.get("errorMessage"));
-			if(event.id != null)
+			if(event_data.id != null)
 			{
 				//this.$el.fullCalendar( 'refetchEvents' );
 				//console.log("JSON: \n"+JSON.stringify(event.toJSON()));
-            	this.$el.fullCalendar('renderEvent', event.toJSON(), { stick: true });
+				//console.log(event_data.toJSON());
+            	this.$el.fullCalendar('renderEvent', event_data.toJSON(), { stick: true });
 			}
-			else if(event.get("errorMessage") !=null)
+			else if(event_data.get("errorMessage") !=null)
 			{			
-				events.pop();
-				console.log("pop events = " +JSON.stringify(events.toJSON()));
+				//events_data.pop();
+				console.log("pop events = " +JSON.stringify(events_data.toJSON()));
 			}				
 			
         },        
@@ -148,7 +162,8 @@ var FullCalendarView = Backbone.View.extend({
             this.$el.fullCalendar('removeEvents', event.id);         
         },
 		sync: function(event) {
-			console.log("FullCalendarView sync");			
+			console.log("FullCalendarView sync");	
+			this.addAll();		
 			//this.render();              
 			
 			/*

@@ -20,13 +20,13 @@ angular.module('movieApp.directives', [])
             }
         }
     })
-    .directive('InlineEditTemplateReady', function() {		
+    .directive('InlineEditTemplateReady', function($timeout) {		
         return {
             restrict: 'C',
             link: function(scope, elem, attrs) {
 				scope.$watch('previewMovieItem', function() {
 						if (scope.previewMovieItem != null) {
-							setTimeout(function(){
+							$timeout(function(){
 								MoviesPlugins.setEditables(scope,elem,attrs);				 
 							},500);
 						} // end scope.previewMovieItem!=null

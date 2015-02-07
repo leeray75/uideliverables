@@ -85,7 +85,8 @@ var ModalViews =
 				},
 				close: function(){
 					$(this.id).off("click.modal", ".do-save-link"); 
-					$.modal.close();
+					//$.modal.close();
+					$.modal.modal('hide');
 					$(this.id).detach();
 					
 				}
@@ -115,22 +116,28 @@ var ModalViews =
 				},
 				initModal: function(){
 					var thisObj = this; 
-					$(this.id).modal({
+					/*$(this.id).modal({
 						autoResize: false,						
 						fixed: false,
 						overlayId: 'EventModalOverlay',
 						containerId: 'EventModalContainer',
 						onShow: function(dialog){ thisObj.show(dialog)},
 						onClose: this.close()
-					});				
+					});	*/
+					$(this.id).on('shown.bs.modal', function () {
+						 thisObj.show();
+					  })			
+					$.modal = $(this.id).modal();			
 				},
 				show: function(dialog){
 					this.initDateTimePickerPlugin();
 					this.initNobleCountPlugin();
 					this.initDelegateEvents();
+					/*
 					dialog.wrap.css('height','500px'); 
 					dialog.wrap.css('overflow','hidden'); 
-					dialog.autoPosition= false;				
+					dialog.autoPosition= false;		
+					*/		
 					
 				},
 
@@ -237,10 +244,11 @@ var ModalViews =
 						 newModel.set('allDay', allDay);
 						 newModel.set('isEditable', this.model.get('isEditable'));
 						 newModel.set('isComplete', this.model.get('isComplete'));
-						 newModel.set('user_id', user.get('id'));
+						 newModel.set('user_id', this.model.get('user_id'));
 						 //console.log("newModel = " +JSON.stringify(newModel.toJSON()));
 						this.model.save(newModel, {success: function(data){ 											
 								//console.log("data = " +JSON.stringify(data.toJSON()));
+								console.log(data);
 								if(data.get("errorMessage") != null)
 								{
 									alert(data.get("errorMessage"));	
@@ -248,6 +256,7 @@ var ModalViews =
 								}
 								else
 								{
+									/*
 									if($('#file').val().length > 0)
 									{
 										thisObj.uploadFile(newModel.get("id"));	
@@ -256,22 +265,28 @@ var ModalViews =
 									{									
 										thisObj.close();
 									}
+									*/
+									thisObj.close();
 									return true;
 								}
 							},// end success
 							error: function(model,response){
-								var data = $.parseJSON(response.responseText);
-								if(data.errorMessage != null)
-								{
-									alert(response.status + " : "  + data.errorMessage);	
-									if(response.status=="401")
+								try{
+									var data = $.parseJSON(response.responseText);
+									if(data.errorMessage != null)
 									{
-										thisObj.close();
-										location.reload();
+										alert(response.status + " : "  + data.errorMessage);	
+										if(response.status=="401")
+										{
+											thisObj.close();
+											location.reload();
+										}
 									}
-								}
-								else
-								{
+									else
+									{
+										alert("Unknown Error");	
+									}
+								}catch(e){
 									alert("Unknown Error");	
 								}
 							}
@@ -281,7 +296,8 @@ var ModalViews =
 				close: function(){
 					//console.log("closing modal");
 					$(this.id).off("click.modal", ".do-save-link"); 
-					$.modal.close();
+					$.modal.modal('hide');
+					//$.modal.close();
 					$(this.id).detach();
 				},
 				delete: function(){
@@ -415,19 +431,39 @@ var ModalViews =
 				// Re-render the titles of the tasks item.
 				render: function() {		
 					var jsonModel = this.model.toJSON();
-					var thisObj = this;			
-					$(AddEditEventModalOverlayView.id).remove();
-					var jsonModel = this.model.toJSON();
+					var thisObj = this;		
+						
+					$('#DisplayEventModal').remove();
+
+					//console.log(jsonModel);
+					if(user.get("isAdmin")==true || (jsonModel["user_id"]!="0" && jsonModel["user_id"]==user.get('id'))){
+						jsonModel["isEditable"] = true;
+					}
+					else
+					{
+						jsonModel["isEditable"] = false;
+					}
 					//console.log("render this.el = " + this.el);
 					//console.log('jsonModel = ' + JSON.stringify(jsonModel));
-					var template = this.template(jsonModel);	
+					var template = this.template(jsonModel);						
 					$('body').append(template);
 					
 					this.initModal();
 					return this;						 		  		  
 				},
+				initDelegateEvents: function()
+				{
+					var thisObj = this;
+					$(this.id + " .delete-model-link").on("click.modal", function(){
+						thisObj.close(); 
+						var DeleteEventModalOverlay = new DeleteEventModalOverlayView({model: thisObj.model });
+						DeleteEventModalOverlay.render();
+						return false; 
+					});			
+				},				
 				initModal: function(){ 
 					var thisObj = this; 
+					/*
 					$(this.id).modal({
 						autoResize: false,
 						fixed: false,
@@ -435,7 +471,13 @@ var ModalViews =
 						containerId: 'EventModalContainer',
 						onShow: this.show(),
 						onClose: this.close()
-					});			
+					});
+					*/
+					$(this.id).on('shown.bs.modal', function () {
+						 thisObj.show();
+					  })			
+					$.modal = $(this.id).modal();						
+								
 				},
 				show: function(){
 					var thisObj = this;
@@ -445,14 +487,15 @@ var ModalViews =
 						AddEditEventModalOverlay.render();						
 						return false; 
 					});						
-
+					this.initDelegateEvents();
 					//this.initPlugins();
 					 //$(this.id + ' .do-delete-link').on("click.modal", function(){thisObj.destroy(); return false; }); 
 					 //$('#DeleteEventOverlay').on("click.modal", ".simplemodal-close", function(){thisObj.close(); return false; }); 
 				},
 				close: function(){
 					$(this.id).off("click.modal", ".do-save-link"); 
-					$.modal.close();
+					//$.modal.close();
+					$.modal.modal('hide');
 					$(this.id).detach();
 					
 				}

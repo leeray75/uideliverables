@@ -103,6 +103,30 @@ h4{ font-size: 16px;}
     background-color: #999;
 }
 
+/* Begin Modal Styles */
+.ui-deliverables-modal.modal .modal-header{ 
+background-color: #062a53;
+}
+.ui-deliverables-modal.modal .modal-header h4{
+color: #fff;
+font-weight: bold;
+}
+.ui-deliverables-modal.modal .modal-header .close{
+	color: #fff; font-weight: bold;	opacity: .8;
+}
+.ui-deliverables-modal.modal.modal-body{ min-height: 100px; }
+.ui-deliverables-modal.modal .modal-body .input-container label{ cursor: pointer; }
+.ui-deliverables-modal.modal .modal-body .input-container > div.row{ margin-top: 10px;}
+.ui-deliverables-modal.modal .modal-body .input-container > div.row:nth-child(1) { 
+	margin-bottom: 0px;
+}
+.ui-deliverables-modal.modal .modal-body .input-container .labels-column{ text-align: right; }
+.ui-deliverables-modal.modal .modal-body .input-container .labels-column label{ padding-top: 3px;}
+.ui-deliverables-modal.modal .modal-body .input-container .input-column input[type=email],
+.ui-deliverables-modal.modal .modal-body .input-container .input-column input[type=password],
+.ui-deliverables-modal.modal .modal-body .input-container .input-column input[type=text]{ width: 80%; }
+.ui-deliverables-modal.modal .modal-footer{  background-color: #CCC; }
+/* End Modal Styles */
 
 /* Begin Login Module */
 #UI-Login-Module{}
@@ -111,24 +135,7 @@ h4{ font-size: 16px;}
 #UI-Login-Module #LoginSuccess{ text-align: center; color: #090; margin-top: 25px; font-weight: bold;}
 #UI-Login-Module .error-msg{ color: #f00; }
 #UI-Login-Module .top-error-message{ text-align: center; width: 80%; margin: 0 auto 10px auto;}
-#UI-Login-Module .modal-header{ 
-background-color: #062a53;
-}
-#UI-Login-Module .modal-header h4{
-color: #fff;
-font-weight: bold;
-}
-#UI-Login-Module .modal-header .close{
-	color: #fff; font-weight: bold;	opacity: .8;
-}
-#UI-Login-Module .modal-body{ min-height: 100px; }
-#UI-Login-Module .modal-body .input-container > div.row:nth-child(1) { 
-	margin-bottom: 10px;
-}
-#UI-Login-Module .modal-body .input-container .labels-column{ text-align: right; }
-#UI-Login-Module .modal-body .input-container .labels-column label{ padding-top: 3px;}
-#UI-Login-Module .modal-body .input-container  .input-column input{ width: 80%; }
-#UI-Login-Module .modal-footer{  background-color: #CCC; }
+
 
 @media (max-width: 990px) {
     body{font-size: 12px;}

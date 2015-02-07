@@ -3,6 +3,8 @@
 window.console = window.console || { log: function(){  }}
 var UI = UI || {};
 UI = {
+	LogInOutCallback: [],
+	isUpdateAllow: false,
 	init: function()
 	{
 		//console.log("intiializing!");
@@ -39,6 +41,10 @@ UI = {
 			else{
 				$('.log-in-out-copy').html("Log In");					
 			}		  
+			if(UI.isUpdateAllow){
+				UI.executeLogInOutCallbacks();
+			}
+			UI.isUpdateAllow = true;
 		}).fail(function(data){});		
 
 
@@ -53,7 +59,19 @@ UI = {
 			}						
 		});
 	},
-	
+	executeLogInOutCallbacks: function(){
+		for(i=0;i<this.LogInOutCallback.length;i++){
+			try{
+				this.LogInOutCallback[i]();	
+			}catch(e){
+				console.log('Error in executeLogInOutCallback '+e);
+			}
+				
+		}
+	},
+	setLogInOutCallback: function(_callback){
+		this.LogInOutCallback.push(_callback);
+	},
 	showModal: function(selector){
 	   $(selector).modal(function () {
 			$('#username').focus()
@@ -118,7 +136,7 @@ UI.services = {
 
 UI.modules = {
 	isLoginModuleInit: false,
-	logout: function(){
+	logout: function(_callback){
 		var hdr = UI.services.logout()
 			.done(function(){
 				UI.updateUser();
@@ -127,7 +145,7 @@ UI.modules = {
 			});
 		
 	},
-	login: function(){
+	login: function(_callback){
 		if(this.isLoginModuleInit){
 			UI.showModal('#LoginModal')
 		}
@@ -185,7 +203,7 @@ UI.modules = {
 								$scope.resetLogin(form);								
 								$scope.isLoginSuccess = false;
 								$scope.errorMessage = "Log In Error";
-								$scope.isWaiting = false;
+								$scope.isWaiting = false;							
 						});					
 										
 					}

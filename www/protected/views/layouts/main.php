@@ -65,10 +65,9 @@ if(isset($_GET["portfolio"]) and ($_GET["portfolio"] == "angular-movies-rating")
 <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 <body>
-<div class="container" id="page" data-role="page">
+<div id="page" data-role="page">
   <?php include "includes/header.php" ?>
-  <section id="main" class="row" data-role="content">
-    <div class="content-container col-xs-12 clearfix">
+  <section id="main" class="container" data-role="content">
       <?php if(isset($this->breadcrumbs)):?>
       <?php $this->widget('zii.widgets.CBreadcrumbs', array(
 			'links'=>$this->breadcrumbs,
@@ -76,33 +75,19 @@ if(isset($_GET["portfolio"]) and ($_GET["portfolio"] == "angular-movies-rating")
       <!-- breadcrumbs -->
       
       <?php endif?>
-      <?php echo $content; ?> </div>
-    <!-- /content-container --> 
+      <?php echo $content; ?> 
   </section>
-  <!-- /main -->
-  <footer data-role="footer">
-    <div class="content-container clearfix">
-      <div id="linkedin-plugin-container"> 
-        <!--
-<script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
---> 
-        <!--
-        <script language="javascript">
-	LazyLoad.js("//platform.linkedin.com/in.js", function () {});
-</script> 
-        <script type="IN/MemberProfile" data-id="http://www.linkedin.com/pub/raymond-lee/3/946/382" data-format="click" data-related="false"></script> 
-        --> 
-      </div>
-      <!-- /linkedin-plugin-container --> 
-      Copyright &copy; <?php echo date('Y'); ?> by <?php echo CHtml::encode(Yii::app()->name); ?>.<br/>
-      All Rights Reserved.<br/>
-      <?php echo Yii::powered(); ?> </div>
-    <!-- /content-container --> 
-  </footer>
+  <!-- /main --> 
 </div>
 <!-- page -->
+<footer data-role="footer">
+  <div class="container content-container"> Copyright &copy; <?php echo date('Y'); ?> by <?php echo CHtml::encode(Yii::app()->name); ?>.<br/>
+    All Rights Reserved.<br/>
+    <?php echo Yii::powered(); ?> </div>
+  <!-- /content-container --> 
+</footer>
 <div id="UIDeliverablesLogin">
-	<div ng-include src="'/www/content/partials/global/login-modal.html'"></div>
+  <div ng-include src="'/www/content/partials/global/login-modal.html'"></div>
 </div>
 <?php 
 if(strpos($_SERVER['SERVER_NAME'], "localhost")===false){

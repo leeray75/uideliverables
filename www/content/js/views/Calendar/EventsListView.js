@@ -1,10 +1,9 @@
-$(document).ready(function(){
-	
-	$.ajax({
-		url: "/www/content/templates/calendar/event-list-item-template.html",
-		}).done(function(data) {
-			$('body').append(data);
-	});
+$.ajax({
+	url: "/www/content/templates/calendar/event-list-item-template.html",
+	}).done(function(data) {
+		$(document).ready(function(){
+			$('body').append(data);			
+		});			
 });
 
 var EventsListView = Backbone.View.extend({
@@ -22,7 +21,7 @@ var EventsListView = Backbone.View.extend({
 			this.listenTo(this.collection, 'sync', this.sync);                   
         },
         render: function() {
-			//console.log('EventsListView render');
+			console.log('EventsListView render');
 			//console.log('EventsListView this.collection.length = ' + this.collection.length);
 			$('#active-events-list').html('');
 			for(i=0;i<this.collection.length;i++)
@@ -33,7 +32,9 @@ var EventsListView = Backbone.View.extend({
 			}
         },
         addAll: function() {
+			
 			//console.log("EventsListView addAll");
+			this.render();
             //this.$el.fullCalendar('addEventSource', events.toJSON());
         },
         addOne: function(event) {
@@ -45,7 +46,7 @@ var EventsListView = Backbone.View.extend({
 			this.collection.sort();  
 		},
         destroy: function(event) {
-			//console.log("EventsListView destroy"); 
+			console.log("EventsListView destroy"); 
 			$('#EventListItem-'+event.get("id")).remove();         
         },
 		sync: function(event) {

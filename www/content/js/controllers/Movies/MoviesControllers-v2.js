@@ -104,6 +104,10 @@ MoviesControllers.controller('MoviesAddEditController', ['$scope', '$routeParams
 			$scope.movie = data;
 			$scope.resetData = angular.copy($scope.movie);
 			$scope.previewMovieItem = MovieTemplateHelper.getUpdatedModel(angular.copy($scope.movie));
+			if(user.get('isAdmin')==false && $scope.movie["user_id"]!=user.get("id")){
+				/* User isn't a Admin and isn't the owner of the movie */
+				$location.path('/');									
+			} // if movie["user_id"] != user.get('id')
 		})
 		.error(function(error){				
 			$scope.pageTitle = "Update Movie";
@@ -111,7 +115,11 @@ MoviesControllers.controller('MoviesAddEditController', ['$scope', '$routeParams
 			var status = {
 				type:"ERROR",
 				message: message,
-				title: "ERROR"	
+				title: "ERROR",
+				okCallback: function(){
+					$location.path('/');
+					$scope.$apply();
+				}
 			};
 			$scope.status = angular.copy(status);
 			$scope.statusCount++;

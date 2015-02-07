@@ -57,6 +57,7 @@ var AppView = Backbone.View.extend({
 		},		
 		syncEvents: function(events){
 			console.log("AppView syncEvents");
+			//this.collection.fetch();
 			this.updateCurrentEventsCollection();
 			
 		}, // end syncTasks
@@ -72,7 +73,8 @@ var AppView = Backbone.View.extend({
 					EventsArray.push(eventModel);					
 				}		
 			}
-			console.log("this.CurrentEventsCollection.add(EventsArray);");
+			console.log("this.CurrentEventsCollection.set(EventsArray);");
+			this.CurrentEventsCollection.reset();
 			this.CurrentEventsCollection.set(EventsArray);
 		},
 		showEventTaskOverlay: function()
@@ -94,6 +96,23 @@ var AppView = Backbone.View.extend({
 
 		App = new AppView();	  	
 		App.render();
+		UI.setLogInOutCallback(function(){
+			console.log("isGuest: "+user.get("isGuest"));
+			if(user.get("isGuest"))
+			{
+				$('#login-info').show();	
+			}
+			else
+			{
+				$('#login-info').hide();
+			}	
+			console.log('reset');
+			App.collection.reset();
+			console.log('fetch');
+			App.collection.fetch();
+			console.log('done');
+
+		});
 
 
 });

@@ -1,4 +1,4 @@
-<div class="row">
+<header>
   <nav id="UI-Deliverables-Nav" class="navbar navbar-default navbar-fixed-top navbar-inverse">
     <div class="navbar-header">
       <div class="ui-logo visible-xs"> <a href="/www/"> <img alt="UI Deliverables" src="/www/content/images/logos/UI-Deliverables.png" class="ui-logo-lg" ><img alt="UI" src="/www/content/images/logos/UI-Deliverables-sm.png" class="img-responsive ui-logo-sm" ></a> </div>
@@ -35,4 +35,5 @@
       </div>
     </div>
   </nav>
-</div>
+</header>
+
