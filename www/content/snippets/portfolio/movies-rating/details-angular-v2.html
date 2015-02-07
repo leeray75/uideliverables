@@ -513,7 +513,13 @@ angular.module('moviesApp', [
   'moviesApp.services',
   'movieApp.controllers',
   'movieApp.directives'
-]).config(['$routeProvider', function($routeProvider) {
+]).run(function($rootScope,$route){
+	$rootScope.message = '';
+	$rootScope.updateView = function(){
+		$route.reload();	
+	}
+	UI.setLogInOutCallback($rootScope.updateView);	
+}).config(['$routeProvider', function($routeProvider) {
   $routeProvider.
   when('/list', {
     templateUrl: '/www/content/partials/movies-rating/movies-list-v2.html',
@@ -529,9 +535,8 @@ angular.module('moviesApp', [
   }).
   otherwise({
     redirectTo: '/list'
-  });
-}])
-
+  }); 
+}]);
               </pre>
           </div>
           <!-- /accordion-inner --> 
@@ -748,6 +753,10 @@ MoviesControllers.controller('MoviesAddEditController', ['$scope', '$routeParams
 			$scope.movie = data;
 			$scope.resetData = angular.copy($scope.movie);
 			$scope.previewMovieItem = MovieTemplateHelper.getUpdatedModel(angular.copy($scope.movie));
+			if(user.get('isAdmin')==false && $scope.movie["user_id"]!=user.get("id")){
+				/* User isn't a Admin and isn't the owner of the movie */
+				$location.path('/');									
+			} // if movie["user_id"] != user.get('id')
 		})
 		.error(function(error){				
 			$scope.pageTitle = "Update Movie";
@@ -755,7 +764,11 @@ MoviesControllers.controller('MoviesAddEditController', ['$scope', '$routeParams
 			var status = {
 				type:"ERROR",
 				message: message,
-				title: "ERROR"	
+				title: "ERROR",
+				okCallback: function(){
+					$location.path('/');
+					$scope.$apply();
+				}
 			};
 			$scope.status = angular.copy(status);
 			$scope.statusCount++;
@@ -878,7 +891,6 @@ MoviesControllers.controller('MoviesAddEditController', ['$scope', '$routeParams
 		$route.reload();
 	}
 }]);
-
               </pre>
           </div>
           <!-- /accordion-inner --> 
@@ -912,88 +924,88 @@ MoviesControllers.controller('MoviesAddEditController', ['$scope', '$routeParams
           <div class="accordion-inner code">
             <pre class="prettyprint linenums">
 angular.module('movieApp.directives', [])
-    .directive('imdbUserRate', function(dataFactory) {		
+    .directive('imdbUserRate', function(dataFactory) {
         return {
             restrict: 'A',
             link: function(scope, elem, attrs) {
-				MoviesPlugins.setUsersRateIt(scope,elem,attrs,dataFactory);		
-			} // end link
+                    MoviesPlugins.setUsersRateIt(scope, elem, attrs, dataFactory);
+                } // end link
         } // end return obj;
     })
-    .directive('imdbRate', function() {		
+    .directive('imdbRate', function() {
         return {
             restrict: 'A',
             link: function(scope, elem, attrs) {
                 scope.$watch('movie.imdbVotes', function() {
-					var id = attrs["id"];
-					var selector = '#'+id;
-					 delete MoviesPlugins.RateItObj[id];
-                     MoviesPlugins.setReadOnlyRateIt(scope,elem,attrs); 
+                    var id = attrs["id"];
+                    var selector = '#' + id;
+                    delete MoviesPlugins.RateItObj[id];
+                    MoviesPlugins.setReadOnlyRateIt(scope, elem, attrs);
                 });
             }
         }
     })
-    .directive('InlineEditTemplateReady', function() {		
+    .directive('InlineEditTemplateReady', function($timeout) {
         return {
             restrict: 'C',
             link: function(scope, elem, attrs) {
-				scope.$watch('previewMovieItem', function() {
-						if (scope.previewMovieItem != null) {
-							setTimeout(function(){
-								MoviesPlugins.setEditables(scope,elem,attrs);				 
-							},500);
-						} // end scope.previewMovieItem!=null
-					}) // end scope.$watch
-			} // end link
+                    scope.$watch('previewMovieItem', function() {
+                            if (scope.previewMovieItem != null) {
+                                $timeout(function() {
+                                    MoviesPlugins.setEditables(scope, elem, attrs);
+                                }, 500);
+                            } // end scope.previewMovieItem!=null
+                        }) // end scope.$watch
+                } // end link
         }
     })
-	.directive('numericField',function(){
-		return {
+    .directive('numericField', function() {
+        return {
             restrict: 'C',
             link: function(scope, elem, attrs) {
-				MoviesPlugins.setNumericField(scope,elem,attrs);	
-			} // end link
+                    MoviesPlugins.setNumericField(scope, elem, attrs);
+                } // end link
         }
-	})
-	.directive('maskedDate',function(){
-		return {
+    })
+    .directive('maskedDate', function() {
+        return {
             restrict: 'C',
             link: function(scope, elem, attrs) {
-				MoviesPlugins.setMaskedDate(scope,elem,attrs);	
-			} // end link
+                    MoviesPlugins.setMaskedDate(scope, elem, attrs);
+                } // end link
         }
-	})
-	.directive('maskedYear',function(){
-		return {
+    })
+    .directive('maskedYear', function() {
+        return {
             restrict: 'C',
             link: function(scope, elem, attrs) {
-				MoviesPlugins.setMaskedYear(scope,elem,attrs);	
-			} // end link
+                    MoviesPlugins.setMaskedYear(scope, elem, attrs);
+                } // end link
         }
-	})	
-	.directive('dialogContainer',function(){		
-		return {
+    })
+    .directive('dialogContainer', function() {
+        return {
             restrict: 'E',
-			templateUrl: '/www/content/partials/movies-rating/movies-dialog.html',			
+            templateUrl: '/www/content/partials/movies-rating/movies-dialog.html',
             link: function(scope, elem, attrs) {
-				scope.$watch('statusCount', function() {
-					if (scope.statusCount>0) {
-						MoviesPlugins.setDialog(scope,elem,attrs);				 
-					} // end scope.previewMovieItem!=null
-				}) // end scope.$watch
-			} // end link
+                    scope.$watch('statusCount', function() {
+                            if (scope.statusCount > 0) {
+                                MoviesPlugins.setDialog(scope, elem, attrs);
+                            } // end scope.previewMovieItem!=null
+                        }) // end scope.$watch
+                } // end link
         }
-	})	
-	.directive('moviePoster',function(){		
-		return {
+    })
+    .directive('moviePoster', function() {
+        return {
             restrict: 'A',
             link: function(scope, elem, attrs) {
-				if(scope.isDraggable){
-					MoviesPlugins.setPosterUpload(scope,elem,attrs);				
-				}
-			} // end link
-        }		
-	});	
+                    if (scope.isDraggable) {
+                        MoviesPlugins.setPosterUpload(scope, elem, attrs);
+                    }
+                } // end link
+        }
+    });
               </pre>
           </div>
           <!-- /accordion-inner --> 

@@ -25,7 +25,6 @@ angular.module('moviesApp', [
   }).
   otherwise({
     redirectTo: '/list'
-  });
- 
-}])
+  }); 
+}]);
 
