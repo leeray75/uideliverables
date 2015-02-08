@@ -107,7 +107,7 @@ $this->breadcrumbs=array(
   </div>
   <!-- /demo tab-pane -->
   <div role="tabpanel" class="tab-pane" id="details">
-    <?php include $_SERVER['DOCUMENT_ROOT']."/www/content/snippets/portfolio/movies-rating/details-angular-v2.html"; ?>
+    <?php include $_SERVER['DOCUMENT_ROOT']."/www/content/snippets/portfolio/movies-rating/details-angular-v2.php"; ?>
   </div>
 </div>
 <!-- /tab-content --> 
