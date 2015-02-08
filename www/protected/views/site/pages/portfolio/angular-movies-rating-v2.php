@@ -26,6 +26,7 @@ $this->pageJS = array(
 	"//cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.3.1/jquery.maskedinput.min.js",
 //	"/www/content/js/libs/angular/angular-1.3.11/angular.min.js",	
 	"/www/content/js/libs/angular/angular-1.3.11/angular-route.min.js",
+	"/www/content/js/libs/angular/angular-ngStorage.js",
 	//"/www/content/js/libs/angular/angular-animate.min.js",
 	"/www/content/js/apps/MoviesDemo-Angular-v2.js",
 	"/www/content/js/services/MoviesServices.js",

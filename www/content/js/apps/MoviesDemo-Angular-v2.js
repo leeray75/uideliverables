@@ -1,5 +1,6 @@
 angular.module('moviesApp', [
   'ngRoute',
+  'ngStorage',
   'moviesApp.services',
   'movieApp.controllers',
   'movieApp.directives'
