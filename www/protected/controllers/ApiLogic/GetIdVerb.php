@@ -13,7 +13,8 @@
 				$model = Event::model()->findByPk($_GET['id']);
 				break;
 			case 'movies':
-				$model = Movie::model()->findByPk($_GET['id']);
+				//$model = Movie::model()->findByPk($_GET['id']);
+				$model = Movie::model()->findByAttributes(array('id'=>$_GET['id']));
 				break;
 			case 'user':
 				/* To use: http://localhost/www/index.php/api/user/0?username=demo&password=demo */

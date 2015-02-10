@@ -122,7 +122,7 @@
       <li>Update a movie by id</li>
       <li>Insert a new movie</li>
       <li>Delete a movie by id</li>
-      <li>Submit a Vote - for this application, since there is only one table, it will call the movie's Update service</li>
+      <li>Submit a Vote</li>
     </ol>
   </section>
   <!-- /AppSetup-Details -->

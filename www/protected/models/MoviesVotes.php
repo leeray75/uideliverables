@@ -1,6 +1,6 @@
 <?php
 
-class Movie extends CActiveRecord
+class MoviesVotes extends CActiveRecord
 {
 	/**
 	 * The followings are the available columns in table 'tbl_post':
@@ -17,7 +17,7 @@ class Movie extends CActiveRecord
 	const STATUS_PUBLISHED=2;
 	const STATUS_ARCHIVED=3;
 	
-	private $TABLE_NAME = "movies";
+	private $TABLE_NAME = "movies_votes";
 
 	private $_oldTags;
 
@@ -35,13 +35,7 @@ class Movie extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		if($_SERVER['REQUEST_METHOD']=="GET"){
-			return "MoviesView";
-		}
-		else
-		{
-			return "movies";	
-		}
+		return "movies_votes";
 	}
 
 	/**
@@ -52,7 +46,7 @@ class Movie extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title, actors, director, genre, plot, poster, rated, released, runtime, writers', 'required'),
+			array('movie_id,ratings,votes', 'required'),
 			/*
 			array('status', 'in', 'range'=>array(1,2,3)),
 			array('title', 'length', 'max'=>128),
@@ -71,7 +65,7 @@ class Movie extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'user_id' => array(self::BELONGS_TO, 'User', 'id'),
+			//'user_id' => array(self::BELONGS_TO, 'User', 'id'),
 			//'events' => array(self::HAS_MANY, 'Comment', 'id'),
 
 		);
@@ -82,7 +76,12 @@ class Movie extends CActiveRecord
 	 */
 	public function attributeLabels()
 	{
-
+		return array(
+			'movies_id' => 'id',
+			'votes' => 'imdbVotes',
+			'ratings' => 'imdbRating'
+		);
+		/*
 		return array(
 			'id' => 'Id',
 			'title' => 'Title',
@@ -102,6 +101,7 @@ class Movie extends CActiveRecord
 			'imdbVotes' => 'imdbVotes',
 			'user_id' => 'User',
 		);
+		*/
 	}
 
 	/**
@@ -109,7 +109,7 @@ class Movie extends CActiveRecord
 	 */
 	public function getUrl()
 	{
-		return Yii::app()->createUrl('movies/view', array(
+		return Yii::app()->createUrl('vote/view', array(
 			'id'=>$this->id,
 			'title'=>$this->title,
 		));
@@ -137,7 +137,7 @@ class Movie extends CActiveRecord
 			
 			if($this->isNewRecord)
 			{
-                 $this->user_id=Yii::app()->user->id;
+                 //$this->user_id=Yii::app()->user->id;
 			}
 			return true;
 		}
@@ -150,24 +150,6 @@ class Movie extends CActiveRecord
 	 */
 	protected function afterSave()
 	{
-		
-		if($_SERVER['REQUEST_METHOD']=="POST"){
-			$votesModel = new MoviesVotes;
-			//$votesModel["id"]= $this["votes_id"];
-			$votesModel["movie_id"]= $this["id"];
-			$votesModel["ratings"]= $this["imdbRating"];
-			$votesModel["votes"]= $this["imdbVotes"];
-			$votesModel->save();
-			//$vm = CJSON::encode($votesModel);								
-		}
-		elseif($_SERVER['REQUEST_METHOD']=="PUT"){
-			$votesModel = MoviesVotes::model()->findByAttributes(array('movie_id'=>$_GET['id']));
-			$votesModel["movie_id"]= $this["id"];
-			$votesModel["ratings"]= $this["imdbRating"];
-			$votesModel["votes"]= $this["imdbVotes"];
-			$votesModel->update();
-		}
-		
 		parent::afterSave();
 		//Tag::model()->updateFrequency($this->_oldTags, $this->tags);
 	}

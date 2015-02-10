@@ -1,99 +1,92 @@
 var DefaultMovieModel = {
-	   "id":"0",
-	   "user_id": user.id,
-	   "title": "",
-	   "plot": "",
-	   "genre": "",
-	   "director": "",
-	   "writers": "",
-	   "actors":"",
-	   "poster": "/www/content/images/movie-posters/default.gif",
-	   "rated":"PG",
-	   "released":"",
-	   "year":"",
-	   "runtime":"",
-	   "type":"movie",
-	   "imdbID":"",
-	   "imdbRating":"0",
-	   "imdbVotes":"0"
-	}
-var MovieModelLabels = {
-	   "title": "Title",
-	   "plot": "Plot",
-	   "genre": "Genre",
-	   "director": "Director",
-	   "writers": "Writers",
-	   "actors":"Actors",
-	   "poster": "Poster",
-	   "rated":"Rated",
-	   "released":"Release Date",
-	   "year":"Year",
-	   "runtime":"Run Time",
-	   "imdbID":"IMDB ID",
-	   "imdbRating":"Movie Rating",
-	   "imdbVotes":"Movie Votes"
-	}	
-	
-var MovieTemplateHelper =
-{
-	getUpdatedModel: function(movie){
-		var userId = 0;
-		var isAdmin = false;
-		try{
-			userId = user.get("id");
-			isAdmin = user.get("isAdmin")=="1";
-		}catch(e){}
-		movie.allowDeleteEdit = ( (movie["user_id"]==userId) || isAdmin);	
-		movie.poster = this.getPosterImageSrc(movie.poster);					
-		movie.GenreLabel = this.getGenreLabel(movie.genre);
-		movie.DisplayReleaseDate = this.getReleaseDateDisplay(movie.released)
-		movie.DirectorLabel = this.getDirectorsLabel(movie.director);
-		movie.WriterLabel = this.getWritersLabel(movie.writers);
-		movie.ActorsLabel =this.getActorsLabel(movie.actors);		
-		movie.rating = this.getImdbRating(movie.imdbRating, movie.imdbVotes);	
-		
-		return movie;		
-	},
-	getReleaseDateDisplay: function(Released)
-	{
-		var dateArray = Released.split("-");
-		var returnVal = "";
-		if(dateArray.length==3){
-			returnVal = dateArray[1] + "-" + dateArray[2] + "-" + dateArray[0];	
-		}
-		return returnVal;
-	},
-	getGenreLabel: function(Genre)
-	{
-		var genresArray = Genre.split(",");
-		return genresArray.length>1 ? "Genres" : "Genre";		
-	},
-	getDirectorsLabel: function(Director)
-	{
-		var directorsArray = Director.split(",");
-		return directorsArray.length>1 ? "Directors" : "Director";		
-	},
-	getWritersLabel: function(Writer)
-	{
-		var writersArray = Writer.split(",");
-		return writersArray.length>1 ? "Writers" : "Writer";		
-	},
-	getActorsLabel: function(Actors)
-	{
-		var actorsArray = Actors.split(",");
-		return actorsArray.length>1 ? "Stars" : "Star";
-	},
-	getPosterImageSrc: function(Poster)
-	{
-		return Poster.replace('http://ia.media-imdb.com/images/',MoviesSettings.PosterImageUri);	
-	},
-	getImdbRating: function(ratings, votes){
-		var rating = ratings/votes;		
-		var roundedRating = (votes>0) ? Math.round(rating*10)/10 : 0;
-		return roundedRating.toFixed(1);	
-	}
+    "id": "0",
+    "user_id": user.id,
+    "title": "",
+    "plot": "",
+    "genre": "",
+    "director": "",
+    "writers": "",
+    "actors": "",
+    "poster": "/www/content/images/movie-posters/default.gif",
+    "rated": "PG",
+    "released": "",
+    "year": "",
+    "runtime": "",
+    "type": "movie",
+    "imdbID": "",
+    "imdbRating": "0",
+    "imdbVotes": "0"
 }
-	
+var MovieModelLabels = {
+    "title": "Title",
+    "plot": "Plot",
+    "genre": "Genre",
+    "director": "Director",
+    "writers": "Writers",
+    "actors": "Actors",
+    "poster": "Poster",
+    "rated": "Rated",
+    "released": "Release Date",
+    "year": "Year",
+    "runtime": "Run Time",
+    "imdbID": "IMDB ID",
+    "imdbRating": "Movie Rating",
+    "imdbVotes": "Movie Votes"
+}
+
+var MovieTemplateHelper = {
+    getUpdatedModel: function(movie) {
+        var userId = 0;
+        var isAdmin = false;
+        try {
+            userId = user.get("id");
+            isAdmin = user.get("isAdmin") == "1";
+        } catch (e) {}
+        movie.allowDeleteEdit = ((movie["user_id"] == userId) || isAdmin);
+        movie.poster = this.getPosterImageSrc(movie.poster);
+        movie.GenreLabel = this.getGenreLabel(movie.genre);
+        movie.DisplayReleaseDate = this.getReleaseDateDisplay(movie.released)
+        movie.DirectorLabel = this.getDirectorsLabel(movie.director);
+        movie.WriterLabel = this.getWritersLabel(movie.writers);
+        movie.ActorsLabel = this.getActorsLabel(movie.actors);
+        movie.rating = this.getImdbRating(movie.imdbRating, movie.imdbVotes);
+
+        return movie;
+    },
+    getReleaseDateDisplay: function(Released) {
+        var dateArray = Released.split("-");
+        var returnVal = "";
+        if (dateArray.length == 3) {
+            returnVal = dateArray[1] + "-" + dateArray[2] + "-" + dateArray[0];
+        }
+        return returnVal;
+    },
+    getGenreLabel: function(Genre) {
+        var genresArray = Genre.split(",");
+        return genresArray.length > 1 ? "Genres" : "Genre";
+    },
+    getDirectorsLabel: function(Director) {
+        var directorsArray = Director.split(",");
+        return directorsArray.length > 1 ? "Directors" : "Director";
+    },
+    getWritersLabel: function(Writer) {
+        var writersArray = Writer.split(",");
+        return writersArray.length > 1 ? "Writers" : "Writer";
+    },
+    getActorsLabel: function(Actors) {
+        var actorsArray = Actors.split(",");
+        return actorsArray.length > 1 ? "Stars" : "Star";
+    },
+    getPosterImageSrc: function(Poster) {
+        return Poster.replace('http://ia.media-imdb.com/images/', MoviesSettings.PosterImageUri);
+    },
+    getImdbRating: function(ratings, votes) {
+        var rating = ratings / votes;
+        var roundedRating = (votes > 0) ? Math.round(rating * 10) / 10 : 0;
+        return roundedRating.toFixed(1);
+    }
+}
+
 var MoviesPlugins = {
         RateItObj: {},
         setNumericField: function(scope, elem, attrs) {
@@ -173,16 +166,29 @@ var MoviesPlugins = {
                             var movieID = movie['id'];
                             var title = movie['title'];
                             var rating = val * 2;
-                            dataFactory.submitVote(movie, rating)
+                            movie['imdbRating'] = (parseInt(movie['imdbRating']) + rating).toString();
+                            movie['imdbVotes'] = (parseInt(movie['imdbVotes']) + 1).toString();
+                            var vote = {
+                                movie_id: 0,
+                                ratings: 0,
+                                votes: 0
+                            }
+                            vote["movie_id"] = movie["id"];
+                            vote["ratings"] = movie["imdbRating"];
+                            vote["votes"] = movie["imdbVotes"];
+                            dataFactory.submitVote(vote)
                                 .success(function(data) {
-                                    var movie = MovieTemplateHelper.getUpdatedModel(data);
-                                    votes["movie_" + movie["id"]] = rating;
-                                    localStorage.setItem(moviesKey, angular.toJson(votes));
-                                    angular.copy(movie, scope.movie);
-                                    thisObj.readonly = true;
-                                    var message = "Your vote for \"" + movie["title"] + "\" is successful!";
-                                    $(elem).parent().find('.message').remove();
-                                    $(elem).parent().prepend('<div class="message" style="color:#f00;">' + message + '</div>');
+                                    dataFactory.getMovie(data["movie_id"]).success(function(data) {
+                                        var movie = MovieTemplateHelper.getUpdatedModel(data);
+                                        votes["movie_" + movie["id"]] = rating;
+                                        localStorage.setItem(moviesKey, angular.toJson(votes));
+                                        angular.copy(movie, scope.movie);
+                                        thisObj.readonly = true;
+                                        var message = "Your vote for \"" + movie["title"] + "\" is successful!";
+                                        $(elem).parent().find('.message').remove();
+                                        $(elem).parent().prepend('<div class="message" style="color:#f00;">' + message + '</div>');
+                                    });
+
 
                                 })
                                 .error(function(error) {
@@ -389,7 +395,7 @@ var MoviesPlugins = {
 
                                 }
                                 scope.statusCount++;;
-								scope.$apply();
+                                scope.$apply();
                                 //MoviesPlugins.setDialog(scope, elem, attrs);
                             }
                         }; //end xhr.onload	
@@ -398,7 +404,7 @@ var MoviesPlugins = {
                                 var complete = (event.loaded / event.total * 100 | 0);
                             }
                         }; // end xhr.upload.onprogress
-						
+
                         var formData = new FormData();
                         formData.append('file', file);
                         xhr.send(formData);

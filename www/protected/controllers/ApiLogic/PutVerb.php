@@ -4,6 +4,7 @@
 		//$put_vars = CJSON::decode($json,true);  //true means use associative array
 
 	 	$put_vars = json_decode(file_get_contents('php://input'), true);
+		$checkUser = true;
 		switch($_GET['model'])
 		{
 			// Find respective model
@@ -11,8 +12,13 @@
 				$model = Event::model()->findByPk($_GET['id']);        
 				break;
 			case 'movies':
-				$model = Movie::model()->findByPk($_GET['id']);        
+				//$model = Movie::model()->findByPk($_GET['id']);        
+				$model = Movie::model()->findByAttributes(array('id'=>$_GET['id']));
 				break;
+			case 'vote':
+				$model = MoviesVotes::model()->findByAttributes(array('movie_id'=>$_GET['id']));
+				$checkUser = false;
+				break;			
 			default:
 				$this->_sendResponse(501, 
 					sprintf( 'Error: Mode <b>update</b> is not implemented for model <b>%s</b>',
@@ -38,7 +44,7 @@
 			}
 		}
 		// Try to save the model
-		if(($model->user_id != Yii::app()->user->id) && !Yii::app()->user->isAdmin())
+		if($checkUser && ($model->user_id != Yii::app()->user->id) && !Yii::app()->user->isAdmin())
 		{
 			$this->_sendResponse(401, "Unauthorized Update!" );
 		}

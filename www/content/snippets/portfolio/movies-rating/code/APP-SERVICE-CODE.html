@@ -31,16 +31,8 @@ angular.module('moviesApp.services', []).factory('dataFactory', ['$http', functi
         //return $http.delete(urlBase + '/' + id);
     };
 
-    dataFactory.submitVote = function(movie, rating) {
-        /* Removes keys that were created in the model that aren't part of the original model */
-        for (key in movie) {
-            if (!DefaultMovieModel.hasOwnProperty(key)) {
-                delete movie[key];
-            }
-        }
-        movie['imdbRating'] = (parseInt(movie['imdbRating']) + rating).toString();
-        movie['imdbVotes'] = (parseInt(movie['imdbVotes']) + 1).toString();
-        return dataFactory.updateMovie(movie);
+    dataFactory.submitVote = function(vote) {
+        return $http.put('/www/index.php/api/vote' + '/' + vote["movie_id"], vote);
     };
     return dataFactory;
 }]);

@@ -9,7 +9,7 @@ UI = {
 	{
 		//console.log("intiializing!");
 		initUser();
-		this.updateUser(user);
+		
 		GlobalVariables = GlobalVariables || {};
 		var now = new Date();
 		var year = now.getFullYear();
@@ -41,10 +41,8 @@ UI = {
 			else{
 				$('.log-in-out-copy').html("Log In");					
 			}		  
-			if(UI.isUpdateAllow){
-				UI.executeLogInOutCallbacks();
-			}
-			UI.isUpdateAllow = true;
+			UI.executeLogInOutCallbacks();
+			//UI.isUpdateAllow = true;
 		}).fail(function(data){});		
 
 

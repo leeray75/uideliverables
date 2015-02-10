@@ -141,6 +141,7 @@ MoviesControllers.controller('MoviesAddEditController', ['$scope', '$routeParams
     }
     $scope.addMovie = function() {
         if ($scope.theForm.$valid) {
+
             dataFactory.insertMovie($scope.movie)
                 .success(function(data) {
                     var message = "Movie Created Successfully!";
@@ -186,7 +187,13 @@ MoviesControllers.controller('MoviesAddEditController', ['$scope', '$routeParams
                     }
                 }
                 if (updates > 0) {
-                    dataFactory.updateMovie($scope.movie)
+                    var movie = angular.copy($scope.movie);
+                    for (key in movie) {
+                        if (!DefaultMovieModel.hasOwnProperty(key)) {
+                            delete movie[key];
+                        }
+                    }
+                    dataFactory.updateMovie(movie)
                         .success(function(data) {
                             angular.copy(data, $scope.movie);
                             var previewMovieItem = MovieTemplateHelper.getUpdatedModel(angular.copy($scope.movie));
