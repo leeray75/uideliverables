@@ -1,9 +1,9 @@
 <?php
-if(isset($_GET["portfolio"]))
+if(isset($_GET["demo"]))
 {
 	
 ?>
-	<?php include "portfolio/".$_GET["portfolio"].".php"; ?>
+	<?php include "demo/".$_GET["demo"].".php"; ?>
 
 <?php
 }
@@ -17,11 +17,11 @@ else{
 	$this->pageJS = array(
 		"/www/content/js/pages/portfolio.js",
 	);	
-    $this->metaKeyWords = "portfolio, html, css, javascript, jquery, ajax, code, samples";
+    $this->metaKeyWords = "demos, portfolio, html, css, javascript, jquery, ajax, code, samples";
     $this->metaDescription = "A list of sites and other projects I've coded recently.";
     $this->pageTitle=Yii::app()->name . ' - Portfolio';
     $this->breadcrumbs=array(
-        'Portfolio',
+        'Demos',
     );
     ?>
     <!-- This is a "static" page. You may change the content of this page

@@ -97,6 +97,7 @@ return array(
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'rules'=>array(
+				
 				'post/<id:\d+>/<title:.*?>'=>'post/view',
 				'posts/<tag:.*?>'=>'post/index',
 				// REST patterns
@@ -109,7 +110,10 @@ return array(
 				//'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
-				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',				
+				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',	
+				'<view:[a-zA-Z0-9-]+>'=>'site/page',
+				'<view:[a-zA-Z0-9-]+>/<demo:[A-Za-z0-9-]+>'=>'site/page',
+						
 			),
 		),		
 		/*

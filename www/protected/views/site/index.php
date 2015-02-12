@@ -148,27 +148,4 @@ $this->metaDescription="Welcome to UI Deliverables! I am a front-end developer w
 <script language="javascript">
 $('#RSS-FEED img').addClass('img-responsive');
 </script>
-<div id="Site-Info" class="row">
-  <div class="col-lg-4 col-md-4 col-sm-4">
-    <div class="box">
-      <h3>My Resume</h3>
-      <p>A document that present my backgrounds and skills. It contains a summary of my relevant job experience, technical skills, and education.</p>
-      <p><a class="btn btn-info" href="/www/index.php/site/page?view=resume">Resume &raquo;</a></p>
-    </div>
-  </div>
-  <div class="col-lg-4 col-md-4 col-sm-4">
-    <div class="box">
-      <h3>Contact Me</h3>
-      <p>Please feel free to contact me if you have any questions, comments, or suggestions. I will receive everything sent through this contact form.</p>
-      <p><a class="btn btn-info" href="/www/index.php/site/contact">Contact Me &raquo;</a></p>
-    </div>
-  </div>
-  <div class="col-lg-4 col-md-4 col-sm-4">
-    <div class="box">
-      <h3>My Demos &amp; Portfolio</h3>
-      <p>A list of sites and other projects I've coded recently. It displays some personal project demos and prototypes I am working on.</p>
-      <p><a class="btn btn-info" href="/www/index.php/site/page?view=portfolio">Portfolio &raquo;</a></p>
-    </div>
-  </div>
-</div>
-<!-- .row -->
+<?php include $_SERVER['DOCUMENT_ROOT']."/www/content/snippets/homepage/bottom-content.html"; ?>

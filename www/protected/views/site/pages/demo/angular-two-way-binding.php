@@ -36,7 +36,7 @@ $this->metaKeyWords = "html, css, javascript, jquery, ajax, json, php, mysql, da
 $this->metaDescription = "A demo of AngularJS and Two Way Data Binding.";
 $this->pageTitle=Yii::app()->name . ' - Demo: Two Way Data Binding';
 $this->breadcrumbs=array(
-	'Demos & Portfolio'=>array('/site/page/?view=portfolio'), 
+	'Demos'=>array('/demo'), 
 	'Two Way Data Binding'
 );
 ?>

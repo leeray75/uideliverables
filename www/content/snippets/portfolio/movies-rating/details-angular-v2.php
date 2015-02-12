@@ -8,8 +8,7 @@
     <h3>Getting Started</h3>
     <p>Before I do any of the front-end developement work. I first needed to take care of some of the back-end work. I'm not going to get into too much details about the back-end stuff, because my primary goal is to work with the AngularJS framework. I decided to use the same movie data model for this project as the previous demo. In the MySQL database, the 'movies' table columns will match the keys from the JSON data model that I was using. For this demo, I wanted to keep things simple as possible. So, I only created two tables 'movies' and 'movies_votes'. I also created one view 'MoviesView' that joins the two tables.. For the RESTful APIs, I added the 'movie' API, to the backend PHP's Yii framework.</p>
   </section>
-  <!-- /GettingStarted-Details -->
-  
+  <!-- /GettingStarted-Details -->  
   <section id="JSON-SQL-CODE-SECTION" class="code-section">
     <div class="accordion" id="Accordian-JSON-SQL">
       <div class="accordion-group">

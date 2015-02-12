@@ -38,7 +38,7 @@
 <?php 
 $baseURL = Yii::app()->request->baseUrl;
 header('Content-language: en');
-if(isset($_GET["portfolio"]) and ($_GET["portfolio"] == "angular-movies-rating"))
+if(isset($_GET["demo"]) and ($_GET["demo"] == "angular-movies-rating"))
 {
 	echo('<html lang="en" ng-app="myApp">');
 }else{

@@ -5,7 +5,7 @@ var UserNav = UserNav || {};
 var GlobalVariables = GlobalVariables || {};
 </script>
 <?php 
-if(isset($_GET["portfolio"]) and (strpos($_GET["portfolio"],'movies-rating') !== false))
+if(isset($_GET["demo"]) and (strpos($_GET["demo"],'-movies-') !== false))
 {
 ?>
 <script>
