@@ -3,7 +3,8 @@
 /* @var $this SiteController */
 $this->pageCSS = array(
 /* "/www/content/css/jquery-ui-1.10.3.custom.css", */
-//"/mediamorph/css/global.css",s
+//"/mediamorph/css/global.css",
+	"//google-code-prettify.googlecode.com/svn/loader/prettify.css",
 	"/www/content/css/portfolio.css",
 	 "/www/content/css/jquery-ui-1.10.3.custom.css",
 	 "/www/content/js/libs/jquery/plugins/rateit/rateit.css",
@@ -12,6 +13,7 @@ $this->pageCSS = array(
 
 
 $this->pageJS = array(
+	"//google-code-prettify.googlecode.com/svn/loader/run_prettify.js",
 	"/www/content/js/libs/jquery/jquery-ui-1.10.3.custom.min.js",
 	"/www/content/js/libs/jquery/plugins/rateit/jquery.rateit-modified.js",
 	"/www/content/js/models/Movies/MovieModel.js",

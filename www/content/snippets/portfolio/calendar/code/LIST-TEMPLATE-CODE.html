@@ -1,4 +1,3 @@
-<script type="text/template" id="Event-List-Item-Template">
 <%
     var startDateArray = start.split(" ");
     var startDate = (startDateArray[0].length > 0) ? startDateArray[0] : GlobalVariables.CurrentDate.split(" ")[0];
@@ -27,35 +26,32 @@
     image.onerror = function() {
         hasImage = false;
     };
-	//image.src = "/www/php/upload/"+id+".jpg";
-	//console.log('Event list item template: '+ title);
 
 %>
-<div id="EventListItem-<%= id %>" class="event-list-item-container <%= eventType %>">
-	<div class="date"><%= dateString %> <span class="time">(<%= timeString %>)</span>
-	<% if(!user.get("isGuest")){ %>
-	<div class="icons-container">
-		<a href="#" class="action-events-icon add-event" title="Add Event">&nbsp;</a>
-		<% if(isEditable==1){ %>
-		<a href="#" class="action-events-icon delete-event" title="Delete Event">&nbsp;</a>
-		<a href="#" class="action-events-icon edit-event" title="Edit Event">&nbsp;</a>
-		<% } %>
-	</div>
-	<!-- /icons-container -->
-	<% } %>
+&lt;div id=&quot;EventListItem-&lt;%= id %&gt;&quot; class=&quot;event-list-item-container &lt;%= eventType %&gt;&quot;&gt;
+	&lt;div class=&quot;date&quot;&gt;&lt;%= dateString %&gt; &lt;span class=&quot;time&quot;&gt;(&lt;%= timeString %&gt;)&lt;/span&gt;
+	&lt;% if(!user.get(&quot;isGuest&quot;)){ %&gt;
+	&lt;div class=&quot;icons-container&quot;&gt;
+		&lt;a href=&quot;#&quot; class=&quot;action-events-icon add-event&quot; title=&quot;Add Event&quot;&gt;&nbsp;&lt;/a&gt;
+		&lt;% if(isEditable==1){ %&gt;
+		&lt;a href=&quot;#&quot; class=&quot;action-events-icon delete-event&quot; title=&quot;Delete Event&quot;&gt;&nbsp;&lt;/a&gt;
+		&lt;a href=&quot;#&quot; class=&quot;action-events-icon edit-event&quot; title=&quot;Edit Event&quot;&gt;&nbsp;&lt;/a&gt;
+		&lt;% } %&gt;
+	&lt;/div&gt;
+	&lt;!-- /icons-container --&gt;
+	&lt;% } %&gt;
 	
-	</div>
-	<!-- /date -->
-	<div class="title"><%= title %></div>
-	<% if(location.length>0){ %>
-	<div class="location">Location: <%= location %></div>
-	<% } %>
-	<% if(description.length>0){ %>
-	<div class="description">Description: 
-		<div class="description-data"><%= description %></div>
-	</div> 
-	<% } %>
+	&lt;/div&gt;
+	&lt;!-- /date --&gt;
+	&lt;div class=&quot;title&quot;&gt;&lt;%= title %&gt;&lt;/div&gt;
+	&lt;% if(location.length&gt;0){ %&gt;
+	&lt;div class=&quot;location&quot;&gt;Location: &lt;%= location %&gt;&lt;/div&gt;
+	&lt;% } %&gt;
+	&lt;% if(description.length&gt;0){ %&gt;
+	&lt;div class=&quot;description&quot;&gt;Description: 
+		&lt;div class=&quot;description-data&quot;&gt;&lt;%= description %&gt;&lt;/div&gt;
+	&lt;/div&gt; 
+	&lt;% } %&gt;
 
-</div>
+&lt;/div&gt;
 <!-- /event-list-item-container -->
-  </script>

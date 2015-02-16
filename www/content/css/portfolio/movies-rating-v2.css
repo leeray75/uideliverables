@@ -251,31 +251,3 @@ ul.movies-navbar li{ margin: 0 auto 0 auto; width: 100%;}
 .movie-top-copy span.reset-label-text { color: #f0ad4e; font-weight: bold; }
 .movie-top-copy span.edit-label-text{ color: #5bc0de; font-weight: bold;}
 
-
-#DETAILS-CONTENT{}
-#DETAILS-CONTENT .accordion {
-    margin-bottom: 20px;
-}
-#DETAILS-CONTENT .accordion-group {
-    border: 1px solid #333;
-    border-radius: 4px;
-    margin-bottom: 2px;
-}
-#DETAILS-CONTENT .accordion-heading {
-    border-bottom: 0 none;
-	background-color: #ccc;
-}
-#DETAILS-CONTENT .accordion-heading a{ color: #062a53; text-decoration: none; font-weight: bold;}
-#DETAILS-CONTENT .accordion-heading a:hover{ text-decoration: none; background: #999;}
-#DETAILS-CONTENT .accordion-heading .accordion-toggle {
-    display: block;
-    padding: 8px 15px;
-}
-#DETAILS-CONTENT .accordion-toggle {
-    cursor: pointer;
-}
-#DETAILS-CONTENT .accordion-inner {
-    border-top: 1px solid #e5e5e5;
-    padding: 9px 15px;
-}
-#DETAILS-CONTENT .line-code{ font-weight: bold;}
