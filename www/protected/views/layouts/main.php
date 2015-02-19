@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <?php /* @var $this Controller */ 
-
+	include_once "includes/check-crawlers.php"; 
 	echo "<!-- isSSL: ".$this->isSSL." -->";
 	
 	if ( (isset($this->isSSL) and $this->isSSL === true) and (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on')) {
@@ -59,8 +59,15 @@ if(isset($_GET["demo"]) and ($_GET["demo"] == "angular-movies-rating"))
 <?php if(isset($this->metaKeywords)): ?>
 <meta name="keywords" content="<?php echo $this->metaKeywords; ?>">
 <?php endif ?>
-<?php include_once "includes/css-files.php"; ?>
-<?php include_once "includes/js-files.php"; ?>
+<?php 
+$crawler = isSpider($_SERVER['HTTP_USER_AGENT']);
+
+if(!$crawler){
+	include_once "includes/css-files.php"; 
+	include_once "includes/js-files.php"; 
+}
+?>
+
 <meta name="author" content="Raymond Lee" />
 <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>

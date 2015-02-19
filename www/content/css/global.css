@@ -1,4 +1,12 @@
 /* CSS crunched with Crunch - http://crunchapp.net/ */
+.clear-fix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
 body {
   padding-top: 70px;
   background: #fff;
@@ -198,6 +206,29 @@ h4 {
   background-color: #cccccc;
 }
 /* End Modal Styles */
+/* Bootstrap Tabs */
+#content .nav-tabs > li > a {
+  border: 1px solid #ddd;
+  border-bottom: none;
+  background-color: #cccccc;
+  color: #062a53;
+}
+#content .nav-tabs > li.active > a {
+  background-color: #fff;
+}
+#content .tab-pane {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-top: none;
+}
+#content .tab-pane:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
 /* Begin Login Module */
 #UI-Login-Module #LoginSpinner {
   text-align: center;

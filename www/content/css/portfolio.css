@@ -49,3 +49,13 @@ ul.list-3{ float: left; width: 150px;}
     padding: 9px 15px;
 }
 #DETAILS-CONTENT .line-code{ font-weight: bold;}
+.code {
+    border: 2px dashed #dedede;
+    color: #333333;
+    font-family: Courier,monospace,Courier New;
+    font-size: 13px;
+    line-height: 16px;
+    padding: 10px;
+    width: 100%;
+    word-wrap: break-word;
+}
