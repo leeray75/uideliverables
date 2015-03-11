@@ -271,7 +271,7 @@
       <li><a href="http://www.yiiframework.com/wiki/175/how-to-create-a-rest-api/" target="_blank">How-To: Create a REST API</a> - this page was very helpful on helping me set up the RESTful APIs with the Yii framework.</li>
       <li><a href="http://backbonejs.org/" target="_blank">Backbone.js</a> - this is Backbone.js website. It will have full documentation on Backbone.js.</a>
       <li><a target="_blank" href="http://jquery.com/">jQuery</a> - a very useful and my favorite JavaScript library. Most of the plugins and code my AngularJS Directives were written with jQuery.</li>
-      <li><<a href="http://arshaw.com/fullcalendar/" target="_blank">FullCalendar</a> - this is the primary plugin that renders the calendar on the page. It has documentation on how to use the plugin.</li>
+      <li><a href="http://arshaw.com/fullcalendar/" target="_blank">FullCalendar</a> - this is the primary plugin that renders the calendar on the page. It has documentation on how to use the plugin.</li>
     </ul>
   </section>
   <!-- /Conclusion-Details --> 

@@ -1,3 +1,4 @@
+
 <?php
 /* @var $this SiteController */
 	$this->pageCSS = array(
@@ -13,6 +14,8 @@ $this->breadcrumbs=array(
 	'Resume',
 );
 ?>
+
+
 <!-- This is a "static" page. You may change the content of this page
 by updating the file <code><?php echo __FILE__; ?></code>.
 $_SERVER['DOCUMENT_ROOT']

@@ -22,7 +22,8 @@
 					Yii::app()->user->logout();	
 					$model = Yii::app()->user->userProfile;
 				}
-				elseif($secure_connection or $hostname=='localhost'){
+				//elseif($secure_connection or $hostname=='localhost'){
+				else{
 					$user_id = getUserId();	
 					$model;
 					if($user_id>-1){		
@@ -35,9 +36,11 @@
 						$this->_sendResponse(200, CJSON::encode($response));
 					}
 				}
+				/*
 				else{
 					$this->_sendResponse(400, 'Secure Connection Failed');
 				}
+				*/
 				break;
 			default:
 				$this->_sendResponse(501);

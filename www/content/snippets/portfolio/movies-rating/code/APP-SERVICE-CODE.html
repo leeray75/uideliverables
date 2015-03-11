@@ -23,16 +23,30 @@ angular.module('moviesApp.services', []).factory('dataFactory', ['$http', functi
 
     dataFactory.deleteMovie = function(id) {
         var deleteApi = urlBase + '/' + id;
-        return $http({
-            method: 'DELETE',
-            url: deleteApi
-        });
-        /* The following throws an error in IE8. Because 'delete' is a reserved word */
-        //return $http.delete(urlBase + '/' + id);
+		return $http.delete(urlBase + '/' + id);
     };
 
     dataFactory.submitVote = function(vote) {
         return $http.put('/www/index.php/api/vote' + '/' + vote["movie_id"], vote);
     };
     return dataFactory;
+}]).factory('getUserData', ['$http','$q', function($http,$q) {
+	return function(){
+		var urlBase = '/www/index.php/api/user/0';
+		var deferred = $q.defer();
+		var user = {
+			id: "",
+			email: "",
+			isAdmin: "",
+			isGuest: "",
+			username: ""	
+		}
+		$http.get(urlBase).then(function(_user){
+			deferred.resolve(_user.data);
+		},function(error){
+			deferred.reject(user);
+		});	
+		return deferred.promise;
+	}
+	
 }]);

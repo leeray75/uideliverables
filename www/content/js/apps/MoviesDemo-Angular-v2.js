@@ -14,15 +14,30 @@ angular.module('moviesApp', [
     $routeProvider.
     when('/list', {
         templateUrl: '/www/content/partials/movies-rating/movies-list-v2.html',
-        controller: 'MoviesListController'
+        controller: 'MoviesListController',
+		resolve: {
+			user: function(getUserData){
+				return getUserData();	
+			}
+		}
     }).
     when('/edit/preview/:id', {
         templateUrl: '/www/content/partials/movies-rating/movies-preview.html',
-        controller: 'MoviesAddEditController'
+        controller: 'MoviesAddEditController',
+		resolve: {
+			user: function(getUserData){
+				return getUserData();	
+			}
+		}
     }).
     when('/edit/form/:id', {
         templateUrl: '/www/content/partials/movies-rating/movies-add-edit.html',
-        controller: 'MoviesAddEditController'
+        controller: 'MoviesAddEditController',
+		resolve: {
+			user: function(getUserData){
+				return getUserData();	
+			}
+		}
     }).
     otherwise({
         redirectTo: '/list'

@@ -25,7 +25,7 @@ $this->pageJS = array(
 	//"/www/content/js/libs/jquery/plugins/jquery.maskedinput.js",
 	"//cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.3.1/jquery.maskedinput.min.js",
 //	"/www/content/js/libs/angular/angular-1.3.11/angular.min.js",	
-	"/www/content/js/libs/angular/angular-1.3.11/angular-route.min.js",
+	"//ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular-route.min.js",
 	"/www/content/js/libs/angular/angular-ngStorage.js",
 	//"/www/content/js/libs/angular/angular-animate.min.js",
 	"/www/content/js/apps/MoviesDemo-Angular-v2.js",

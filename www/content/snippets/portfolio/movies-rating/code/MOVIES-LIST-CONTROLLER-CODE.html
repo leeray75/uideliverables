@@ -1,4 +1,4 @@
-MoviesControllers.controller('MoviesListController', ['$scope', 'dataFactory', function($scope, dataFactory) {
+MoviesControllers.controller('MoviesListController', ['$scope', 'dataFactory', 'user', function($scope, dataFactory, user) {
     $scope.pageTitle = "Movies List";
     $scope.statusCount = 0;
     $scope.status = {};
@@ -48,7 +48,7 @@ MoviesControllers.controller('MoviesListController', ['$scope', 'dataFactory', f
             .success(function(data) {
                 for (var obj in data) {
                     var movie = data[obj];
-                    movie = MovieTemplateHelper.getUpdatedModel(movie);
+                    movie = MovieTemplateHelper.getUpdatedModel(movie,user);
                 }
                 $scope.movies = data;
             })

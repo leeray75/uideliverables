@@ -17,14 +17,14 @@
       <div class="clearfix" ng-show="AddEditMovieForm.$submitted">
         <h4>Enter the following:</h4>
         <ul>
-          <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.title.$error.required">Title</li>
-          <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.runtime.$error.required">Run Time</li>
-          <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.genre.$error.required">Genre</li>
-          <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.released.$error.required">Release Date</li>
-          <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.plot.$error.required">Plot</li>
-          <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.director.$error.required">Director</li>
-          <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.writers.$error.required">Writer</li>
-          <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-show="AddEditMovieForm.actors.$error.required">Actor</li>
+          <li class="col-xs-6" ng-show="AddEditMovieForm.title.$error.required">Title</li>
+          <li class="col-xs-6" ng-show="AddEditMovieForm.runtime.$error.required">Run Time</li>
+          <li class="col-xs-6" ng-show="AddEditMovieForm.genre.$error.required">Genre</li>
+          <li class="col-xs-6" ng-show="AddEditMovieForm.released.$error.required">Release Date</li>
+          <li class="col-xs-6" ng-show="AddEditMovieForm.plot.$error.required">Plot</li>
+          <li class="col-xs-6" ng-show="AddEditMovieForm.director.$error.required">Director</li>
+          <li class="col-xs-6" ng-show="AddEditMovieForm.writers.$error.required">Writer</li>
+          <li class="col-xs-6" ng-show="AddEditMovieForm.actors.$error.required">Actor</li>
         </ul>
       </div>
       <input  name="title" id="title" ng-model="movie.title" value="" required type="text" class="hidden">
@@ -39,20 +39,20 @@
     <div id="Movie-Preview-Container" class="editable-preview-container">
       <div id="#MovieItem-{{previewMovieItem.id}}" class="movie-list-item-container clear-fix row">
         <div class="row">
-          <div class="image-col col-lg-3 col-md-3 col-sm-3">
+          <div class="image-col col-sm-3">
           	<div id="Movie-Poster" Movie-Poster ng-class="{noBorder: isDraggable==false}"><img ng-src="{{previewMovieItem.poster}}" class="img-responsive"/></div><!-- /Movie-Poster -->
           </div>
-          <div class="data-col col-lg-9 col-md-9 col-sm-9">
+          <div class="data-col col-sm-9">
             <div class="movie-title row editable-text" model-key="title">{{previewMovieItem.title}}</div>
             <div class="row ">
-              <div class="col-lg-6 col-md-6 col-sm-6 info-column">
+              <div class="col-sm-6 info-column">
                 <div class="row"><span class="movie-label">Rated:</span> <span id="Editable-Select-Rated" class="rated" model-key="rated">{{previewMovieItem.rated}}</span></div>
                 <div class="row"><span class="movie-label">Run Time:</span> <span class="run-time"><span class="editable-text" model-key="runtime">{{previewMovieItem.runtime}}</span> minutes</span></div>
                 <div class="row"><span class="movie-label">{{previewMovieItem.GenreLabel}}:</span> <span class="genre editable-text" model-key="genre">{{previewMovieItem.genre}}</span></div>
                 <div class="row"><span class="movie-label">Release Date: </span> <span class="release-date editable-date masked" model-key="released">{{previewMovieItem.DisplayReleaseDate}}</span></div>
               </div>
               <!-- /info-column -->
-              <div class="ratings-column col-lg6 col-md-6 col-sm-6">
+              <div class="ratings-column col-sm-6">
                 <div class="ratings-container">
                 
                   <div class="row"><span class="movie-label">Your Rating:</span> <span id="RateIt-User-Preview" class="rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="16" rating="0" imdb-rate></span> </div>

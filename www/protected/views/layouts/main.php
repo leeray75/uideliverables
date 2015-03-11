@@ -1,4 +1,19 @@
 <!DOCTYPE HTML>
+<?php
+	$ServerName = $_SERVER['SERVER_NAME'];
+	if($ServerName != 'localhost' && $ServerName == "uideliverables.com"){
+		$ServerName = "www.uideliverables.com";	
+	}	
+	if( $_SERVER["REQUEST_URI"] == "/www/index.php/site/page?view=resume"){
+		header("HTTP/1.1 301 Moved Permanently");		
+		header("Location: http://".$ServerName."/www/index.php/resume"); 
+	}
+	elseif($_SERVER['SERVER_NAME']!="localhost" && $_SERVER['SERVER_NAME']=="uideliverables.com"){
+		header("HTTP/1.1 301 Moved Permanently");		
+		header("Location: http://".$ServerName.$_SERVER["REQUEST_URI"]); 
+	}
+?>
+
 <?php /* @var $this Controller */ 
 	include_once "includes/check-crawlers.php"; 
 	echo "<!-- isSSL: ".$this->isSSL." -->";

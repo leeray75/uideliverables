@@ -1,6 +1,6 @@
 
-<section class="top-content clear-fix row">
-  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<section class="top-content row">
+  <div class="col-xs-12">
     <div class="top-copy">
       <h1>Movies Single Page Application Demo with AngularJS</h1>
       <?php include $_SERVER['DOCUMENT_ROOT']."/www/content/snippets/portfolio/movies-rating/top-copy-angular-v2.html"; ?>
@@ -33,7 +33,7 @@
             </aside>
           </div>
           <!-- /MoviesSideNavColumn -->
-          <div id="MoviesMainViewColumn" class="col-lg-10 col-md-10">
+          <div id="MoviesMainViewColumn" class="col-md-10">
             <div class="main" ng-view></div>
           </div>
           <!-- /MoviesMainViewColumn --> 

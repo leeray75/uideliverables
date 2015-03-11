@@ -5,7 +5,7 @@
   </div>
   <div class="movies-search-container">
     <div class="row">
-      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="col-xs-12">
         <form id="MovieTitlesSearchForm">
           <div class="movie-search-field"> <span class="glyphicon glyphicon-search"></span>
             <input id="MovieTitleSearchFilterField" type="text" ng-model="titleFilter" placeholder="Search Movie Titles & Plots" />
@@ -18,20 +18,20 @@
     <li ng-repeat="movie in movies | filter: moviesSearchFilter | orderBy: 'title' ">
       <div id="#MovieItem-{{movie.imdbID}}" class="movie-list-item-container clear-fix row">
         <div class="row">
-          <div class="image-col col-lg-3 col-md-3 col-sm-3"> <img name="PosterImage-{{movie.imdbID}}" ng-src="{{movie.poster}}" class="img-responsive"/>
+          <div class="image-col col-sm-3"> <img name="PosterImage-{{movie.imdbID}}" ng-src="{{movie.poster}}" class="img-responsive"/>
             <div class="edit-delete-links" ng-if="movie.allowDeleteEdit"><a href="#/edit/preview/{{movie.id}}" class="btn btn-primary">Edit</a> <a href="" ng-click="deleteMovie(movie)" class="btn btn-danger">Delete</a></div>
           </div>
-          <div class="data-col col-lg-9 col-md-9 col-sm-9">
+          <div class="data-col col-sm-9">
             <div class="movie-title row"> {{movie.title}} </div>
             <div class="row ">
-              <div class="col-lg-6 col-md-6 col-sm-6 info-column">
+              <div class="col-sm-6 info-column">
                 <div class="row"><span class="movie-label">Rated:</span> <span class="rated">{{movie.rated}}</span></div>
                 <div class="row"><span class="movie-label">Run Time:</span> <span class="run-time">{{movie.runtime}} minutes</span></div>
                 <div class="row"><span class="movie-label">{{movie.GenreLabel}}:</span> <span class="genre">{{movie.genre}}</span></div>
                 <div class="row"><span class="movie-label">Release Date: </span> <span class="release-date">{{movie.DisplayReleaseDate}}</span></div>
               </div>
               <!-- /info-column -->
-              <div class="ratings-column col-lg6 col-md-6 col-sm-6">
+              <div class="ratings-column col-sm-6">
                 <div class="ratings-container">
                   <div class="row"><span class="movie-label">Your Rating:</span> <span id="RateIt-{{movie.id}}" class="rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="16" rating="0" imdb-user-rate></span> </div>
                   <div class="row"> <span class="movie-label">Rating:</span> <span id="IMDb-RateIt-{{movie.id}}" class="rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="16" data-rating="{{movie.rating}}" imdb-rate></span> </div>

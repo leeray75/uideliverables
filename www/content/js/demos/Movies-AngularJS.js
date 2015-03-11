@@ -35,12 +35,12 @@ var MovieModelLabels = {
 }
 
 var MovieTemplateHelper = {
-    getUpdatedModel: function(movie) {
+    getUpdatedModel: function(movie, user) {
         var userId = 0;
         var isAdmin = false;
         try {
-            userId = user.get("id");
-            isAdmin = user.get("isAdmin") == "1";
+            userId = user.id;
+            isAdmin = user.isAdmin == "1";
         } catch (e) {}
         movie.allowDeleteEdit = ((movie["user_id"] == userId) || isAdmin);
         movie.poster = this.getPosterImageSrc(movie.poster);

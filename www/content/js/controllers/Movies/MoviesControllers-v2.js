@@ -9,7 +9,7 @@ MoviesControllers.controller('asideMenuController', function($scope, $location) 
         });
     })
     /* Movies List Controller */
-MoviesControllers.controller('MoviesListController', ['$scope', 'dataFactory', function($scope, dataFactory) {
+MoviesControllers.controller('MoviesListController', ['$scope', 'dataFactory', 'user', function($scope, dataFactory, user) {
     $scope.pageTitle = "Movies List";
     $scope.statusCount = 0;
     $scope.status = {};
@@ -59,7 +59,7 @@ MoviesControllers.controller('MoviesListController', ['$scope', 'dataFactory', f
             .success(function(data) {
                 for (var obj in data) {
                     var movie = data[obj];
-                    movie = MovieTemplateHelper.getUpdatedModel(movie);
+                    movie = MovieTemplateHelper.getUpdatedModel(movie,user);
                 }
                 $scope.movies = data;
             })
@@ -79,7 +79,7 @@ MoviesControllers.controller('MoviesListController', ['$scope', 'dataFactory', f
 }]);
 
 /* Add/Edit Movies Controller */
-MoviesControllers.controller('MoviesAddEditController', ['$scope', '$routeParams', '$route', '$location', 'dataFactory', '$localStorage', '$timeout', function($scope, $routeParams, $route, $location, dataFactory, $localStorage, $timeout) {
+MoviesControllers.controller('MoviesAddEditController', ['$scope', '$routeParams', '$route', '$location', 'dataFactory', '$localStorage', '$timeout', 'user', function($scope, $routeParams, $route, $location, dataFactory, $localStorage, $timeout,user) {
     $scope.theForm = null;
     $scope.isDraggable = ('draggable' in document.createElement('span'));
     $scope.id = $routeParams.id;
@@ -120,9 +120,9 @@ MoviesControllers.controller('MoviesAddEditController', ['$scope', '$routeParams
                 $scope.resetData = angular.copy($scope.movie);
                 $scope.previewMovieItem = MovieTemplateHelper.getUpdatedModel(angular.copy($scope.movie));
                 /* Check if User is a admin and the owner of the movie */
-                if (user.get('isAdmin') == false && $scope.movie["user_id"] != user.get("id")) {
+                if (user.isAdmin == false && $scope.movie["user_id"] != user.id) {
                     $location.path('/');
-                } // if movie["user_id"] != user.get('id')
+                } 
             })
             .error(function(error) {
                 $scope.pageTitle = "Update Movie";
