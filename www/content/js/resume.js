@@ -12,7 +12,7 @@ var PersonalInfo = {
 	city: 'Edison',
 	state: 'NJ',
 	zip: '08817',	
-	email: 'hoyenlee@yahoo.com'	
+	email: 'hoyenlee@gmail.com'	
 }
 var Resume =
 {
