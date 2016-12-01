@@ -38,6 +38,7 @@ p#login-info{ margin-top: 1.5em;}
 	color: #FF9;
 }
 #calendar .fc-event-time{ display: none; }
+#calendar .fc-today{ background: #cccccc;}
 /* css for timepicker */
 .ui-timepicker-div .ui-widget-header {
 	margin-bottom: 8px;

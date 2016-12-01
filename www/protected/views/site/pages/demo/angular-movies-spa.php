@@ -9,6 +9,7 @@ $this->pageCSS = array(
 	"//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css",
 	// "/www/content/css/jquery-ui-1.10.3.custom.css",
 	 "/www/content/js/libs/jquery/plugins/rateit/rateit.css",
+	 "/www/content/css/xeditable.css",
 	 
 );
 
@@ -32,6 +33,7 @@ $this->pageJS = array(
 	"/www/content/js/services/MoviesServices.js",
 	"/www/content/js/controllers/Movies/MoviesControllers-v2.js",
 	"/www/content/js/directives/MoviesDirectives.js",
+	"/www/content/js/directives/xeditable.min.js",
 	
 	//
 );

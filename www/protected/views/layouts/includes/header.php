@@ -18,7 +18,9 @@
               <li><a href="/www/index.php/demo/angular-movies-spa"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"> </span> Angular: Movie Single Page Application</a></li>
               <li><a href="/www/index.php/demo/backbone-calendar"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"> </span> Backbone: Event Calendar</a></li>
               <li><a href="/www/index.php/demo/bootstrap-skill-junction"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"> </span> Bootstrap: Skill Junction</a></li>
+              <!--
               <li><a href="/www/index.php/demo/bootstrap-am-waste-services"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"> </span> Bootstrap: 5 Page Bootstrap Website</a></li>
+              -->
               <li><a href="/www/index.php/demo/angular-two-way-binding"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"> </span> Angular: Two Way Data Binding</a> </li>
               <li><a href="/www/index.php/demo/angular-movies-rating"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"> </span> Angular: Movie Rating</a> </li>
               <li><a href="/www/index.php/demo/backbone-movies-rating"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"> </span> Backbone: Movie Rating</a> </li>

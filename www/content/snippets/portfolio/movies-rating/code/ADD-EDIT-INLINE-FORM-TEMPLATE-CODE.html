@@ -17,14 +17,14 @@
       &lt;div class=&quot;clearfix&quot; ng-show=&quot;AddEditMovieForm.$submitted&quot;&gt;
         &lt;h4&gt;Enter the following:&lt;/h4&gt;
         &lt;ul&gt;
-          &lt;li class=&quot;col-xs-6 col-sm-6 col-md-6 col-lg-6&quot; ng-show=&quot;AddEditMovieForm.title.$error.required&quot;&gt;Title&lt;/li&gt;
-          &lt;li class=&quot;col-xs-6 col-sm-6 col-md-6 col-lg-6&quot; ng-show=&quot;AddEditMovieForm.runtime.$error.required&quot;&gt;Run Time&lt;/li&gt;
-          &lt;li class=&quot;col-xs-6 col-sm-6 col-md-6 col-lg-6&quot; ng-show=&quot;AddEditMovieForm.genre.$error.required&quot;&gt;Genre&lt;/li&gt;
-          &lt;li class=&quot;col-xs-6 col-sm-6 col-md-6 col-lg-6&quot; ng-show=&quot;AddEditMovieForm.released.$error.required&quot;&gt;Release Date&lt;/li&gt;
-          &lt;li class=&quot;col-xs-6 col-sm-6 col-md-6 col-lg-6&quot; ng-show=&quot;AddEditMovieForm.plot.$error.required&quot;&gt;Plot&lt;/li&gt;
-          &lt;li class=&quot;col-xs-6 col-sm-6 col-md-6 col-lg-6&quot; ng-show=&quot;AddEditMovieForm.director.$error.required&quot;&gt;Director&lt;/li&gt;
-          &lt;li class=&quot;col-xs-6 col-sm-6 col-md-6 col-lg-6&quot; ng-show=&quot;AddEditMovieForm.writers.$error.required&quot;&gt;Writer&lt;/li&gt;
-          &lt;li class=&quot;col-xs-6 col-sm-6 col-md-6 col-lg-6&quot; ng-show=&quot;AddEditMovieForm.actors.$error.required&quot;&gt;Actor&lt;/li&gt;
+          &lt;li class=&quot;col-xs-6&quot; ng-show=&quot;AddEditMovieForm.title.$error.required&quot;&gt;Title&lt;/li&gt;
+          &lt;li class=&quot;col-xs-6&quot; ng-show=&quot;AddEditMovieForm.runtime.$error.required&quot;&gt;Run Time&lt;/li&gt;
+          &lt;li class=&quot;col-xs-6&quot; ng-show=&quot;AddEditMovieForm.genre.$error.required&quot;&gt;Genre&lt;/li&gt;
+          &lt;li class=&quot;col-xs-6&quot; ng-show=&quot;AddEditMovieForm.released.$error.required&quot;&gt;Release Date&lt;/li&gt;
+          &lt;li class=&quot;col-xs-6&quot; ng-show=&quot;AddEditMovieForm.plot.$error.required&quot;&gt;Plot&lt;/li&gt;
+          &lt;li class=&quot;col-xs-6&quot; ng-show=&quot;AddEditMovieForm.director.$error.required&quot;&gt;Director&lt;/li&gt;
+          &lt;li class=&quot;col-xs-6&quot; ng-show=&quot;AddEditMovieForm.writers.$error.required&quot;&gt;Writer&lt;/li&gt;
+          &lt;li class=&quot;col-xs-6&quot; ng-show=&quot;AddEditMovieForm.actors.$error.required&quot;&gt;Actor&lt;/li&gt;
         &lt;/ul&gt;
       &lt;/div&gt;
       &lt;input  name=&quot;title&quot; id=&quot;title&quot; ng-model=&quot;movie.title&quot; value=&quot;&quot; required type=&quot;text&quot; class=&quot;hidden&quot;&gt;
@@ -39,20 +39,20 @@
     &lt;div id=&quot;Movie-Preview-Container&quot; class=&quot;editable-preview-container&quot;&gt;
       &lt;div id=&quot;#MovieItem-{{previewMovieItem.id}}&quot; class=&quot;movie-list-item-container clear-fix row&quot;&gt;
         &lt;div class=&quot;row&quot;&gt;
-          &lt;div class=&quot;image-col col-lg-3 col-md-3 col-sm-3&quot;&gt;
+          &lt;div class=&quot;image-col col-sm-3&quot;&gt;
           	&lt;div id=&quot;Movie-Poster&quot; Movie-Poster ng-class=&quot;{noBorder: isDraggable==false}&quot;&gt;&lt;img ng-src=&quot;{{previewMovieItem.poster}}&quot; class=&quot;img-responsive&quot;/&gt;&lt;/div&gt;&lt;!-- /Movie-Poster --&gt;
           &lt;/div&gt;
-          &lt;div class=&quot;data-col col-lg-9 col-md-9 col-sm-9&quot;&gt;
+          &lt;div class=&quot;data-col col-sm-9&quot;&gt;
             &lt;div class=&quot;movie-title row editable-text&quot; model-key=&quot;title&quot;&gt;{{previewMovieItem.title}}&lt;/div&gt;
             &lt;div class=&quot;row &quot;&gt;
-              &lt;div class=&quot;col-lg-6 col-md-6 col-sm-6 info-column&quot;&gt;
+              &lt;div class=&quot;col-sm-6 info-column&quot;&gt;
                 &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;movie-label&quot;&gt;Rated:&lt;/span&gt; &lt;span id=&quot;Editable-Select-Rated&quot; class=&quot;rated&quot; model-key=&quot;rated&quot;&gt;{{previewMovieItem.rated}}&lt;/span&gt;&lt;/div&gt;
                 &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;movie-label&quot;&gt;Run Time:&lt;/span&gt; &lt;span class=&quot;run-time&quot;&gt;&lt;span class=&quot;editable-text&quot; model-key=&quot;runtime&quot;&gt;{{previewMovieItem.runtime}}&lt;/span&gt; minutes&lt;/span&gt;&lt;/div&gt;
                 &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;movie-label&quot;&gt;{{previewMovieItem.GenreLabel}}:&lt;/span&gt; &lt;span class=&quot;genre editable-text&quot; model-key=&quot;genre&quot;&gt;{{previewMovieItem.genre}}&lt;/span&gt;&lt;/div&gt;
                 &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;movie-label&quot;&gt;Release Date: &lt;/span&gt; &lt;span class=&quot;release-date editable-date masked&quot; model-key=&quot;released&quot;&gt;{{previewMovieItem.DisplayReleaseDate}}&lt;/span&gt;&lt;/div&gt;
               &lt;/div&gt;
               &lt;!-- /info-column --&gt;
-              &lt;div class=&quot;ratings-column col-lg6 col-md-6 col-sm-6&quot;&gt;
+              &lt;div class=&quot;ratings-column col-sm-6&quot;&gt;
                 &lt;div class=&quot;ratings-container&quot;&gt;
                 
                   &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;movie-label&quot;&gt;Your Rating:&lt;/span&gt; &lt;span id=&quot;RateIt-User-Preview&quot; class=&quot;rateit bigstars&quot; data-rateit-starwidth=&quot;32&quot; data-rateit-starheight=&quot;16&quot; rating=&quot;0&quot; imdb-rate&gt;&lt;/span&gt; &lt;/div&gt;
@@ -88,5 +88,6 @@
     &lt;span class=&quot;InlineEditTemplateReady&quot; style=&quot;display:none;&quot;&gt;&lt;/span&gt;
   &lt;/form&gt;
 &lt;/div&gt;
+
 &lt;!-- /TemplateWrapper --&gt;
 &lt;dialog-container&gt;&lt;/dialog-container&gt;

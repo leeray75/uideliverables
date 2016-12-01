@@ -1,6 +1,6 @@
 <div id="TemplateSpinner" ng-show="previewMovieItem == null"> <img src="/www/content/images/apps/movies/ajax-loader.gif" /> </div>
 <div id="TemplateWrapper" ng-show="previewMovieItem!=null">
-  <form name="AddEditMovieForm" id="AddEditMovieForm" novalidate >
+  <form name="AddEditMovieForm" id="AddEditMovieForm" novalidate>
     <div ng-init="setForm(AddEditMovieForm);"></div>
     <div id="Movie-Page-Title">
       <h2>{{ pageTitle }}</h2>
@@ -43,7 +43,10 @@
           	<div id="Movie-Poster" Movie-Poster ng-class="{noBorder: isDraggable==false}"><img ng-src="{{previewMovieItem.poster}}" class="img-responsive"/></div><!-- /Movie-Poster -->
           </div>
           <div class="data-col col-sm-9">
-            <div class="movie-title row editable-text" model-key="title">{{previewMovieItem.title}}</div>
+         
+            <div class="movie-title row editable-text" model-key="title">{{previewMovieItem.title}}
+            	
+            </div>
             <div class="row ">
               <div class="col-sm-6 info-column">
                 <div class="row"><span class="movie-label">Rated:</span> <span id="Editable-Select-Rated" class="rated" model-key="rated">{{previewMovieItem.rated}}</span></div>

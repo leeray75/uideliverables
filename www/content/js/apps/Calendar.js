@@ -67,13 +67,13 @@ var AppView = Backbone.View.extend({
 			for(i=0; i<this.collection.length;i++)
 			{			
 				var eventModel = this.collection.at(i);
-				var endDateVal = eventModel.get("end")
+				var endDateVal = eventModel.get("end");
+				console.log("endDateVal: ",endDateVal);
 				if(getDateObject(GlobalVariables.CurrentDate) < getDateObject(endDateVal))
 				{
 					EventsArray.push(eventModel);					
 				}		
 			}
-			console.log("this.CurrentEventsCollection.set(EventsArray);");
 			this.CurrentEventsCollection.reset();
 			this.CurrentEventsCollection.set(EventsArray);
 		},

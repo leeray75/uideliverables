@@ -1,4 +1,6 @@
 <?php
+header( 'Location: http://www.uideliverables.com/www/' ) ;
+die();
 /* @var $this SiteController */
 $this->pageCSS = array(
 	"//google-code-prettify.googlecode.com/svn/loader/prettify.css",
